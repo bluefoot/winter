@@ -1,0 +1,559 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700|Raleway:400,300,700);
+body {
+  color: #32323e;
+font: 14px Lato,"Helvetica Neue",Helvetica,Arial,sans-serif;
+line-height: 1.5;
+}
+.float-left {
+  float:left;
+}
+.float-right {
+  float:right;
+}
+.clear {
+  clear:both;
+}
+h1, h2, h3, h4, h5, #logo,
+.form input[type="submit"],
+.form input[type="button"] {
+  font-family: "Raleway","Helvetica Neue",Helvetica,Arial,sans-serif;
+  text-transform:uppercase;
+}
+.app-main {
+  background: #fff;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+#left_col {
+  position: absolute;
+top: 0;
+left: 0;
+bottom: 0;
+width: 240px;
+z-index: 3;
+}
+
+#left_col:before {
+content: "";
+display: block;
+position: absolute;
+top: 0;
+right: 0;
+bottom: 0;
+width: 1px;
+z-index: 4;
+background: #000;
+}
+
+#left_col.open #large_nav {
+display: block;
+}
+#large_nav {
+position: absolute;
+top: 0;
+left: 0;
+bottom: 0;
+width: 240px;
+overflow: hidden;
+}
+
+#large_nav .content {
+width: 240px;
+height: 100%;
+background: #19191f;
+}
+
+#large_nav .content .top {
+width: 240px;
+}
+
+.top {
+margin: 0;
+padding: 0;
+width: 100%;
+z-index: 1;
+text-align:center;
+}
+
+#large_nav .content .top #logo {
+
+/*display: block;
+width: 240px;
+height: 32px;
+overflow: hidden;
+padding: 25px 0;
+*/
+
+text-align: center;
+cursor: pointer;
+}
+
+
+#large_nav .content .stretch {
+width: 240px !important;
+}
+
+#large_nav .stretch.playlists {
+}
+
+.stretch {
+width: 100% !important;
+height: 100% !important;
+
+}
+
+#large_nav .content  {
+  color: #666676;
+line-height: 34px;
+}
+
+#large_nav .content .no-playlists {
+  line-height: normal;
+  text-align: center;
+  margin-top:15px;
+}
+
+.icon-logout {
+  display:block;
+  float:right;
+  margin-top:8px;
+  font-size:1.3em !important; 
+}
+#large_nav .content .bottom {
+width: 240px;
+}
+
+.bottom {
+position: absolute;
+bottom: 0px;
+margin: 0;
+padding: 0;
+width: 100%;
+}
+
+#flyout {
+display: none;
+z-index: 999;
+position: absolute;
+top: 10px;
+left: 50px;
+bottom: 10px;
+padding-left: 10px;
+}
+
+
+#flyout .point {
+display: block;
+width: 12px;
+height: 12px;
+position: absolute;
+top: 17px;
+left: -1px;
+z-index: 1;
+}
+
+#flyout .point:before {
+content: "";
+width: 0px;
+height: 0px;
+border: 6px solid #fff;
+border-left-color: transparent;
+border-top-color: transparent;
+border-bottom-color: transparent;
+position: absolute;
+top: 50%;
+right: 0px;
+margin-top: -6px;
+z-index: 1;
+}
+
+#flyout .point:after {
+content: "";
+width: 0px;
+height: 0px;
+border: 6px solid rgba(0,0,0,0.25);
+border-left-color: transparent;
+border-top-color: transparent;
+border-bottom-color: transparent;
+position: absolute;
+top: 50%;
+right: 1px;
+margin-top: -6px;
+z-index: 0;
+}
+
+#flyout .content {
+position: absolute;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+color: #32323e;
+border: 1px solid rgba(0,0,0,0.25);
+background: #fff;
+background-clip: padding-box;
+padding: 15px;
+overflow: hidden;
+}
+
+
+#large_nav .content #footer {
+margin: 15px;
+text-align: center;
+}
+
+.logged-user, .options-playlists, .no-playlists, .footer, #logo {
+  margin-left:15px;
+  margin-right:15px;
+}
+
+.logged-user-name {
+  text-overflow: ellipsis;
+width: 183px;
+display: block;
+white-space: nowrap;
+overflow: hidden;
+float: left;
+}
+
+.options-playlists a.add-new-playlist {
+  margin:10px 9px 10px 0;  
+}
+
+.options-playlists a.edit-playlist {
+  margin:10px 0 10px 9px;
+}
+
+/*
+
+MAIN COL
+
+*/
+
+
+#main_col {
+background: #fff;
+}
+
+#main_col, #flash {
+position: relative;
+height: 100%;
+overflow: hidden;
+margin-left: 240px;
+/* margin-right: 340px;  enable this to activate third column */
+z-index: 2;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+
+
+#main_col .content, #flash .content {
+height: 100%;
+}
+
+#channel {
+padding: 18px 20px 0;
+}
+
+.scroll ::-webkit-scrollbar {
+width: 0;
+height: 0;
+}
+
+
+
+
+/*
+WATCHLATER LAYOUT
+*/
+
+*,
+*:after,
+*::before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+a {
+  color:#07c;
+  text-decoration:none;
+    -webkit-transition: all .3s ease;
+     -moz-transition: all .3s ease;
+       -o-transition: all .3s ease;
+      -ms-transition: all .3s ease;
+          transition: all .3s ease;
+          outline:none;
+          
+}
+
+a:hover {
+  color:#30a7fc;
+  
+}
+
+a:visited {
+  color:#0c65a5;
+}
+
+img {
+  border:none;
+}
+
+
+
+/*
+SIDEBAR
+*/
+
+ul.playlists-images {
+  list-style-type: none;
+  margin:0;
+  padding:0;
+}
+
+ul.playlists-images li{
+  margin:0;
+  padding:8px 8px;
+}
+
+ul.playlists-images a:not(.button) {
+  display: block;
+position: relative;
+line-height: 17px;
+width: 100%;
+color: #8c8c9c;
+overflow: hidden;
+cursor: pointer;
+font-weight:bold;
+}
+
+ul.playlists-images a:hover,
+ul.playlists-images li:hover,
+ul.playlists-images li.selected-playlist a,
+ul.playlists-images li.selected-playlist {
+  text-decoration: none;
+  background-color: #101014;
+  color: #eee
+}
+
+/*
+MAIN
+*/
+
+ul.videos-list {
+  list-style-type: none;
+  margin:0;
+  padding:0;
+}
+
+ul.videos-list li{
+  margin:0;
+  padding:4px 0;
+}
+
+ul.videos-list li a {
+  display: block;
+}
+
+ul.videos-list li:hover {
+  background-color:#f2f2f2;
+}
+
+.button-play-video img {
+  
+
+
+
+  padding-right:10px;
+
+          
+}
+
+
+/*
+COMMON SIDEBAR AND MAIN
+*/
+
+ul.playlists-images img,
+.button-play-video img {
+    background-image: url(/watchlater/resources/images/ajax-loader.gif);
+background-repeat: no-repeat;
+background-position: center center;
+  -webkit-transition: all .3s ease;
+     -moz-transition: all .3s ease;
+       -o-transition: all .3s ease;
+      -ms-transition: all .3s ease;
+          transition: all .3s ease;
+}
+
+ul.playlists-images a:hover img,
+ul.videos-list li:hover img {
+  opacity: 0.7;
+}
+
+/*POPUP*/
+
+
+.popuptw {
+visibility: hidden;
+position: fixed;
+top: 0px;
+bottom: 0;
+padding: 20px 0;
+left: 0;
+width: 100%;
+z-index: 5888999;
+overflow-x: hidden;
+overflow-y: auto;
+background: rgba(33,18,51,0.9);
+animation: modalFadeIn 0.18s 0 1;
+-o-animation: modalFadeIn 0.18s 0 1;
+-moz-animation: modalFadeIn 0.18s 0 1;
+-webkit-animation: modalFadeIn 0.18s 0 1;
+visibility: visible;
+}
+
+
+.popup-player-video .mfp-content {
+  height:100%;
+}
+
+.player-popup {
+  position: relative;
+  width: 90%;
+  margin: 20px auto 0;
+  height:90%;
+  text-align:center;
+  color:white;
+}
+
+.player-popup .mfp-close,
+.player-popup .mfp-close:active {
+  top:-32px;
+}
+
+.mfp-close-btn-in .player-popup .mfp-close {
+  color:white;
+}
+
+
+
+/*
+FORMS
+*/
+
+.form{
+    font: 95% Arial, Helvetica, sans-serif;
+    /*max-width: 400px;*/
+    margin: 10px auto;
+    padding: 16px;
+    background: #F7F7F7;
+}
+.form h1{
+    text-align: center;
+}
+.form input[type="text"],
+.form input[type="date"],
+.form input[type="datetime"],
+.form input[type="email"],
+.form input[type="number"],
+.form input[type="search"],
+.form input[type="time"],
+.form input[type="url"],
+.form textarea,
+.form select 
+{
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    background: #fff;
+    margin-bottom: 3%;
+    border: 1px solid #ccc;
+    padding: 2%;
+    color: #555;
+    font: 95% Arial, Helvetica, sans-serif;
+}
+
+.form textarea {
+    -moz-transition: none;
+    -webkit-transition: none;
+    -o-transition: color 0 ease-in;
+    transition: none;
+    max-width:100%; /*only stretch down*/
+}
+.form input[type="text"]:focus,
+.form input[type="date"]:focus,
+.form input[type="datetime"]:focus,
+.form input[type="email"]:focus,
+.form input[type="number"]:focus,
+.form input[type="search"]:focus,
+.form input[type="time"]:focus,
+.form input[type="url"]:focus,
+.form textarea:focus,
+.form select:focus
+{
+    box-shadow: 0 0 5px #07c;
+    padding: 2%;
+    border: 1px solid #0495ff;
+}
+
+.form input[type="submit"],
+.form input[type="button"]{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    padding: 2%;
+    background: #07c;
+    border-bottom: 2px solid #0067b3;
+    border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;    
+    color: #fff;
+    cursor:pointer;
+}
+.form input[type="submit"]:hover,
+.form input[type="button"]:hover{
+    background: #0061a8;
+}
+
+
+.ajax-form-main {
+padding: 30px 40px 40px;
+max-width: 40%; /*700px;*/
+margin: 10px auto;
+position: relative;
+}
+
+
+.form input[type="text"].loading,
+.form input[type="date"].loading,
+.form input[type="datetime"].loading,
+.form input[type="email"].loading,
+.form input[type="number"].loading,
+.form input[type="search"].loading,
+.form input[type="time"].loading,
+.form input[type="url"].loading,
+.form textarea.loading,
+.form select.loading 
+{
+  background-image:url(../images/ajax-loader.gif);
+  background-position:right center;
+  background-repeat: no-repeat;
+      -moz-transition: none;
+    -webkit-transition: none;
+    -o-transition: color 0 ease-in;
+    transition: none;
+}
+

@@ -1,0 +1,10 @@
+.classpath
+.project
+/.metadata
+/.settings
+
+/target
+
+maven-eclipse.xml
+/.externalToolBuilders
+.DS_Store

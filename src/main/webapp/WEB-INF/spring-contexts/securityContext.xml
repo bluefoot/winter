@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+  xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:sec="http://www.springframework.org/schema/security"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd"
+  default-autowire="byType">
+
+  <bean id="userDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+
+
+  <sec:authentication-manager alias="authenticationManager">
+    <sec:authentication-provider user-service-ref="userDetailsService" />
+  </sec:authentication-manager>
+
+  <sec:global-method-security pre-post-annotations="enabled" />
+
+  <sec:http auto-config="true" use-expressions="true">
+    <sec:logout logout-url="/logout"/>
+    <sec:intercept-url pattern="/login.jsp" access="permitAll" />
+    <sec:intercept-url pattern="/resources/**" access="permitAll" />
+    <sec:intercept-url pattern="/**"
+      access="isAuthenticated() and hasRole('ROLE_USER')" />
+    <sec:form-login login-page="/login.jsp"  />
+    <sec:openid-login always-use-default-target="false" default-target-url="/" 
+      user-service-ref="openIdUserService" 
+      authentication-failure-handler-ref="openIdAuthFailureHandler" 
+      login-processing-url="/login">
+      <sec:attribute-exchange>
+        <sec:openid-attribute name="email" type="http://axschema.org/contact/email" required="true"/>
+        <sec:openid-attribute name="firstName" type="http://axschema.org/namePerson/first" required="true"/>
+        <sec:openid-attribute name="lastName" type="http://axschema.org/namePerson/last" required="true"/>
+      </sec:attribute-exchange>
+    </sec:openid-login>
+  </sec:http>
+  
+  <bean id="openIdUserService" class="info.bluefoot.watchlater.spring.OpenIdUserDetailsService" />
+  <bean id="openIdAuthFailureHandler" class="info.bluefoot.watchlater.spring.OpenIDAuthenticationFailureHandler">
+    <property name="defaultFailureUrl" value="/login.jsp?fail" />
+  </bean>
+  
+  
+
+</beans>
