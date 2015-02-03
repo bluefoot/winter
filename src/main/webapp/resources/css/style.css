@@ -80,15 +80,8 @@ text-align:center;
 }
 
 #large_nav .content .top #logo {
-
-/*display: block;
-width: 240px;
-height: 32px;
-overflow: hidden;
-padding: 25px 0;
-*/
-
-text-align: center;
+display: block;
+padding: 15px 0 10px 0;
 cursor: pointer;
 }
 
@@ -199,12 +192,31 @@ padding: 15px;
 overflow: hidden;
 }
 
+#large_nav .content .divider {
+  margin: 12px 20px 0;
+border-top: 1px solid #32323e;
+height: 8px;
+
+  }
 
 #large_nav .content #footer {
-margin: 15px;
+margin: 30px 15px 0 15px;
 text-align: center;
+font-size:80%;
+min-height:250px;
 }
 
+#large_nav .content #footer a {
+  margin: 0 3px;
+font-size: 11px;
+color: #666676;
+white-space: nowrap;
+}
+
+#large_nav .content #footer a:hover {
+  color:#7c7b93;
+
+ } 
 .logged-user, .options-playlists, .no-playlists, .footer, #logo {
   margin-left:15px;
   margin-right:15px;
@@ -268,7 +280,7 @@ height: 0;
 
 
 /*
-WATCHLATER LAYOUT
+WINTER LAYOUT
 */
 
 *,
@@ -291,7 +303,8 @@ a {
           
 }
 
-a:hover {
+a:hover,
+a:visited:hover {
   color:#30a7fc;
   
 }
@@ -329,7 +342,6 @@ width: 100%;
 color: #8c8c9c;
 overflow: hidden;
 cursor: pointer;
-font-weight:bold;
 }
 
 ul.playlists-images a:hover,
@@ -338,8 +350,10 @@ ul.playlists-images li.selected-playlist a,
 ul.playlists-images li.selected-playlist {
   text-decoration: none;
   background-color: #101014;
-  color: #eee
+  color: #eee;
 }
+
+
 
 /*
 MAIN
@@ -381,7 +395,7 @@ COMMON SIDEBAR AND MAIN
 
 ul.playlists-images img,
 .button-play-video img {
-    background-image: url(/watchlater/resources/images/ajax-loader.gif);
+    background-image: url(/winter/resources/images/ajax-loader.gif);
 background-repeat: no-repeat;
 background-position: center center;
   -webkit-transition: all .3s ease;

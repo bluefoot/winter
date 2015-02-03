@@ -9,10 +9,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-<meta name="description" content="WatchLater" />
-<meta name="keywords" content="Watchlater" />
+<meta name="description" content="Winter" />
+<meta name="keywords" content="playlist,resume,winter,watch,later,twitch,youtube,save" />
 <meta name="author" content="bluefoot.dev@gmail.com" />
-<title>${selectedPlaylist eq null ? 'Start Page' : selectedPlaylist.name } - WatchLater</title>
+<title>${selectedPlaylist eq null ? 'Start Page' : selectedPlaylist.name } - Winter</title>
 
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/reset.css" />" />
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/text.css" />" />
@@ -35,7 +35,7 @@
 <script type="text/javascript">
     var playlistId = '${selectedPlaylist.playlistId }';
     var contextRoot = '<c:url value="/" />';
-    var lastPlayedVideoId = '${selectedPlaylist.lastPlayed.videoId }';
+    var lastPlayedVideoId = '${selectedPlaylist.lastReproduced.videoId }';
     $(document).ready(function() {
         // Scroll Emulator
         $('.wrapperscroll, .wrapperscrollmain').TrackpadScrollEmulator();
@@ -62,7 +62,7 @@
       <div class="content">
         <div class="top">
           <a href="<c:url value="/" />" id="logo">
-            155/77
+            <img src="<c:url value="/resources/images/winterlogo.svg" />" width="173px" height="86px" alt="Winter" />
           </a>
         </div>
         <div class="playlists tse-scrollable wrapperscroll stretch">
@@ -101,12 +101,22 @@
               });
             </script>
             </c:if>
+            <div class="divider"></div>
             <div id="footer">
-              by http://bluefoot.info
+              <div class="footer-line"><img src="logo" /></div>
+              <div class="footer-line">thanks for using Winter!</div>
+              <div class="footer-line">
+                <a href="<c:url value="/about" />">About</a>
+                <a href="http://bluefoot.info" target="_blank">Blog</a>
+                <a href="http://careers.stackoverflow.com/bluefoot" target="_blank">Stack Careers</a>
+                <a href="mailto:bluefoot.dev@gmail.com" target="_blank">Contact Me</a>
+              </div>
             </div>
           </div>
         </div>
-        <div class="bottom"></div>
+        <div class="bottom">
+          <!-- fixed content at the bottom if needed -->
+        </div>
       </div>
     </div>
     <div id="flyout">
@@ -120,12 +130,12 @@
       <div class="content">
         <div id="channel">
           <div id="someotherdiv">
-            <h1>${selectedPlaylist eq null ? 'WatchLater' : selectedPlaylist.name }</h1>
+            <h1>${selectedPlaylist eq null ? 'Winter' : selectedPlaylist.name }</h1>
              <c:if test="${videos != null}">
-             <ul class="videos-list" last-played-video="${selectedPlaylist.lastPlayed.videoId }">
+             <ul class="videos-list" last-played-video="${selectedPlaylist.lastReproduced.videoId }">
               <c:forEach items="${videos }" var="v" >  
                 <li>
-                  <a href="<c:url value="/playlist/${selectedPlaylist.playlistId }/video/${v.videoId }" />" video-id=${v.videoId } class="button-play-video" last-played="${v.lastPlayedTime }">${v.url }</a>
+                  <a href="<c:url value="/playlist/${selectedPlaylist.playlistId }/video/${v.videoId }" />" video-id=${v.videoId } class="button-play-video" last-played="${v.currentPosition }">${v.url }</a>
                 </li>
               </c:forEach>
               </ul>

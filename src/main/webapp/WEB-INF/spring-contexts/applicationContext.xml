@@ -10,7 +10,7 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd"
   default-autowire="byType">
 	<!-- Scans for application @Components to deploy -->
-  <context:component-scan base-package="info.bluefoot.watchlater" />
+  <context:component-scan base-package="info.bluefoot.winter" />
   
   <!-- 
   <jdbc:embedded-database id="testDataSource" type="HSQL">
@@ -18,24 +18,30 @@
     <jdbc:script location="classpath:foobarcard-dml.sql" />
   </jdbc:embedded-database>
  -->
-  <!-- <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-  
-  
+  <!-- 
+  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
     <property name="driverClass" value="org.postgresql.Driver" />
-    <property name="jdbcUrl" value="jdbc:postgresql://10.0.2.15:44444/winter" />
-    <property name="user" value="winter" />
-    <property name="password" value="winter" />
+    <property name="jdbcUrl" value="jdbc:postgresql://127.0.0.1:5433/winter" />
+
+         <property name="user" value="adminmqswr7r" />
+    <property name="password" value="aVIYl1CYY_rE" />
     <property name="maxPoolSize" value="40" />
     <property name="minPoolSize" value="1" />
     <property name="maxIdleTime" value="200" />
-  
+  </bean>
    -->
+
+    <!-- 
+    <property name="user" value="winter" />
+    <property name="password" value="aIJDd768sdDGS" />
+    
+             <property name="user" value="adminmqswr7r" />
+    <property name="password" value="aVIYl1CYY_rE" />
+     -->
+       
   <bean id="dataSource"
     class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="org.postgresql.Driver" />
-    <property name="url" value="jdbc:postgresql://192.168.56.1:44444/winter" />
-    <property name="username" value="winter" />
-    <property name="password" value="winter" />
-    
-  </bean>
+    <property name="url" value="jdbc:postgresql://127.0.0.1:5432/winter?user=adminmqswr7r&amp;password=aVIYl1CYY_rE" />
+  </bean>  
 </beans>

@@ -107,8 +107,8 @@ function registerBrowseLocationChange() {
             var regExpShowPlaylist = new RegExp(contextRoot + "playlist/([0-9]+)$");
             var matchShowPlaylist = location.pathname.match(regExpShowPlaylist);
             if (matchShowPlaylist){
-                // Note, when url is already watchlater/playlist/x, and user
-                // clicks back button and goes back to same watchlater/playlist/x,
+                // Note, when url is already winter/playlist/x, and user
+                // clicks back button and goes back to same winter/playlist/x,
                 // this method will get called anyway
                 closePlayer();
             }
