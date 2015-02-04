@@ -27,6 +27,7 @@
       user-service-ref="openIdUserService" remember-me-parameter="rememberme" />
     <sec:logout logout-url="/logout"/>
     <sec:intercept-url pattern="/login" access="permitAll" />
+    <sec:intercept-url pattern="/faq" access="permitAll" />
     <sec:intercept-url pattern="/resources/**" access="permitAll" />
     <sec:intercept-url pattern="/**" access="isAuthenticated() and hasRole('ROLE_USER')" />
     <sec:openid-login always-use-default-target="false" default-target-url="/" 

@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -41,6 +42,22 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlistDao.addPlaylist(playlist);
         for (Video video : playlist.getVideos()) {
             videoService.addVideo(video);
+        }
+    }
+
+    @Override
+    public void removePlaylistAndVideos(Integer playlistId) {
+        videoService.removeVideosFromPlaylist(playlistId);
+        playlistDao.removePlaylist(playlistId);
+    }
+
+    @Override
+    public Playlist getPlaylistByIdAndUser(Integer playlistId,
+            WinterUser principal) {
+        try {
+            return playlistDao.getPlaylistsByIdAndUser(playlistId, principal.getUserId());
+        } catch (EmptyResultDataAccessException e) {
+            throw new PlaylistNotFoundException(playlistId.toString(), e);
         }
     }
 

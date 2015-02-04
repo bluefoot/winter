@@ -75,4 +75,10 @@ public class JdbcVideoDao extends JdbcDaoSupport  implements VideoDao {
         });
     }
 
+    @Override
+    public void removeVideosFromPlaylist(Integer playlistId) {
+        String sql = "DELETE FROM VIDEO WHERE PLAYLIST_ID = ?";
+        this.getJdbcTemplate().update(sql, new Object[] {playlistId});
+    }
+
 }

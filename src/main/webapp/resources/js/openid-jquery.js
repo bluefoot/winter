@@ -47,11 +47,30 @@ openid = {
 			openid_btns.append(box);
 		}
 		if (providers_small) {
+		    /**
+		     * **********************
+		     * START OF MODIFICATIONS
+		     * **********************
+		     */
 			openid_btns.append('<br/>');
+			var providers_small_containers = $('<div id="providers_small_containers" />');
 			for (id in providers_small) {
 				box = this.getBoxHTML(id, providers_small[id], 'small', i++);
-				openid_btns.append(box);
+				providers_small_containers.append(box);
 			}
+			providers_small_containers.hide();
+			var link_show_providers_small = $('<a href="javascript:;">show more</a>');
+			link_show_providers_small.bind('click', function(){
+			    $(this).remove();
+			    providers_small_containers.show();
+			});
+			openid_btns.append(link_show_providers_small);
+			openid_btns.append(providers_small_containers);
+            /**
+             * ********************
+             * END OF MODIFICATIONS
+             * ********************
+             */
 		}
 		$('#openid_form').submit(this.submit);
 		var box_id = this.readCookie();

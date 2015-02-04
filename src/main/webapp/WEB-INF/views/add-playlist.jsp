@@ -6,17 +6,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- 
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/reset.css" />" />
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/text.css" />" />
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css" />" />
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/font-awesome.min.css" />" />
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/hiiconeffect.css" />" />
-
-<script src="<c:url value="/resources/js/jquery-1.11.2.min.js" />"></script>
-<script src="<c:url value="/resources/js/modernizr.custom.js" />"></script>
-
- -->
 <script type="text/javascript">
 
     var contextRoot = '<c:url value="/" />';
@@ -34,8 +23,10 @@
             imageWasChangedByUser=true;
         });
         
-        
+
         $('#addplaylistform').submit(function() {
+            var form = $(this);
+            $('input[type="submit"]', form).addClass('loading').attr('disabled','disabled');
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -45,8 +36,8 @@
                     window.location.href = contextRoot + "playlist/" + data.playlist_id;
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
-                    var status = xhr.status;
-                    alert("ERROR PLS PUT ME IN A DIV " + xhr.responseText + ajaxOptions + thrownError);
+                    $('.error-add-playlist').addClass('error').text(xhr.responseJSON.error);
+                    $('input[type="submit"]', form).removeClass('loading').removeAttr('disabled','disabled')
                 }
             });
             return false;
@@ -104,7 +95,10 @@
             });
         } else {
             var videoID = getTwitchVideoID(url);
+            console.log(videoID);
             $.getJSON('https://api.twitch.tv/kraken/videos/'+ videoID + '?callback=?', function(data) {
+                console.log('got json ');
+                console.log(data);
                 if(!$('#addplaylistform .imageurlfield').val() || !imageWasChangedByUser) {
                     $('#addplaylistform .imageurlfield').val(data.preview);
                 }
@@ -122,6 +116,7 @@
 <div class="form ajax-form-main">
 <c:url value="/playlist/add" var="submitaction" />
 <h1>Add New Playlist or Video</h1>
+<div class="error-add-playlist"></div>
 <form:form action="${submitaction }" commandName="addplaylistform" >
   <form:input class="namefield" type="text" name="name" placeholder="Name" autofocus="autofocus" required="required" path="playlist.name"/>
   <form:input class="imageurlfield" type="url" name="image" placeholder="Image" required="required" path="playlist.image" />

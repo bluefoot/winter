@@ -117,7 +117,7 @@ CREATE TABLE playlist
   CONSTRAINT "PLAYLIST_pkey" PRIMARY KEY (playlist_id),
   CONSTRAINT "PLAYLIST_last_reprod_video_id_fkey" FOREIGN KEY (last_reprod_video_id)
       REFERENCES video (video_id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+      ON UPDATE NO ACTION ON DELETE SET NULL
 )
 WITH (
   OIDS=FALSE

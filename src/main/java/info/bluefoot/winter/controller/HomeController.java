@@ -5,6 +5,7 @@ import info.bluefoot.winter.model.Video;
 import info.bluefoot.winter.model.WinterUser;
 import info.bluefoot.winter.service.PlaylistService;
 import info.bluefoot.winter.service.VideoService;
+import info.bluefoot.winter.service.impl.PlaylistNotFoundException;
 
 import java.util.List;
 
@@ -20,18 +21,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /*
- * MISSING: FIX LOGIN GMAIL
- * css login page
- * EDIT
+ * MISSING: FIX LOGIN GMAIL, add facebook
  * MOBILE
  * REMEMBER ME NOT SAVING COOKIE
  * better way of showing selected playlist - see inspiration on battle.net - actually the right-border is better 
- * work link for playing single video
+ * TWITCH FULL SCREEN AND YOUTUBE - WELL YOUTUBE WONT WORK FUCK
  * ERROR PAGES DEFAULT - GENERATE PROTOCOL
- * FAILURE MESSAGE INSERT PLAYLIST
  * FAILURE MESSAGE LOGIN INCORRECT
- * SPINNER WHEN ADDING VIDEO!!
- * FIX WERROR WHEN ADDING VIDEO MSG WHERE TO SHOW
+ * REMOVER SOME USELESS INFO LOGS
+ * MOVE STATIC JS TO EXTERNAL FILES, SUCH AS IN ADD-PLAYLIST.JSP
+ * MAVEN COMPRESS JS AND CSS RELEASE
+ * FAQ PAGE - NEED SCROLL OR NOT? CHECK HOW IT GOES ON WINDOWS
+ * USER TRIES TO SEE A PLAYLIST THAT DOESN'T BELONG TO HIM
+ * WHEN OPENING PLAYLIST, SCROLL TO IT. DANG THIS IS GONNA BE DIFFICULT
+ * BUG: IS PLAYING VIDEO EVEN IF LESS THAN 5 SECONDS IF VIDEO FINISHED PLAYER WITHOUT RELOADING PAGE
+ *  future:       //document.getElementById('plthumb-${selectedPlaylist.playlistId }').scrollIntoView(true);
+ *  future: rename
+ *  future: sort by creation date or alphabetically
  * */
 
 //http://docs.spring.io/spring-security/site/docs/3.2.5.RELEASE/reference/htmlsingle/
@@ -57,6 +63,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 //http://www.mkyong.com/spring-mvc/spring-3-mvc-and-jsr303-valid-example/
 //http://viralpatel.net/blogs/spring-mvc-multi-row-submit-java-list/
 //https://code.google.com/p/openid-selector/
+//http://www.cssreset.com/how-to-keep-footer-at-bottom-of-page-with-css/
 /**
  * openid:
  * http://blogs.isostech.com/spring-2/adding-google-authentication-spring
@@ -90,27 +97,14 @@ public class HomeController {
     public String login() {
         return "login";
     }
+    @RequestMapping(value = { "/faq" }, method = RequestMethod.GET)
+    public String faq() {
+        return "faq";
+    }
     @RequestMapping(value = { "/" }, method = RequestMethod.GET)
     public String getAllPlaylists(Model model) {
-        List<Playlist> playlists = getUsersPlaylists();
+        List<Playlist> playlists = playlistService.getPlaylistsFromUser(Utils.getCurrentLoggedUser());
         model.addAttribute("playlists", playlists);
-        return "home";
-    }
-
-    // @PreAuthorize("hasPermission(#playlist, 'owner')")
-    @RequestMapping(value = { "/playlist/{id}" }, method = RequestMethod.GET)
-    public String play(@PathVariable Integer id, Model model) {
-        List<Playlist> playlists = getUsersPlaylists();
-        Playlist selectedPlaylist = null;
-        for (Playlist p : playlists) {
-            if (p.getPlaylistId().equals(id)) {
-                selectedPlaylist = p;
-            }
-        }
-        List<Video> videos = videoService.getVideosFromPlaylist(selectedPlaylist);
-        model.addAttribute("playlists", playlists);
-        model.addAttribute("selectedPlaylist", selectedPlaylist);
-        model.addAttribute("videos", videos);
         return "home";
     }
 
@@ -124,8 +118,4 @@ public class HomeController {
         playlistService.updateLastPlayedVideo(playlistId, videoId);
     }
 
-    private List<Playlist> getUsersPlaylists() {
-        WinterUser user = (WinterUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return playlistService.getPlaylistsFromUser(user);
-    }
 }

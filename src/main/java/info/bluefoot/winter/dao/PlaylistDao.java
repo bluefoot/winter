@@ -11,4 +11,8 @@ public interface PlaylistDao {
     public void updateLastPlayedVideo(Integer playlistId, Integer videoId);
 
     public Playlist addPlaylist(Playlist playlist);
+
+    public void removePlaylist(Integer playlistId);
+
+    public Playlist getPlaylistsByIdAndUser(Integer playlistId, Integer userId);
 }

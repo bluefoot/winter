@@ -11,4 +11,6 @@ public interface VideoDao {
     public List<Video> getVideosFromPlaylist(Playlist playlist);
 
     public int insert(Video video);
+
+    public void removeVideosFromPlaylist(Integer playlistId);
 }

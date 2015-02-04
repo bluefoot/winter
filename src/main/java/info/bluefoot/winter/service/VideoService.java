@@ -12,4 +12,6 @@ public interface VideoService {
 
     public List<Video> getVideosFromPlaylist(Playlist playlist);
 
+    public void removeVideosFromPlaylist(Integer playlistId);
+
 }

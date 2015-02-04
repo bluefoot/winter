@@ -34,4 +34,9 @@ public class VideoServiceImpl implements VideoService {
     public List<Video> getVideosFromPlaylist(Playlist playlist) {
         return videoDao.getVideosFromPlaylist(playlist);
     }
+
+    @Override
+    public void removeVideosFromPlaylist(Integer playlistId) {
+        videoDao.removeVideosFromPlaylist(playlistId);
+    }
 }

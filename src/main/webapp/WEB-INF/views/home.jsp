@@ -2,26 +2,25 @@
     pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
 <meta name="description" content="Winter" />
 <meta name="keywords" content="playlist,resume,winter,watch,later,twitch,youtube,save" />
-<meta name="author" content="bluefoot.dev@gmail.com" />
+<meta name="author" content="gewton" />
 <title>${selectedPlaylist eq null ? 'Start Page' : selectedPlaylist.name } - Winter</title>
-
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/reset.css" />" />
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/text.css" />" />
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css" />" />
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/trackpad/trackpad-scroll-emulator.css" />" />
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/magnific-popup.css" />" />
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/font-awesome.min.css" />" />
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/hiiconeffect.css" />" />
-
+<link rel="apple-touch-icon" href="<c:url value="/resources/images/apple-touch-icon.png" />" />
+<link rel="icon" href="<c:url value="/resources/images/favicon.png" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/reset.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/text.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/style.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/trackpad/trackpad-scroll-emulator.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/magnific-popup.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/hiiconeffect.css" />" />
 <script src="<c:url value="/resources/js/jquery-1.11.2.min.js" />"></script>
 <script src="<c:url value="/resources/js/trackpad/jquery.trackpad-scroll-emulator.min.js" />"></script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
@@ -36,6 +35,7 @@
     var playlistId = '${selectedPlaylist.playlistId }';
     var contextRoot = '<c:url value="/" />';
     var lastPlayedVideoId = '${selectedPlaylist.lastReproduced.videoId }';
+    var videoToPlay = '${videoToPlay }';
     $(document).ready(function() {
         // Scroll Emulator
         $('.wrapperscroll, .wrapperscrollmain').TrackpadScrollEmulator();
@@ -52,7 +52,54 @@
             closeOnBgClick: false,
             showCloseBtn: true
         });
+        
+        $('.button-delete-playlist').each(function(){
+            $(this).bind('click', function(e){
+                if(e.altKey) {
+                    var playlistIdToBeDeleted = $(this).attr('playlistid');
+                    $('#playlist' + playlistIdToBeDeleted).fadeOut('fast');
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '<c:url value="/playlist/delete" />',
+                        data: 'playlistId=' + playlistIdToBeDeleted,
+                        success: function(data) {
+                            if(playlistIdToBeDeleted == playlistId) {
+                                window.location.href = contextRoot;
+                            } else {
+                              $('#playlist' + playlistIdToBeDeleted).remove();
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            $('#playlist' + playlistIdToBeDeleted).fadeIn('fast')
+                            warningMessage(xhr.responseJSON.error, true);
+                        }
+                    });
+                } else {
+                    warningMessage("hold ALT key or it won't work", true);
+                }
+                e.preventDefault();
+            });
+        });
     });
+    
+    function warningMessage(text, bounce) {
+        if($('#msg-alt-key').length != 0) {
+            $('#msg-alt-key').remove();
+        }
+        var div = '<div id="msg-alt-key" class="top-page-message"><span>' + text + '</span></div>';
+        $('body').prepend(div);
+        if(bounce) {
+          for(var i = 0; i < 5; i++) {
+              $('#msg-alt-key').animate({marginTop: '-=10'}, 50).animate({marginTop: '+=10'}, 50);
+          }
+        }
+         setTimeout(function() {
+            $("#msg-alt-key").fadeOut('fast', function() {
+                $(this).remove();
+            });
+          }, 3000);
+    }
 </script>
 </head>
 <body>
@@ -73,22 +120,23 @@
              <div class="clear" ></div>
             </div>
             <div class="options-playlists">
-              <div class="float-left hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+              <div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
                 <a href="<c:url value="/playlist/add" />" class="hi-icon fa fa-file-o add-new-playlist">Add New Playlist or Video</a>
               </div>
+              <%--
               <div class="float-right hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
                 <a href="<c:url value="/editplaylists" />" class="hi-icon fa fa-pencil edit-playlist">Edit</a>
               </div>
               <div class="clear" ></div>
+               --%>
             </div>
             <c:if test="${playlists != null && not empty playlists}">
             <ul class="playlists-images">
               <c:forEach items="${playlists }" var="pl" >
-                <li <c:if test="${selectedPlaylist.playlistId  == pl.playlistId}">class="selected-playlist"</c:if>>
-                  <a href="<c:url value="/playlist/${pl.playlistId}" />">
-                    <img src="${pl.image }" height="126px" width="224px" />
-                    ${pl.name }
-                  </a>
+                <li id="playlist${pl.playlistId}" <c:if test="${selectedPlaylist.playlistId  == pl.playlistId}">class="selected-playlist"</c:if>>
+                  <a class="link-playlist-thumb" href="<c:url value="/playlist/${pl.playlistId}" />">
+                    <img src="${pl.image }" height="126px" width="224px" /><br />${pl.name }</a>
+                  <a href="javascript:;" class="button-delete-playlist fa fa-trash-o" playlistid="${pl.playlistId}" title="Delete this playlist (hold ALT key)"></a>
                 </li>
               </c:forEach>
             </ul>
@@ -103,10 +151,10 @@
             </c:if>
             <div class="divider"></div>
             <div id="footer">
-              <div class="footer-line"><img src="logo" /></div>
+              <div class="footer-line"><img src="<c:url value="/resources/images/wintersymbol.svg" />" height="24px" alt="Winter Symbol" /></div>
               <div class="footer-line">thanks for using Winter!</div>
               <div class="footer-line">
-                <a href="<c:url value="/about" />">About</a>
+                <a href="<c:url value="/faq" />">FAQ</a>
                 <a href="http://bluefoot.info" target="_blank">Blog</a>
                 <a href="http://careers.stackoverflow.com/bluefoot" target="_blank">Stack Careers</a>
                 <a href="mailto:bluefoot.dev@gmail.com" target="_blank">Contact Me</a>

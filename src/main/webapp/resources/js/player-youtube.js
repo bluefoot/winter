@@ -80,7 +80,9 @@ function onYouTubeIframeAPIReady() {
                         }
                     }
                 });
-                if($(linkobj).attr('video-id')==lastPlayedVideoId || $('.videos-list li').length==1) {
+                if((videoToPlay == '' && $(linkobj).attr('video-id')==lastPlayedVideoId) || 
+                        $('.videos-list li').length==1 || 
+                        $(linkobj).attr('video-id')==videoToPlay) {
                     $(linkobj).click();
                 }
             } else {
