@@ -31,16 +31,6 @@ limitations under the License.
 <link rel="stylesheet" href="<c:url value="/resources/css/reset.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/text.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />" />
-<link rel="stylesheet" href="<c:url value="/resources/css/openid-shadow.css" />" />
-<script src="<c:url value="/resources/js/jquery-1.11.2.min.js" />"></script>
-<script src="<c:url value="/resources/js/openid-jquery.js" />"></script>
-<script src="<c:url value="/resources/js/openid-en.js" />"></script>
-  <script type="text/javascript">
-    var contextRoot = '<c:url value="/" />';
-    $(document).ready(function() {
-      openid.init('openid_identifier');
-    });
-  </script>
 </head>
 <body>
 <div class="static-main">
@@ -70,22 +60,7 @@ limitations under the License.
         <input type="submit" value="Login with Facebook!" class="login-with-provider login-with-facebook" />
       </form>
     </div>
-    
-    <form action="<c:url value="/openidlogin" />" method="post" id="openid_form" class="login-provider">
-      <input type="hidden" name="remember-me" value="true" />
-      <input type="hidden" name="_csrf" value="${_csrf.token}" />
-        <div id="openid_choice">
-          <div id="openid_btns"></div>
-        </div>
-        <div id="openid_input_area">
-          <input id="openid_identifier" name="openid_identifier" type="text" value="http://" />
-          <input id="openid_submit" type="submit" value="Sign-In"/>
-        </div>
-        <noscript>
-          <p>OpenID is service that allows you to log-on to many different websites using a single indentity.
-          Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
-        </noscript>
-    </form>
+    <div class="clear"></div>
   </div> <!--#login-form-container-->
   <footer id="footer-general">
     <div class="footer-line"><img src="<c:url value="/resources/images/wintersymbol.svg"/>" height="24px" alt="Winter Symbol" /></div>

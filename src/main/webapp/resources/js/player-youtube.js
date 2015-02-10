@@ -80,9 +80,10 @@ function onYouTubeIframeAPIReady() {
                         }
                     }
                 });
-                if((videoToPlay == '' && $(linkobj).attr('video-id')==lastPlayedVideoId) || 
+                if(isAutoPlayEnabled &&
+                        ((videoToPlay == '' && $(linkobj).attr('video-id')==lastPlayedVideoId) || 
                         $('.videos-list li').length==1 || 
-                        $(linkobj).attr('video-id')==videoToPlay) {
+                        $(linkobj).attr('video-id')==videoToPlay)) {
                     $(linkobj).click();
                 }
             } else {

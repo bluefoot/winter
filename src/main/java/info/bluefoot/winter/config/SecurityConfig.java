@@ -32,16 +32,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
-import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.openid.OpenIDAttribute;
-import org.springframework.security.openid.OpenIDAuthenticationToken;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.social.UserIdSource;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
@@ -68,23 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	    return userDetailsService;
 	}
 	
-	@Bean
-	public UserDetailsService openIdUserService() {
-	    return new info.bluefoot.winter.service.openid.OpenIdUserDetailsService();
-	}
-	
-	@Bean
-	public AuthenticationUserDetailsService<OpenIDAuthenticationToken> authenticationUserDetailsService() {
-	    return new UserDetailsByNameServiceWrapper<OpenIDAuthenticationToken>(openIdUserService());
-	}
-	
-	@Bean
-	public AuthenticationFailureHandler openIdAuthFailureHandler() {
-	    info.bluefoot.winter.service.openid.OpenIDAuthenticationFailureHandler handler = new info.bluefoot.winter.service.openid.OpenIDAuthenticationFailureHandler();
-	    handler.setDefaultFailureUrl("/login?fail");
-	    return handler;
-	}
-	
 	//FIXME url rewriting how to disable
     //FIXME remember me parameter: new org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices().setp
 	//isAuthenticated() and hasRole('ROLE_USER')
@@ -95,24 +73,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .rememberMe()
                 .tokenValiditySeconds(7776000)
                 .key("winterapp23823829389")
-                .userDetailsService(openIdUserService())
             .and()
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                     .deleteCookies("JSESSIONID")
             .and()
-                .openidLogin()
-                    .defaultSuccessUrl("/")
-                    .authenticationUserDetailsService(authenticationUserDetailsService())
-                    .failureHandler(openIdAuthFailureHandler())
-                    .loginProcessingUrl("/openidlogin")
+                .formLogin()
                     .loginPage("/login")
-                    .attributeExchange(".*")
-                        .attribute(new OpenIDAttribute("email", "http://axschema.org/contact/email"))
-                        .attribute(new OpenIDAttribute("firstName", "http://axschema.org/namePerson/first"))
-                        .attribute(new OpenIDAttribute("lastName", "http://axschema.org/namePerson/last"))
-                    .and()
-            .and()    
+                    .failureUrl("/login?fail")
+            .and()
                 .authorizeRequests()
                     .antMatchers(
                             "/login", 

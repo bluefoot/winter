@@ -41,6 +41,7 @@ limitations under the License.
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
 <script src="<c:url value="/resources/js/modernizr.custom.js" />"></script>
 <script src="<c:url value="/resources/js/magnific-popup.js" />"></script>
+<script src="<c:url value="/resources/js/detectmobilebrowser.js" />"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 <script src="<c:url value="/resources/js/player-global.js" />"></script>
 <script src="<c:url value="/resources/js/player-youtube.js" />"></script>
@@ -52,9 +53,19 @@ limitations under the License.
     var lastPlayedVideoId = '${selectedPlaylist.lastReproduced.videoId }';
     var videoToPlay = '${videoToPlay }';
     var csrfToken = '${_csrf.token}';
+    var isPlaylistOrVideoPage = (playlistId != '');
+    var isAutoPlayEnabled = true;
     $(document).ready(function() {
+        if(jQuery.browser.mobile) {
+            isAutoPlayEnabled = false;
+            if(isPlaylistOrVideoPage) {
+                $('.app-main').addClass('playlist-or-video-page');
+            }
+        }
         // Scroll Emulator
-        $('.wrapperscroll, .wrapperscrollmain').TrackpadScrollEmulator();
+        if(!jQuery.browser.mobile) {
+            $('.wrapperscroll, .wrapperscrollmain').TrackpadScrollEmulator();
+        }
 
         // Load youtube and twitch videos
         loadTwitchVideos();

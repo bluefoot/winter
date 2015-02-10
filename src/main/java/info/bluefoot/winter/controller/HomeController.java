@@ -33,15 +33,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /*
- * add debug log and info log on everything
  * better break css
+ * fix google scopr all you need is name and email and profile url
+ * main page too big
+ * csrf token session expired if takes too long in a page. this is very annoying I think I'm gonna drop it OR redirect to / always
+ * org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices
  * MOBILE
- * REMEMBER ME NOT SAVING COOKIE
+ * REMEMBER ME IGNORING "REMEMBER-ME" COOKIE WHEN COMING BACK FROM OPENID
  * better way of showing selected playlist - see inspiration on battle.net - actually the right-border is better 
  * TWITCH FULL SCREEN AND YOUTUBE - WELL YOUTUBE WONT WORK FUCK
  * ERROR PAGES DEFAULT - GENERATE PROTOCOL
  * FAILURE MESSAGE LOGIN INCORRECT
- * REMOVER SOME USELESS INFO LOGS
  * MOVE STATIC JS TO EXTERNAL FILES, SUCH AS IN ADD-PLAYLIST.JSP
  * MAVEN COMPRESS JS AND CSS RELEASE
  * FAQ PAGE - NEED SCROLL OR NOT? CHECK HOW IT GOES ON WINDOWS

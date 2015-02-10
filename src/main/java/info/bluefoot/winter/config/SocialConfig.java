@@ -15,14 +15,12 @@
  */
 package info.bluefoot.winter.config;
 
-import info.bluefoot.winter.controller.Utils;
 import info.bluefoot.winter.dao.UserDao;
-import info.bluefoot.winter.model.SocialUser;
+import info.bluefoot.winter.service.sociallogin.SocialConnectionSignUp;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -38,8 +36,6 @@ import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.connect.ConnectionSignUp;
-import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.connect.web.ReconnectFilter;
@@ -84,36 +80,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
 	@Override
 	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
 		JdbcUsersConnectionRepository rep = new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
-		rep.setConnectionSignUp(new ConnectionSignUp() {
-            
-            @Override
-            public String execute(Connection<?> connection) {
-                String email = "";
-                UserProfile profile = null;
-                if (connection.getApi() instanceof org.springframework.social.twitter.api.impl.TwitterTemplate) {
-                    email = connection.getDisplayName().replace("@", "") + "@twitter.com";
-                } else {
-                    profile = connection.fetchUserProfile();
-                    email = profile.getEmail();
-                }
-                // ========================================
-                // Name verification added for facebook 1.x api, see http://stackoverflow.com/a/23986618
-                // Not needed anymore since I'm using v 2 pre release, so this can be removed
-                String name = connection.getDisplayName();
-                if(StringUtils.isEmpty(name) || "null".equals(name)) {
-                    if(profile==null) {
-                        profile = connection.fetchUserProfile();
-                    }
-                    name = profile.getName();
-                }
-                // ========================================
-                SocialUser user = new SocialUser(connection.getProfileUrl(),
-                        email, name, Utils.getDefaultUserAuthorities());
-                userDao.insertUser(user);
-                userDao.insertAuthorities(user);
-                return connection.getProfileUrl();
-            }
-        });
+		rep.setConnectionSignUp(new SocialConnectionSignUp(userDao));
         return rep;
 	}
 

@@ -16,8 +16,6 @@
 package info.bluefoot.winter.dao.jdbc;
 
 import info.bluefoot.winter.dao.UserDao;
-import info.bluefoot.winter.dao.UserNotFoundException;
-import info.bluefoot.winter.model.OpenIdUser;
 import info.bluefoot.winter.model.SocialUser;
 import info.bluefoot.winter.model.User;
 
@@ -28,7 +26,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.security.core.GrantedAuthority;
@@ -43,26 +40,6 @@ public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
         super();
         setDataSource(dataSource);
     }
-    
-    @Override
-    public User getUserByOpenId(String userName) {
-        String sql = "SELECT U.USERNAME, U.PASSWORD, U.EMAIL, UOID.DISPLAYNAME FROM USERS U INNER JOIN USEROPENIDCONNECTION UOID ON (U.USERNAME=UOID.OPENID) WHERE UOID.OPENID=?";
-        try {
-            return this.getJdbcTemplate().queryForObject(sql,
-                    new Object[] { userName }, new OpenIdUserRowMapper());
-        } catch (EmptyResultDataAccessException e) {
-            throw new UserNotFoundException("Open ID User not found: " + userName, e);
-        }
-    }
-
-    @Override
-    public void insertOpenIdUser(final OpenIdUser user) {
-        String userSql = "INSERT INTO USERS (USERNAME, PASSWORD, EMAIL) VALUES (?, ?, ?)";
-        this.getJdbcTemplate().update(userSql, new Object[] {user.getUsername(), user.getPassword(), user.getEmail()});
-        String openIduserSql = "INSERT INTO USEROPENIDCONNECTION (OPENID, DISPLAYNAME) VALUES (?, ?)";
-        this.getJdbcTemplate().update(openIduserSql, new Object[] {user.getOpenId(), user.getDisplayName()});
-    }
-    
 
     @Override
     public void insertUser(User user) {
@@ -80,23 +57,6 @@ public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
         }
     }
     
-    class OpenIdUserRowMapper implements RowMapper<User> {
-        @Override
-        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-            String username = rs.getString("USERNAME");
-            String authoritiesSql = "SELECT AUTHORITY FROM AUTHORITY WHERE USERNAME=?";
-            List<SimpleGrantedAuthority> authorities = JdbcUserDao.this.getJdbcTemplate().query(authoritiesSql,
-                    new Object[] { username }, new RowMapper<SimpleGrantedAuthority>() {
-                                @Override
-                                public SimpleGrantedAuthority mapRow(ResultSet resultSet, int rowNum)
-                                        throws SQLException {
-                                    return new SimpleGrantedAuthority(resultSet.getString("AUTHORITY"));
-                                }
-                            });
-            return new OpenIdUser(username, rs.getString("EMAIL"), rs.getString("DISPLAYNAME"), authorities);
-        }
-    }
-
     @Override
     public SocialUser loadSocialUser(String userId) {
         String sql = "SELECT USERID, PROVIDERID, PROVIDERUSERID, RANK, " + 

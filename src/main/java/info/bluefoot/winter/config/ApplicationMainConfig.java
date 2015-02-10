@@ -33,7 +33,7 @@ public class ApplicationMainConfig {
     public DataSource dataSource() throws Throwable {
         com.mchange.v2.c3p0.ComboPooledDataSource ds = new com.mchange.v2.c3p0.ComboPooledDataSource();
         ds.setDriverClass("org.postgresql.Driver");
-        ds.setJdbcUrl("jdbc:postgresql://127.0.0.1:5432/winter?user=adminmqswr7r&password=aVIYl1CYY_rE"); //prod: 127.8.229.130 // dev: 127.0.0.1
+        ds.setJdbcUrl("jdbc:postgresql://127.8.229.130:5432/winter?user=adminmqswr7r&password=aVIYl1CYY_rE"); //prod: 127.8.229.130 // dev: 127.0.0.1
         ds.setMaxPoolSize(40);
         ds.setMinPoolSize(1);
         ds.setMaxIdleTime(200);

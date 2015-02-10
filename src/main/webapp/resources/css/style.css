@@ -104,6 +104,9 @@ padding: 15px 0 10px 0;
 cursor: pointer;
 }
 
+.tse-scrollable .tse-scroll-content {
+  width: auto !important;
+}
 
 #large_nav .content .stretch {
 width: 240px !important;
@@ -113,7 +116,7 @@ width: 240px !important;
 }
 
 .stretch {
-width: 100% !important;
+/*width: 100% !important;*/
 height: 100% !important;
 
 }
@@ -711,21 +714,18 @@ LOGIN
   height:96px;
 }
 
-#login-form-container .openid_large_btn,
-#login-form-container .openid_small_btn,
 .login-with-provider {
   box-shadow: none;
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   text-indent: -9999px;
   cursor:pointer;
+  background-image:url(../images/loginproviders.png);
+  background-repeat:no-repeat;
+  background-color: #fff;
 }
 
-#login-form-container .openid_large_btn:hover,
-#login-form-container .openid_small_btn:hover,
-.login-with-provider:hover,
-#login-form-container #openid_highlight > .openid_large_btn,
-#login-form-container #openid_highlight > .openid_small_btn
+.login-with-provider:hover
   {
   margin:3px;
     box-shadow: 0 0 5px #07c;
@@ -733,22 +733,8 @@ LOGIN
     border: 1px solid #0495ff;
 }
 
-#login-form-container #openid_highlight {
-  background-color:transparent;
-  padding:0;
-}
 
-#login-form-container #openid_input_area {
-  padding:0;
-}
 
-#login-form-container #openid_input_area p {
-  margin-bottom:8px;
-}
-
-#openid_btns {
-  text-align:center;
-}
 
 #login-form-container .login-provider {
 width: 320px;
@@ -774,16 +760,13 @@ border-radius: 5px;
 margin:3px;
 }
 .login-with-google {
-  background: #FFF url(../images/openid/openid-providers-en.png);
-  background-position: 0px 0px;
+  background-position: 0px center;
 }
 .login-with-twitter {
-  background: #FFF url(../images/openid/openid-providers-en.png);
-  background-position: 100px 0px;
+  background-position: -200px center;
 }
 .login-with-facebook {
-  background: #FFF url(../images/openid/openid-providers-en.png);
-  background-position: 200px 0px;
+  background-position: -100px center;
 }
 
 /**
@@ -796,5 +779,99 @@ ABOUT
 }
 
 #about-text, #login-form-container {
-  padding-bottom:96px;
+  padding-bottom:128px;
 }
+
+
+@media only screen and (max-device-width: 480px) {
+  /*
+  LOGIN
+  */
+  
+  #big-logo {
+    background-size:275px;
+    height:150px;
+  }
+  
+  /*
+  MAIN APP
+  */
+  
+  #large_nav .content .top #logo {
+padding: 4px 0 1px 0;
+}
+
+  #large_nav .content .top #logo img {
+  height: 70px;
+  }
+  .options-playlists {
+  text-align:center;
+  }
+  .options-playlists a.add-new-playlist {
+margin: 5px 9px -5px 0;
+}
+
+#left_col, #large_nav {
+  width:100%;
+}
+
+#large_nav .content,
+#large_nav .content .top,
+#large_nav .content .stretch
+ {
+  width: auto !important;
+}
+
+ul.playlists-images a.link-playlist-thumb {
+  text-align:center;
+}
+#large_nav {
+  overflow: visible;
+}
+
+#large_nav .content {
+  height:auto;
+}
+
+.logged-user-name {
+  text-indent: -9999px;
+}
+
+.logged-user {
+  float:right;
+  margin-left:0;
+}
+
+.options-playlists {
+  float:left;
+}
+
+.icon-logout {
+  font-size:3em !important;
+  margin-top: 0;
+}
+ul.playlists-images {
+  clear:both;
+}
+
+.fa.fa-sign-out:before{content:"\f007" !important}
+
+.playlist-or-video-page #left_col {
+  left:-999px;
+}
+
+.playlist-or-video-page #main_col {
+  margin-left:0;
+}
+
+
+.playlist-or-video-page .content, 
+.playlist-or-video-page .stretch, 
+.playlist-or-video-page #main_col {
+  height:auto !important;
+}
+
+
+
+}
+

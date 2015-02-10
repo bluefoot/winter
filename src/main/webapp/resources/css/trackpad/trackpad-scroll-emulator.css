@@ -7,8 +7,8 @@
  
  .tse-scrollable {
   position: relative;
-  width: 200px; /* Default value. Overwite this if you want. */
-  height: 300px; /* Default value. Overwite this if you want. */
+  /*width: 200px;  Default value. Overwite this if you want. */
+  /*height: 300px;  Default value. Overwite this if you want. */
   overflow: hidden;
   }
   .tse-scrollable .tse-scroll-content {
