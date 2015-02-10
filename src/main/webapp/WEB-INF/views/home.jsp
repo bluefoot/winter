@@ -40,8 +40,8 @@ limitations under the License.
 <script src="<c:url value="/resources/js/trackpad/jquery.trackpad-scroll-emulator.min.js" />"></script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
 <script src="<c:url value="/resources/js/modernizr.custom.js" />"></script>
-<script src="<c:url value="/resources/js/magnific-popup.js" />"></script>
-<script src="<c:url value="/resources/js/detectmobilebrowser.js" />"></script>
+<script src="<c:url value="/resources/js/magnific-popup.min.js" />"></script>
+<script src="<c:url value="/resources/js/detectmobilebrowser.min.js" />"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 <script src="<c:url value="/resources/js/player-global.js" />"></script>
 <script src="<c:url value="/resources/js/player-youtube.js" />"></script>
