@@ -15,17 +15,13 @@
  */
 package info.bluefoot.winter.dao;
 
-import java.util.List;
+//UserNotFoundException FIXME, LET SPRING THROW, MOVE CUSTOM EXCEPTIONS TO THE SERVICE LAYER
+public class UserNotFoundException extends RuntimeException {
 
-import info.bluefoot.winter.model.Playlist;
-import info.bluefoot.winter.model.Video;
+    private static final long serialVersionUID = -3682664212541245770L;
 
-public interface VideoDao {
-    public void updateNotNullValues(Video video);
+    public UserNotFoundException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
 
-    public List<Video> getVideosFromPlaylist(Playlist playlist);
-
-    public int insert(Video video);
-
-    public void removeVideosFromPlaylist(Integer playlistId);
 }

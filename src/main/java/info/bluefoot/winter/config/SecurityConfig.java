@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2015 Gewton Jhames <bluefoot.dev@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 package info.bluefoot.winter.config;
 
 import info.bluefoot.winter.dao.UserDao;
-import info.bluefoot.winter.spring.WinterSocialUsersDetailService;
+import info.bluefoot.winter.service.sociallogin.WinterSocialUsersDetailService;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -52,7 +52,7 @@ import org.springframework.social.security.SpringSocialConfigurer;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 @EnableGlobalAuthentication
-public class SecurityContext extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	private ApplicationContext context;
@@ -70,7 +70,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter{
 	
 	@Bean
 	public UserDetailsService openIdUserService() {
-	    return new info.bluefoot.winter.spring.OpenIdUserDetailsService();
+	    return new info.bluefoot.winter.service.openid.OpenIdUserDetailsService();
 	}
 	
 	@Bean
@@ -80,7 +80,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter{
 	
 	@Bean
 	public AuthenticationFailureHandler openIdAuthFailureHandler() {
-	    info.bluefoot.winter.spring.OpenIDAuthenticationFailureHandler handler = new info.bluefoot.winter.spring.OpenIDAuthenticationFailureHandler();
+	    info.bluefoot.winter.service.openid.OpenIDAuthenticationFailureHandler handler = new info.bluefoot.winter.service.openid.OpenIDAuthenticationFailureHandler();
 	    handler.setDefaultFailureUrl("/login?fail");
 	    return handler;
 	}
@@ -132,22 +132,10 @@ public class SecurityContext extends WebSecurityConfigurerAdapter{
     
     @Override
     @Autowired
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService());
         super.configure(auth);
     }
-	
-	///////////////////////////////////
-	
-//	@Autowired
-//	public void registerAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.jdbcAuthentication()
-//				.dataSource(dataSource)
-//				.usersByUsernameQuery("select username, password, true from Account where username = ?")
-//				.authoritiesByUsernameQuery("select username, 'ROLE_USER' from Account where username = ?")
-//				.passwordEncoder(passwordEncoder());
-//	}
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {

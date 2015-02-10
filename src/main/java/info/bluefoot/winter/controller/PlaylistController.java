@@ -1,3 +1,18 @@
+/*
+ * Copyright 2015 Gewton Jhames <bluefoot.dev@gmail.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package info.bluefoot.winter.controller;
 
 import info.bluefoot.winter.model.Playlist;
@@ -70,6 +85,9 @@ public class PlaylistController {
             model.addAttribute("videos", videos);
             return "home";
         } catch (PlaylistNotFoundException e) {
+            if(logger.isDebugEnabled()) {
+                logger.debug("Playlist " + id + " not found, redirecting to home");
+            }
             return "redirect:/";
         }
     }
@@ -88,6 +106,9 @@ public class PlaylistController {
             model.addAttribute("videoToPlay", videoId);
             return "home";
         } catch (PlaylistNotFoundException e) {
+            if(logger.isDebugEnabled()) {
+                logger.debug("Playlist " + id + " not found, redirecting to home");
+            }
             return "redirect:/";
         }
     }
@@ -102,8 +123,7 @@ public class PlaylistController {
             String errorId = RandomStringUtils.randomAlphanumeric(6).toUpperCase();
             logger.error("[" + errorId + "] Can't delete playlist", e);
             return new ResponseEntity<Map<String, String>>(
-                    Collections.singletonMap("error", 
-                            "Can't delete playlist. Try again later. Error id: " + errorId + "."), 
+                    Collections.singletonMap("error", "Can't delete playlist. Try again later. Error id: " + errorId + "."), 
                             HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<Map<String, String>>(
@@ -124,7 +144,7 @@ public class PlaylistController {
         int sort=0;
         for (String url : addPlaylistForm.getVideos().split("\n")) {
             if (!url.trim().isEmpty()) {
-                videos.add(new Video(url.trim(), sort++));
+                videos.add(new Video(url.trim(), sort++).setPlaylist(addPlaylistForm.getPlaylist()));
             }
         }
 
@@ -137,8 +157,7 @@ public class PlaylistController {
             String errorId = RandomStringUtils.randomAlphanumeric(6).toUpperCase();
             logger.error("[" + errorId + "] Can't create playlist", e);
             return new ResponseEntity<Map<String, String>>(
-                    Collections.singletonMap("error", 
-                            "Can't create playlist. Try again later. Error id: " + errorId + "."), 
+                    Collections.singletonMap("error", "Can't create playlist. Try again later. Error id: " + errorId + "."), 
                             HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<Map<String, String>>(

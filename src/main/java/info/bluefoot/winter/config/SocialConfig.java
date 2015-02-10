@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2015 Gewton Jhames <bluefoot.dev@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,11 +49,10 @@ import org.springframework.social.google.api.Google;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
-//import org.springframework.social.facebook.web.DisconnectController;
 
 @Configuration
 @EnableSocial
-public class SocialContext extends SocialConfigurerAdapter {
+public class SocialConfig extends SocialConfigurerAdapter {
 
 	@Inject
 	private DataSource dataSource;
@@ -82,9 +81,6 @@ public class SocialContext extends SocialConfigurerAdapter {
 		};
 	}
 	
-	public static void main(String[] args) {
-        System.out.println(StringUtils.isBlank("null"));
-    }
 	@Override
 	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
 		JdbcUsersConnectionRepository rep = new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
@@ -102,7 +98,7 @@ public class SocialContext extends SocialConfigurerAdapter {
                 }
                 // ========================================
                 // Name verification added for facebook 1.x api, see http://stackoverflow.com/a/23986618
-                // Not needed anymore since I'm using v 2 pre release
+                // Not needed anymore since I'm using v 2 pre release, so this can be removed
                 String name = connection.getDisplayName();
                 if(StringUtils.isEmpty(name) || "null".equals(name)) {
                     if(profile==null) {
