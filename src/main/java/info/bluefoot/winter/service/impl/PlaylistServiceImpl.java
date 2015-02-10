@@ -3,7 +3,7 @@ package info.bluefoot.winter.service.impl;
 import info.bluefoot.winter.dao.PlaylistDao;
 import info.bluefoot.winter.model.Playlist;
 import info.bluefoot.winter.model.Video;
-import info.bluefoot.winter.model.WinterUser;
+import info.bluefoot.winter.model.User;
 import info.bluefoot.winter.service.PlaylistService;
 import info.bluefoot.winter.service.VideoService;
 
@@ -24,7 +24,7 @@ public class PlaylistServiceImpl implements PlaylistService {
     private VideoService videoService;
     
     @Override
-    public List<Playlist> getPlaylistsFromUser(WinterUser user) {
+    public List<Playlist> getPlaylistsFromUser(User user) {
         List<Playlist> playlists = playlistDao.getPlaylistsByUser(user);
         for (Playlist playlist : playlists) {
             playlist.setUser(user);
@@ -53,9 +53,9 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     @Override
     public Playlist getPlaylistByIdAndUser(Integer playlistId,
-            WinterUser principal) {
+            User principal) {
         try {
-            return playlistDao.getPlaylistsByIdAndUser(playlistId, principal.getUserId());
+            return playlistDao.getPlaylistsByIdAndUser(playlistId, principal.getUsername());
         } catch (EmptyResultDataAccessException e) {
             throw new PlaylistNotFoundException(playlistId.toString(), e);
         }

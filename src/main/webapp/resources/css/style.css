@@ -694,7 +694,7 @@ LOGIN
   overflow: hidden;
 }
 
-#login-form-container #openid_form {
+#login-form-container .login-provider {
   margin:0 auto;
 }
 
@@ -712,16 +712,21 @@ LOGIN
 }
 
 #login-form-container .openid_large_btn,
-#login-form-container .openid_small_btn {
+#login-form-container .openid_small_btn,
+.login-with-provider {
   box-shadow: none;
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
+  text-indent: -9999px;
+  cursor:pointer;
 }
 
 #login-form-container .openid_large_btn:hover,
 #login-form-container .openid_small_btn:hover,
+.login-with-provider:hover,
 #login-form-container #openid_highlight > .openid_large_btn,
-#login-form-container #openid_highlight > .openid_small_btn  {
+#login-form-container #openid_highlight > .openid_small_btn
+  {
   margin:3px;
     box-shadow: 0 0 5px #07c;
     
@@ -742,11 +747,43 @@ LOGIN
 }
 
 #openid_btns {
-  text-align:left;
+  text-align:center;
 }
 
-#login-form-container #openid_form {
-width: 561px;
+#login-form-container .login-provider {
+width: 320px;
+}
+
+.providers-login {
+  width: 320px;
+  margin:0 auto;
+}
+.providers-login .provider-login {
+  float:left;
+}
+.login-with-provider {
+  width: 100px;
+  height: 60px;
+border: 2px solid #DDD;
+border-right: 2px solid #ccc;
+border-bottom: 2px solid #ccc;
+float: left;
+border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+margin:3px;
+}
+.login-with-google {
+  background: #FFF url(../images/openid/openid-providers-en.png);
+  background-position: 0px 0px;
+}
+.login-with-twitter {
+  background: #FFF url(../images/openid/openid-providers-en.png);
+  background-position: 100px 0px;
+}
+.login-with-facebook {
+  background: #FFF url(../images/openid/openid-providers-en.png);
+  background-position: 200px 0px;
 }
 
 /**

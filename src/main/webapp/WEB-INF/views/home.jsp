@@ -36,6 +36,7 @@
     var contextRoot = '<c:url value="/" />';
     var lastPlayedVideoId = '${selectedPlaylist.lastReproduced.videoId }';
     var videoToPlay = '${videoToPlay }';
+    var csrfToken = '${_csrf.token}';
     $(document).ready(function() {
         // Scroll Emulator
         $('.wrapperscroll, .wrapperscrollmain').TrackpadScrollEmulator();
@@ -62,7 +63,7 @@
                         type: 'POST',
                         dataType: 'json',
                         url: '<c:url value="/playlist/delete" />',
-                        data: 'playlistId=' + playlistIdToBeDeleted,
+                        data: 'playlistId=' + playlistIdToBeDeleted + '&_csrf=' + csrfToken,
                         success: function(data) {
                             if(playlistIdToBeDeleted == playlistId) {
                                 window.location.href = contextRoot;
@@ -115,7 +116,7 @@
         <div class="playlists tse-scrollable wrapperscroll stretch">
           <div class="tse-content">
             <div class="logged-user">
-              <span class="logged-user-name" title="<sec:authentication property="principal.fullName"/>"><sec:authentication property="principal.fullName"/></span>
+              <span class="logged-user-name" title="<sec:authentication property="principal.displayName"/>"><sec:authentication property="principal.displayName"/></span>
               <a href="<c:url value="/logout" />" title="Logout" class="fa fa-sign-out icon-logout"></a>
              <div class="clear" ></div>
             </div>

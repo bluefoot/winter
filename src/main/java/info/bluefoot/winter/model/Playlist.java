@@ -7,14 +7,14 @@ public class Playlist {
     private String name;
     private String image;
     private Video lastReproduced;
-    private WinterUser user;
+    private User user;
     private List<Video> videos;
 
-    public WinterUser getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(WinterUser user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

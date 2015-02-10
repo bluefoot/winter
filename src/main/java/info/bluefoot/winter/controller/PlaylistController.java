@@ -2,7 +2,7 @@ package info.bluefoot.winter.controller;
 
 import info.bluefoot.winter.model.Playlist;
 import info.bluefoot.winter.model.Video;
-import info.bluefoot.winter.model.WinterUser;
+import info.bluefoot.winter.model.User;
 import info.bluefoot.winter.service.PlaylistService;
 import info.bluefoot.winter.service.VideoService;
 import info.bluefoot.winter.service.impl.PlaylistNotFoundException;
@@ -129,7 +129,7 @@ public class PlaylistController {
         }
 
         addPlaylistForm.getPlaylist().setVideos(new ArrayList<Video>(videos));
-        WinterUser user = (WinterUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         addPlaylistForm.getPlaylist().setUser(user);
         try {
             playlistService.addPlaylistAndVideos(addPlaylistForm.getPlaylist());

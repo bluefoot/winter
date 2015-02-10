@@ -73,7 +73,7 @@ openid = {
              */
 		}
 		$('#openid_form').submit(this.submit);
-		var box_id = this.readCookie();
+		var box_id = null;// this.readCookie();
 		if (box_id) {
 			this.signin(box_id, true);
 		}
@@ -89,6 +89,7 @@ openid = {
 					+ ' style="background: #FFF url(' + this.img_path + '../images.' + box_size + '/' + box_id + image_ext + ') no-repeat center center" '
 					+ 'class="' + box_id + ' openid_' + box_size + '_btn"></a>';
 		}
+
 		var x = box_size == 'small' ? -index * 24 : -index * 100;
 		var y = box_size == 'small' ? -60 : 0;
 		return '<a title="' + this.image_title.replace('{provider}', provider["name"]) + '" href="javascript:openid.signin(\'' + box_id + '\');"'
@@ -107,7 +108,7 @@ openid = {
 			return;
 		}
 		this.highlight(box_id);
-		this.setCookie(box_id);
+		//this.setCookie(box_id);
 		this.provider_id = box_id;
 		this.provider_url = provider['url'];
 		// prompt user for input?

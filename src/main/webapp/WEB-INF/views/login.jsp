@@ -21,6 +21,7 @@
 <script src="<c:url value="/resources/js/openid-jquery.js" />"></script>
 <script src="<c:url value="/resources/js/openid-en.js" />"></script>
   <script type="text/javascript">
+    var contextRoot = '<c:url value="/" />';
     $(document).ready(function() {
       openid.init('openid_identifier');
     });
@@ -32,8 +33,32 @@
   <div id="site-description"><h2>Winter lets you create and reproduce playlists and remembers where you left off!</h2></div>
   <div id="login-form-container">
     <p>Select your account provider to login into Winter using one of your existing accounts!</p>
-    <form action="<c:url value="/openidlogin" />" method="post" id="openid_form">
-      <input type="hidden" name="rememberme" value="true" />
+    
+    <div class="providers-login">
+      <form action="<c:url value="/auth/google" />" method="post" class="provider-login">
+        <input type="hidden" name="remember-me" value="true" />
+        <input type="hidden" name="_csrf" value="${_csrf.token}" />
+        <input type="hidden" name="scope" value="email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/latitude.all.best" />
+        <input type="hidden" name="request_visible_actions" value="http://schemas.google.com/AddActivity http://schemas.google.com/BuyActivity http://schemas.google.com/CheckInActivity http://schemas.google.com/CommentActivity http://schemas.google.com/CreateActivity http://schemas.google.com/DiscoverActivity http://schemas.google.com/ListenActivity http://schemas.google.com/ReserveActivity http://schemas.google.com/ReviewActivity http://schemas.google.com/WantActivity"/>
+        <input type="hidden" name="access_type" value="offline"/>
+        <input type="submit" value="Login with Google!" class="login-with-provider login-with-google" />
+      </form>
+      <form action="<c:url value="/auth/twitter" />" method="post" class="provider-login">
+        <input type="hidden" name="remember-me" value="true" />
+        <input type="hidden" name="_csrf" value="${_csrf.token}" />
+        <input type="submit" value="Login with Twitter!" class="login-with-provider login-with-twitter" />
+      </form>
+      <form action="<c:url value="/auth/facebook" />" method="post" class="provider-login">
+        <input type="hidden" name="remember-me" value="true" />
+        <input type="hidden" name="_csrf" value="${_csrf.token}" />
+        <input type="hidden" name="scope" value="email public_profile" />
+        <input type="submit" value="Login with Facebook!" class="login-with-provider login-with-facebook" />
+      </form>
+    </div>
+    
+    <form action="<c:url value="/openidlogin" />" method="post" id="openid_form" class="login-provider">
+      <input type="hidden" name="remember-me" value="true" />
+      <input type="hidden" name="_csrf" value="${_csrf.token}" />
         <div id="openid_choice">
           <div id="openid_btns"></div>
         </div>

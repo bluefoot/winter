@@ -3,7 +3,7 @@ package info.bluefoot.winter.dao.jdbc;
 import info.bluefoot.winter.dao.PlaylistDao;
 import info.bluefoot.winter.model.Playlist;
 import info.bluefoot.winter.model.Video;
-import info.bluefoot.winter.model.WinterUser;
+import info.bluefoot.winter.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+
+import javax.inject.Inject;
+import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,10 +25,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class JdbcPlaylistDao extends JdbcDaoSupport implements PlaylistDao  {
 
+    @Inject 
+    public JdbcPlaylistDao(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
+    }
+    
     @Override
-    public List<Playlist> getPlaylistsByUser(final WinterUser user) {
-        String sql = "SELECT P.PLAYLIST_ID, P.NAME, P.IMAGE, P.LAST_REPROD_VIDEO_ID FROM PLAYLIST P INNER JOIN USERS U ON (U.USER_ID=P.USER_ID) WHERE U.USER_ID=? ORDER BY P.NAME";
-        return this.getJdbcTemplate().query(sql, new Object[] {user.getUserId()}, new RowMapper<Playlist>() {
+    public List<Playlist> getPlaylistsByUser(final User user) {
+        String sql = "SELECT P.PLAYLIST_ID, P.NAME, P.IMAGE, P.LAST_REPROD_VIDEO_ID FROM PLAYLIST P WHERE P.USERNAME=? ORDER BY P.NAME";
+        return this.getJdbcTemplate().query(sql, new Object[] {user.getUsername()}, new RowMapper<Playlist>() {
             @Override
             public Playlist mapRow(ResultSet resultSet, int arg1)
                     throws SQLException {
@@ -49,7 +58,7 @@ public class JdbcPlaylistDao extends JdbcDaoSupport implements PlaylistDao  {
 
     @Override
     public Playlist addPlaylist(final Playlist playlist) {
-        final String sqlInsertPlaylist = "INSERT INTO PLAYLIST (NAME, IMAGE, USER_ID) VALUES(?, ?, ?)";
+        final String sqlInsertPlaylist = "INSERT INTO PLAYLIST (NAME, IMAGE, USERNAME) VALUES(?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         this.getJdbcTemplate().update(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(
@@ -58,7 +67,7 @@ public class JdbcPlaylistDao extends JdbcDaoSupport implements PlaylistDao  {
                         Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, playlist.getName().trim());
                 ps.setString(2, playlist.getImage().trim());
-                ps.setInt(3, playlist.getUser().getUserId());
+                ps.setString(3, playlist.getUser().getUsername());
                 return ps;
             }
         }, keyHolder);
@@ -73,10 +82,10 @@ public class JdbcPlaylistDao extends JdbcDaoSupport implements PlaylistDao  {
     }
 
     @Override
-    public Playlist getPlaylistsByIdAndUser(Integer playlistId, Integer userId) {
-        String sql = "SELECT PLAYLIST_ID, NAME, IMAGE, LAST_REPROD_VIDEO_ID FROM PLAYLIST WHERE PLAYLIST_ID = ? AND USER_ID = ?";
+    public Playlist getPlaylistsByIdAndUser(Integer playlistId, String username) {
+        String sql = "SELECT PLAYLIST_ID, NAME, IMAGE, LAST_REPROD_VIDEO_ID FROM PLAYLIST WHERE PLAYLIST_ID = ? AND USERNAME = ?";
         return this.getJdbcTemplate().queryForObject(sql,
-                new Object[] { playlistId, userId }, new RowMapper<Playlist>() {
+                new Object[] { playlistId, username }, new RowMapper<Playlist>() {
                     @Override
                     public Playlist mapRow(ResultSet resultSet, int arg1)
                             throws SQLException {

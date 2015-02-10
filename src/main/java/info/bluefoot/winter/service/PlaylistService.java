@@ -1,12 +1,12 @@
 package info.bluefoot.winter.service;
 
 import info.bluefoot.winter.model.Playlist;
-import info.bluefoot.winter.model.WinterUser;
+import info.bluefoot.winter.model.User;
 
 import java.util.List;
 
 public interface PlaylistService {
-    public List<Playlist> getPlaylistsFromUser(WinterUser user);
+    public List<Playlist> getPlaylistsFromUser(User user);
 
     public void updateLastPlayedVideo(Integer playlistId, Integer videoId);
     
@@ -15,5 +15,5 @@ public interface PlaylistService {
     public void removePlaylistAndVideos(Integer playlistId);
 
     public Playlist getPlaylistByIdAndUser(Integer playlistId,
-            WinterUser principal);
+            User principal);
 }

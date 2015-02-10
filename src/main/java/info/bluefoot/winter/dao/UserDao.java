@@ -1,11 +1,17 @@
 package info.bluefoot.winter.dao;
 
-import info.bluefoot.winter.model.WinterUser;
+import info.bluefoot.winter.model.OpenIdUser;
+import info.bluefoot.winter.model.SocialUser;
+import info.bluefoot.winter.model.User;
 
 public interface UserDao {
-    WinterUser getUserByOpenId(String openid);
+    User getUserByOpenId(String openid);
 
-    int insertUser(WinterUser user);
+    void insertOpenIdUser(OpenIdUser user);
+    
+    void insertUser(User user);
 
-    void insertAuthorities(WinterUser user);
+    void insertAuthorities(User user);
+
+    SocialUser loadSocialUser(String userId);
 }

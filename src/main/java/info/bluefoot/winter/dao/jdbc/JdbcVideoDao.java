@@ -12,6 +12,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -22,6 +25,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class JdbcVideoDao extends JdbcDaoSupport  implements VideoDao {
 
+    @Inject 
+    public JdbcVideoDao(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
+    }
+    
     @Override
     public void updateNotNullValues(Video video) {
         StringBuilder sql = new StringBuilder();

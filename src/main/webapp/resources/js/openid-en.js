@@ -6,32 +6,32 @@
 */
 
 var providers_large = {
-	google : {
+	/*google : {
 		name : 'Google',
-		url : 'https://www.google.com/accounts/o8/id'
-	},
-	yahoo : {
-		name : 'Yahoo',
-		url : 'http://me.yahoo.com/'
-	},
-	aol : {
-		name : 'AOL',
-		label : 'Enter your AOL screenname.',
-		url : 'http://openid.aol.com/{username}'
-	},
-	myopenid : {
+		url : '/winter/auth/google'
+	},*/
+	/*myopenid : {
 		name : 'MyOpenID',
 		label : 'Enter your MyOpenID username.',
 		url : 'http://{username}.myopenid.com/'
-	},
-	openid : {
-		name : 'OpenID',
-		label : 'Enter your OpenID.',
-		url : null
-	}
+	},*/
 };
 
 var providers_small = {
+    yahoo : {
+        name : 'Yahoo',
+        url : 'http://me.yahoo.com/'
+    },
+    openid : {
+        name : 'OpenID',
+        label : 'Enter your OpenID.',
+        url : null
+    },
+    aol : {
+        name : 'AOL',
+        label : 'Enter your AOL screenname.',
+        url : 'http://openid.aol.com/{username}'
+    },
 	livejournal : {
 		name : 'LiveJournal',
 		label : 'Enter your Livejournal username.',
@@ -57,12 +57,13 @@ var providers_small = {
 		label : 'Your Blogger account',
 		url : 'http://{username}.blogspot.com/'
 	},
+	/*
 	verisign : {
 		name : 'Verisign',
 		label : 'Your Verisign username',
 		url : 'http://{username}.pip.verisignlabs.com/'
 	},
-	/* vidoop: {
+	 vidoop: {
 		name: 'Vidoop',
 		label: 'Your Vidoop username',
 		url: 'http://{username}.myvidoop.com/'

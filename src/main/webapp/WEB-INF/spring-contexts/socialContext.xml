@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+  xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:sec="http://www.springframework.org/schema/security"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd"
+  default-autowire="constructor">
+
+ <!-- <bean id="usersConnectionRepository" class="org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository">
+  
+  </bean>  
+ --> 
+ 
+ <bean id="socialUserDetailsService" class="info.bluefoot.winter.config.SimpleSocialUsersDetailService">
+  <constructor-arg ref="userDetailsService" />
+ </bean>
+ 
+ <bean id="userIdSource" class="org.springframework.social.security.AuthenticationNameUserIdSource"></bean>
+
+  <bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
+    <property name="connectionFactories">
+      <list>
+        <bean class="org.springframework.social.twitter.connect.TwitterConnectionFactory">
+          <constructor-arg value="changeme" />
+          <constructor-arg value="changeme" />
+        </bean>
+        <bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+          <constructor-arg value="changeme" />
+          <constructor-arg value="changeme" />
+        </bean>
+        <bean class="org.springframework.social.google.connect.GoogleConnectionFactory">
+          <constructor-arg value="421555105306-1ef8cfjroj9gggm5tgiaim0smv5mv6rc.apps.googleusercontent.com" />
+          <constructor-arg value="WJ_MDFaKthzj91ZSl8cAQsys" />
+        </bean>
+      </list>
+    </property>
+  </bean>
+  
+  <!-- <bean id="bla" class="org.springframework.social.security.SpringSocialConfigurer"></bean> 
+  
+  <bean id="socialFilter" class="org.springframework.social.security.SocialAuthenticationFilter" autowire="constructor">
+    <constructor-arg ref="authenticationManager" />
+    <constructor-arg ref="connectionFactoryLocator" />
+    UsersConnectionRepository usersConnectionRepository, SocialAuthenticationServiceLocator authServiceLocator 
+    <constructor-arg ref="userIdSource" />
+  </bean>
+  -->
+  <!-- 
+  <bean id="apiExceptionHandler" class="org.springframework.social.connect.web.ReconnectFilter">
+    <constructor-arg><bean class="org.springframework.social.connect.UsersConnectionRepository" autowire="byType"></bean></constructor-arg>
+    <constructor-arg><bean class="org.springframework.social.UserIdSource" autowire="byType"></bean></constructor-arg>
+  </bean>
+ -->
+
+</beans>

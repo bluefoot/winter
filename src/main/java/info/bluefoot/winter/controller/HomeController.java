@@ -1,27 +1,23 @@
 package info.bluefoot.winter.controller;
 
 import info.bluefoot.winter.model.Playlist;
-import info.bluefoot.winter.model.Video;
-import info.bluefoot.winter.model.WinterUser;
 import info.bluefoot.winter.service.PlaylistService;
 import info.bluefoot.winter.service.VideoService;
-import info.bluefoot.winter.service.impl.PlaylistNotFoundException;
 
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /*
- * MISSING: FIX LOGIN GMAIL, add facebook
+ * add debug log and info log on everything
+ * better break css
  * MOBILE
  * REMEMBER ME NOT SAVING COOKIE
  * better way of showing selected playlist - see inspiration on battle.net - actually the right-border is better 
@@ -41,8 +37,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * */
 
 //http://docs.spring.io/spring-security/site/docs/3.2.5.RELEASE/reference/htmlsingle/
-//https://github.com/spring-projects/spring-mvc-showcase/blob/master/src/main/webapp/WEB-INF/spring/root-context.xml
 //http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#mvc-servlet
+//https://github.com/spring-projects/spring-mvc-showcase/blob/master/src/main/webapp/WEB-INF/spring/root-context.xml
 //http://discuss.dev.twitch.tv/t/scrub-to-time-on-embedded-player/120
 //https://github.com/justintv/Twitch-API
 //http://tympanus.net/Development/CreativeLinkEffects/

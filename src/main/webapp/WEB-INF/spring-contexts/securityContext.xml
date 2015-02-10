@@ -11,43 +11,20 @@
         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd"
   default-autowire="byType">
 
-  <bean id="userDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
-    <property name="dataSource" ref="dataSource" />
-  </bean>
-
-
   <sec:authentication-manager alias="authenticationManager">
     <sec:authentication-provider user-service-ref="userDetailsService" />
   </sec:authentication-manager>
 
-  <sec:global-method-security pre-post-annotations="enabled" />
-
-  <sec:http use-expressions="true" disable-url-rewriting="true" >
-    <sec:remember-me token-validity-seconds="7776000" key="winterapp23823829389" 
-      user-service-ref="openIdUserService" remember-me-parameter="rememberme" />
-    <sec:logout logout-url="/logout"/>
+  <sec:http  >
     <sec:intercept-url pattern="/login" access="permitAll" />
     <sec:intercept-url pattern="/faq" access="permitAll" />
     <sec:intercept-url pattern="/resources/**" access="permitAll" />
+    <sec:intercept-url pattern="/auth/**" access="permitAll" />
+    <sec:intercept-url pattern="/signin/**" access="permitAll" />
+    <sec:intercept-url pattern="/signup/**" access="permitAll" />
+    <sec:intercept-url pattern="/disconnect/facebook" access="permitAll" />
     <sec:intercept-url pattern="/**" access="isAuthenticated() and hasRole('ROLE_USER')" />
-    <sec:openid-login always-use-default-target="false" default-target-url="/" 
-      user-service-ref="openIdUserService" 
-      authentication-failure-handler-ref="openIdAuthFailureHandler" 
-      login-processing-url="/openidlogin"
-      login-page="/login">
-      <sec:attribute-exchange>
-        <sec:openid-attribute name="email" type="http://axschema.org/contact/email" required="true"/>
-        <sec:openid-attribute name="firstName" type="http://axschema.org/namePerson/first" required="true"/>
-        <sec:openid-attribute name="lastName" type="http://axschema.org/namePerson/last" required="true"/>
-      </sec:attribute-exchange>
-    </sec:openid-login>
   </sec:http>
-  
-  <bean id="openIdUserService" class="info.bluefoot.winter.spring.OpenIdUserDetailsService" />
-  <bean id="openIdAuthFailureHandler" class="info.bluefoot.winter.spring.OpenIDAuthenticationFailureHandler">
-    <property name="defaultFailureUrl" value="/login?fail" />
-  </bean>
-  
   
 
 </beans>

@@ -66,6 +66,17 @@
     </plugins>
   </build>
 
+<repositories>
+    <repository>
+        <id>spring-milestones</id>
+        <name>Spring Milestones</name>
+        <url>http://repo.spring.io/milestone</url>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </repository>
+</repositories>
+
 
   <dependencies>
 
@@ -76,11 +87,6 @@
       <artifactId>postgresql</artifactId>
       <version>9.2-1003-jdbc4</version>
     </dependency>
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.25</version>
-    </dependency>  
     
     <!-- Adapters ================================================================== -->
     <dependency>
@@ -189,7 +195,7 @@
       <version>v3-rev125-1.19.1</version>
     </dependency>
 
-    <!-- Spring ================================================================== -->
+    <!-- Spring Core & Web ================================================================== -->
 
     <dependency>
         <groupId>org.springframework</groupId>
@@ -213,7 +219,9 @@
         <version>4.1.4.RELEASE</version>
         
     </dependency>
-        
+
+    <!-- Spring Security ================================================================== -->
+            
     <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-config</artifactId>
@@ -238,6 +246,48 @@
       <artifactId>spring-security-taglibs</artifactId>
       <version>3.2.5.RELEASE</version>
     </dependency>
+    
+    <!-- Spring social ===================================================== -->
+    
+      <dependency>
+        <groupId>org.springframework.social</groupId>
+        <artifactId>spring-social-core</artifactId>
+          <version>1.1.0.RELEASE</version>
+      </dependency>
+    <dependency>
+        <groupId>org.springframework.social</groupId>
+        <artifactId>spring-social-security</artifactId>
+          <version>1.1.0.RELEASE</version>
+      </dependency>
+      
+    <dependency>
+        <groupId>org.springframework.social</groupId>
+        <artifactId>spring-social-web</artifactId>
+          <version>1.1.0.RELEASE</version>
+      </dependency>
+    <dependency>
+        <groupId>org.springframework.social</groupId>
+        <artifactId>spring-social-google</artifactId>
+          <version>1.0.0.RELEASE</version>
+      </dependency>
+      
+    <dependency>
+        <groupId>org.springframework.social</groupId>
+        <artifactId>spring-social-twitter</artifactId>
+          <version>1.1.0.RELEASE</version>
+      </dependency>
+
+    <dependency>
+        <groupId>org.springframework.social</groupId>
+        <artifactId>spring-social-facebook</artifactId>
+          <version>2.0.0.M1</version> <!-- 1.1.1.RELEASE -->
+      </dependency>
+      
+      <dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpclient</artifactId>
+    <version>4.3.1</version>
+</dependency>
 
     <!-- JSR-330 ================================================================== -->
 
