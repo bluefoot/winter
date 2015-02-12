@@ -37,14 +37,12 @@ function loadYoutubeVideos() {
 function onYouTubeIframeAPIReady() {
     $(".video-title:contains('youtube.com')").each(function(index) {
         var videoURL = $(this).text();
-        $('body').append('<br /><span>found ' + videoURL + '</span>');
         var videoID = getYoutubeVideoID(videoURL);
         var internalVideoID = $(this).attr('data-video-id');
         var linkobj = this;
         // Calls youtube to get video info
         $.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + videoID + '&key=' + gkey + '&part=snippet,contentDetails&callback=?', function(data) {
             if (typeof (data.items[0]) != "undefined") {
-                $('body').append('<br />found ' + data.items[0].snippet.title + ' imagem ' + data.items[0].snippet.thumbnails.medium.url);
                 // Modifies HTML to have image, title, etc
                 $(linkobj).text(data.items[0].snippet.title);
                 $('.img', $(linkobj).parent('a')).css('background-image', 'url(' + data.items[0].snippet.thumbnails.medium.url + ')');
@@ -53,6 +51,12 @@ function onYouTubeIframeAPIReady() {
                     $(linkobj).attr('data-last-played', '0');
                 }
                 $(linkobj).parent('a').bind('click', function(e){
+                    if(youtubePlayer) {
+                        youtubePlayer.destroy();
+                    }
+                    currentVideoId = $('span.video-title', this).attr('data-video-id');
+                    $('.current-playing').removeClass('current-playing');
+                    $(this).parent('div.cell-wmobile').addClass('current-playing');
                     youtubePlayer = new YT.Player('video-placeholder', {
                         height: '100%',
                         width: '100%',
@@ -87,7 +91,8 @@ function onYouTubeIframeAPIReady() {
  * @param event
  */
 function onYoutubePlayerReady(event) {
-    event.target.playVideo();
+    // Can't autoplay on mobile. https://developers.google.com/youtube/iframe_api_reference#Mobile_considerations
+    //event.target.playVideo();
     triggerSaveCurrentVideoTime();
 }
 

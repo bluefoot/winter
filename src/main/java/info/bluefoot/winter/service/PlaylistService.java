@@ -31,4 +31,6 @@ public interface PlaylistService {
 
     public Playlist getPlaylistByIdAndUser(Integer playlistId,
             User principal);
+
+    public Playlist getPlaylistById(Integer id);
 }

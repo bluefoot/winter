@@ -92,4 +92,9 @@ public class PlaylistServiceImpl implements PlaylistService {
         }
     }
 
+    @Override
+    public Playlist getPlaylistById(Integer playlistId) {
+        return playlistDao.getPlaylistsById(playlistId);
+    }
+
 }

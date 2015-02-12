@@ -94,6 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                                 .permitAll()
                     .antMatchers(
                             "/**")
+                                //.permitAll() //for debugging
                                 .authenticated()
             .and()
                 .apply(new SpringSocialConfigurer());

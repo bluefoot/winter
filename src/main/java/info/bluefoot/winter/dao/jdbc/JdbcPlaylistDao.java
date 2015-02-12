@@ -115,4 +115,24 @@ public class JdbcPlaylistDao extends JdbcDaoSupport implements PlaylistDao  {
                     }
                 });
     }
+
+    @Override
+    public Playlist getPlaylistsById(Integer playlistId) {
+        String sql = "SELECT PLAYLIST_ID, NAME, IMAGE, LAST_REPROD_VIDEO_ID FROM PLAYLIST WHERE PLAYLIST_ID = ?";
+        return this.getJdbcTemplate().queryForObject(sql,
+                new Object[] { playlistId }, new RowMapper<Playlist>() {
+                    @Override
+                    public Playlist mapRow(ResultSet resultSet, int arg1)
+                            throws SQLException {
+                        Playlist playlist = new Playlist();
+                        playlist.setPlaylistId(resultSet.getInt("PLAYLIST_ID"));
+                        playlist.setName(resultSet.getString("NAME"));
+                        playlist.setImage(resultSet.getString("IMAGE"));
+                        if(resultSet.getInt("LAST_REPROD_VIDEO_ID")!=0) {
+                            playlist.setLastReproduced(new Video(resultSet.getInt("LAST_REPROD_VIDEO_ID")));
+                        }
+                        return playlist;
+                    }
+                });
+    }
 }

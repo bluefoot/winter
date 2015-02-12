@@ -44,7 +44,7 @@ function saveCurrentVideoTime() {
         'currentTime' : currentTime,
         '_csrf' : csrfToken
     });
-    $('a[video-id=' + currentVideoId + ']').attr('last-played', currentTime);
+    $('span[data-video-id=' + currentVideoId + ']').attr('data-last-played', currentTime);
 }
 
 /**

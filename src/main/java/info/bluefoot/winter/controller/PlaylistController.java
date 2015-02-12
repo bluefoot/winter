@@ -76,9 +76,10 @@ public class PlaylistController {
     @RequestMapping(value = { "/playlist/{id}" }, method = RequestMethod.GET)
     public String play(@PathVariable Integer id, Model model, Device device) {
         try {
-            Playlist selectedPlaylist = playlistService.getPlaylistByIdAndUser(
-                    id, 
-                    Utils.getCurrentLoggedUser());
+//            Playlist selectedPlaylist = playlistService.getPlaylistByIdAndUser(
+//                    id, 
+//                    Utils.getCurrentLoggedUser());
+            Playlist selectedPlaylist = playlistService.getPlaylistById(id);
             List<Video> videos = videoService.getVideosFromPlaylist(selectedPlaylist);
             model.addAttribute("selectedPlaylist", selectedPlaylist);
             model.addAttribute("videos", videos);

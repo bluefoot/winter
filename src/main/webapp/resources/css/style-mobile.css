@@ -57,9 +57,9 @@ h1, h2, h3, h4, h5, #logo,
 }
 
 .playlists-wmobile-grid .cell-wmobile:hover,
-.playlists-wmobile-grid .cell-wmobile:active {
-  background-color:#E6E6E6;
-  
+.playlists-wmobile-grid .cell-wmobile:active,
+.current-playing {
+  background-color:#E6E6E6 !important;;
 }
 
 .playlists-wmobile-grid .cell-wmobile a {
@@ -78,7 +78,9 @@ h1, h2, h3, h4, h5, #logo,
 }
 
 .playlists-wmobile-grid .cell-wmobile a,
-.playlists-wmobile-grid .cell-wmobile a:visited {
+.playlists-wmobile-grid .cell-wmobile a:visited,
+.playlists-wmobile-grid .cell-wmobile a:hover,
+.playlists-wmobile-grid .cell-wmobile a:active {
   font-weight:normal;
   text-decoration:none;
   color: #32323e;

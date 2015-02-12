@@ -30,4 +30,6 @@ public interface PlaylistDao {
     public void removePlaylist(Integer playlistId);
 
     public Playlist getPlaylistsByIdAndUser(Integer playlistId, String username);
+
+    public Playlist getPlaylistsById(Integer playlistId);
 }
