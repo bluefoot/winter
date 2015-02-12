@@ -49,7 +49,9 @@ limitations under the License.
     var isPlaylistOrVideoPage = false;
     var isAutoPlayEnabled = false;
     var playlistId = '${selectedPlaylist.playlistId }';
-    loadYoutubeVideos();
+    $(document).ready(function() {
+            loadYoutubeVideos();
+    });
 </script>
 </head>
 <body>
