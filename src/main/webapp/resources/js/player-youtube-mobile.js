@@ -45,7 +45,6 @@ function onYouTubeIframeAPIReady() {
             if (typeof (data.items[0]) != "undefined") {
                 // Modifies HTML to have image, title, etc
                 $(linkobj).text(data.items[0].snippet.title);
-                console.log($('.img', $(linkobj).parent('a')));
                 $('.img', $(linkobj).parent('a')).css('background-image', 'url(' + data.items[0].snippet.thumbnails.medium.url + ')');
                 // If last played size is almost finishing video, come back to start
                 if($(linkobj).attr('data-last-played') >= convertIso8601ToSeconds(data.items[0].contentDetails.duration) - 5) {
