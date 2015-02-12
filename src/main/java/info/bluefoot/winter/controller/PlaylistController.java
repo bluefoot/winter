@@ -37,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mobile.device.Device;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,17 +74,21 @@ public class PlaylistController {
 
     // @PreAuthorize("hasPermission(#playlist, 'owner')")
     @RequestMapping(value = { "/playlist/{id}" }, method = RequestMethod.GET)
-    public String play(@PathVariable Integer id, Model model) {
+    public String play(@PathVariable Integer id, Model model, Device device) {
         try {
             Playlist selectedPlaylist = playlistService.getPlaylistByIdAndUser(
                     id, 
                     Utils.getCurrentLoggedUser());
-            List<Playlist> playlists = playlistService.getPlaylistsFromUser(Utils.getCurrentLoggedUser());
             List<Video> videos = videoService.getVideosFromPlaylist(selectedPlaylist);
-            model.addAttribute("playlists", playlists);
             model.addAttribute("selectedPlaylist", selectedPlaylist);
             model.addAttribute("videos", videos);
-            return "home";
+            if (device.isMobile()) {
+                return "playlist";
+            } else {
+                List<Playlist> playlists = playlistService.getPlaylistsFromUser(Utils.getCurrentLoggedUser());
+                model.addAttribute("playlists", playlists);
+                return "home";
+            }
         } catch (PlaylistNotFoundException e) {
             if(logger.isDebugEnabled()) {
                 logger.debug("Playlist " + id + " not found, redirecting to home");

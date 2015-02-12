@@ -26,7 +26,7 @@ limitations under the License.
 <meta name="description" content="Winter" />
 <meta name="keywords" content="playlist,resume,winter,watch,later,twitch,youtube,save" />
 <meta name="author" content="gewton" />
-<title>Winter</title>
+<title>${selectedPlaylist eq null ? 'Start Page' : selectedPlaylist.name } - Winter</title>
 <link rel="apple-touch-icon" href="<c:url value="/resources/images/apple-touch-icon.png" />" />
 <link rel="icon" href="<c:url value="/resources/images/favicon.png" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/reset.css" />" />
@@ -40,7 +40,7 @@ limitations under the License.
 <script src="<c:url value="/resources/js/jquery.mobile.custom.min.js" />"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 <script src="<c:url value="/resources/js/player-global.js" />"></script>
-<script src="<c:url value="/resources/js/player-youtube.js" />"></script>
+<script src="<c:url value="/resources/js/player-youtube-mobile.js" />"></script>
 <script src="<c:url value="/resources/js/player-twitch.js" />"></script>
 
 <script type="text/javascript">
@@ -48,6 +48,8 @@ limitations under the License.
     var csrfToken = '${_csrf.token}';
     var isPlaylistOrVideoPage = false;
     var isAutoPlayEnabled = false;
+    var playlistId = '${selectedPlaylist.playlistId }';
+    loadYoutubeVideos();
 </script>
 </head>
 <body>
@@ -60,23 +62,29 @@ limitations under the License.
       <li data-filtertext="buttons button markup buttonmarkup method anchor link button element" data-icon="power"><a href="<c:url value="/logout" />">Logout</a></li>
     </ul>
   </div> <!--left panel-->
+  
   <div data-role="header" class="header-wmobile">
     <h1><img src="<c:url value="/resources/images/winterlogomobile.svg" />" alt="Winter" height="40px" /></h1>
     <!-- <a href="#menupanel" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a> -->
     <a href="#menupanel" class="ui-btn ui-btn-icon-notext ui-icon-bars ui-nodisc-icon wmobile-menu-icon">Menu</a>
-  </div> <!--header-->
+  </div>
   <div role="main" class="ui-content playlists-wmobile">
-      <ul class="ui-grid-a playlists-wmobile-grid">
-        <c:forEach items="${playlists }" var="pl" varStatus="loop" >
-          <li class="ui-block-${loop.index % 2 == 0 ? 'a' : 'b'}">
-            <div class="ui-bar ui-bar-a cell-wmobile">
-              <a data-role="none" href="<c:url value="/playlist/${pl.playlistId}" />">
-                <img src="${pl.image }" /><br />${pl.name }</a>
-            </div>
-          </li>
-        </c:forEach>
-      </ul><!-- /grid-c -->
-  </div> <!-- main -->
+    <div id="video-placeholder">
+      
+    </div>
+    <ul class="ui-grid-a playlists-wmobile-grid">
+      <c:forEach items="${videos }" var="v" varStatus="loop" >
+        <li class="ui-block-${loop.index % 2 == 0 ? 'a' : 'b'}">
+          <div class="ui-bar ui-bar-a cell-wmobile">
+            <a data-role="none" href="<c:url value="/playlist/${selectedPlaylist.playlistId }/video/${v.videoId }" />">
+              <div class="img"></div>
+              <span class="video-title" data-last-played="${v.currentPosition }" data-video-id="${v.videoId}" >${v.url }</span></a>
+          </div>
+        </li>
+      </c:forEach>
+    </ul><!-- /grid-c -->
+  </div>
+
 </div>
 </body>
 </html>
