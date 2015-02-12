@@ -24,8 +24,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,9 +33,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /*
+ * test utf8 chars like bruce playlist
  * better break css
  * fix google scopr all you need is name and email and profile url
- * main page too big
  * csrf token session expired if takes too long in a page. this is very annoying I think I'm gonna drop it OR redirect to / always
  * org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices
  * MOBILE
@@ -110,7 +110,15 @@ public class HomeController {
     private VideoService videoService;
     
     @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
-    public String login() {
+    public String login(Device device) {
+//        Device device = DeviceUtils.getCurrentDevice(request);
+        if (device.isMobile()) {
+            System.out.println("Hello mobile user!");
+        } else if (device.isTablet()) {
+            System.out.println("Hello tablet user!");
+        } else {
+            System.out.println("Hello desktop user!");         
+        }
         return "login";
     }
     @RequestMapping(value = { "/faq" }, method = RequestMethod.GET)
@@ -118,7 +126,15 @@ public class HomeController {
         return "faq";
     }
     @RequestMapping(value = { "/" }, method = RequestMethod.GET)
-    public String getAllPlaylists(Model model) {
+    public String getAllPlaylists(Model model, Device device) {
+//        Device device = DeviceUtils.getCurrentDevice(request);
+        if (device.isMobile()) {
+            System.out.println("Hello mobile user!");
+        } else if (device.isTablet()) {
+            System.out.println("Hello tablet user!");
+        } else {
+            System.out.println("Hello desktop user!");         
+        }
         List<Playlist> playlists = playlistService.getPlaylistsFromUser(Utils.getCurrentLoggedUser());
         model.addAttribute("playlists", playlists);
         return "home";

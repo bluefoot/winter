@@ -15,10 +15,17 @@
  */
 package info.bluefoot.winter.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
+import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
+import org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -36,7 +43,38 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setPrefix("/WEB-INF/views/");
         viewResolver.setSuffix(".jsp");
-        return viewResolver;
+        
+        LiteDeviceDelegatingViewResolver mobileResolver = new LiteDeviceDelegatingViewResolver(viewResolver);
+        mobileResolver.setMobilePrefix("mobile/");
+        mobileResolver.setEnableFallback(true);
+        return mobileResolver;
+    }
+    // ~ Spring mobile config ====================================
+    
+    // Registering an interceptor to Spring Mvc to resolve the device.
+    // Alternatively a filter could be used here
+    
+    @Bean
+    public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+        return new DeviceResolverHandlerInterceptor();
     }
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(deviceResolverHandlerInterceptor());
+    }
+    
+    // This enables the ability to add a new Device argument (optionally) to 
+    // controller methods that will automatically be populated with current
+    // Device. Alternatively, we could use DeviceUtils.getCurrentDevice(servletRequest);
+    
+    @Bean
+    public DeviceHandlerMethodArgumentResolver deviceHandlerMethodArgumentResolver() {
+        return new DeviceHandlerMethodArgumentResolver();
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(deviceHandlerMethodArgumentResolver());
+    }
 }

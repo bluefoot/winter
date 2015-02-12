@@ -1,0 +1,73 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700|Raleway:400,300,700);
+body {
+  color: #32323e;
+font: 14px Lato,"Helvetica Neue",Helvetica,Arial,sans-serif;
+line-height: 1.5;
+height:100%;
+}
+h1 {
+  text-transform:uppercase;
+}
+h1, h2, h3, h4, h5, #logo,
+.form input[type="submit"],
+.form input[type="button"] {
+  font-family: "Raleway","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.wmobile .playlists-wmobile {
+  padding:0;
+}
+
+.wmobile .header-wmobile h1 {
+  margin:0;
+}
+
+.wmobile .header-wmobile {
+  border-bottom:2px solid #8C8C9C;
+  border-top:none;
+  border-right:none;
+  border-left:none;
+}
+
+.playlists-wmobile-grid .cell-wmobile {
+  padding:.3em .3em;
+}
+
+.playlists-wmobile-grid .cell-wmobile.ui-bar-a,
+.playlists-wmobile-grid .cell-wmobile.ui-bar-b {
+  background-color:#fff;
+  color:#32323e;
+  font-weight:normal;
+  border-bottom:none;
+}
+
+.playlists-wmobile-grid .ui-block-a {
+  border-top:1px solid #cfcfcf;
+  border-right:1px solid #cfcfcf;
+}
+
+.playlists-wmobile-grid .ui-block-b {
+  border-top:1px solid #cfcfcf;
+  border-left:1px solid #cfcfcf;
+}
+
+.playlists-wmobile-grid .cell-wmobile.ui-bar-a {
+  border:none;
+}
+
+.playlists-wmobile-grid .cell-wmobile a {
+  border:none;
+  margin:0;
+  padding:0;
+}
+
+.playlists-wmobile-grid .cell-wmobile a img {
+  width:100%;
+}
+
+.playlists-wmobile-grid .cell-wmobile a,
+.playlists-wmobile-grid .cell-wmobile a:visited {
+  font-weight:normal;
+  text-decoration:none;
+  color: #32323e;
+}
