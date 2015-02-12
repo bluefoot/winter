@@ -110,10 +110,7 @@ limitations under the License.
             });
         } else {
             var videoID = getTwitchVideoID(url);
-            console.log(videoID);
             $.getJSON('https://api.twitch.tv/kraken/videos/'+ videoID + '?callback=?', function(data) {
-                console.log('got json ');
-                console.log(data);
                 if(!$('#addplaylistform .imageurlfield').val() || !imageWasChangedByUser) {
                     $('#addplaylistform .imageurlfield').val(data.preview);
                 }

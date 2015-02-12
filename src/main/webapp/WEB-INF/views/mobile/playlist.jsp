@@ -39,7 +39,7 @@ limitations under the License.
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
 <script src="<c:url value="/resources/js/jquery.mobile.custom.min.js" />"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
-<script src="<c:url value="/resources/js/player-global.js" />"></script>
+<script src="<c:url value="/resources/js/player-global-mobile.js" />"></script>
 <script src="<c:url value="/resources/js/player-youtube-mobile.js" />"></script>
 <script src="<c:url value="/resources/js/player-twitch.js" />"></script>
 

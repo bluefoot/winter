@@ -37,12 +37,14 @@ function loadYoutubeVideos() {
 function onYouTubeIframeAPIReady() {
     $(".video-title:contains('youtube.com')").each(function(index) {
         var videoURL = $(this).text();
+        $('body').append('<br /><span>found ' + videoURL + '</span>');
         var videoID = getYoutubeVideoID(videoURL);
         var internalVideoID = $(this).attr('data-video-id');
         var linkobj = this;
         // Calls youtube to get video info
         $.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + videoID + '&key=' + gkey + '&part=snippet,contentDetails&callback=?', function(data) {
             if (typeof (data.items[0]) != "undefined") {
+                $('body').append('<br />found ' + data.items[0].snippet.title + ' imagem ' + data.items[0].snippet.thumbnails.medium.url);
                 // Modifies HTML to have image, title, etc
                 $(linkobj).text(data.items[0].snippet.title);
                 $('.img', $(linkobj).parent('a')).css('background-image', 'url(' + data.items[0].snippet.thumbnails.medium.url + ')');
@@ -113,3 +115,4 @@ function getYoutubeVideoID(url) {
         return "Invalid video URL: " + url;
     }
 }
+
