@@ -16,9 +16,11 @@
 package info.bluefoot.winter.controller;
 
 import info.bluefoot.winter.model.Playlist;
+import info.bluefoot.winter.model.SocialUser;
 import info.bluefoot.winter.service.PlaylistService;
 import info.bluefoot.winter.service.VideoService;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,6 +28,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.openid.OpenIDAuthenticationToken;
+import org.springframework.social.connect.ApiAdapter;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.support.OAuth2Connection;
+import org.springframework.social.google.api.Google;
+import org.springframework.social.google.api.impl.GoogleTemplate;
+import org.springframework.social.google.connect.GoogleAdapter;
+import org.springframework.social.google.connect.GoogleServiceProvider;
+import org.springframework.social.oauth2.OAuth2ServiceProvider;
+import org.springframework.social.security.SocialAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -148,6 +161,23 @@ public class HomeController {
         Integer currentTime = Integer.valueOf(request.getParameter("currentTime"));
         videoService.updateLastPlayedTime(videoId, currentTime);
         playlistService.updateLastPlayedVideo(playlistId, videoId);
+    }
+    
+    @RequestMapping(value = { "/debug1234" }, method = RequestMethod.GET)
+    public String forceAuthenticationForDebug() {
+        SocialUser u = new SocialUser("https://plus.google.com/111200739196604053879", "gjhames@gmail.com", "Gewton Jhames", Utils.getDefaultUserAuthorities());
+        u.setProviderId("google");
+        u.setRank(1);
+        u.setProfileUrl("https://plus.google.com/111200739196604053879");
+        u.setAccessToken("ya29.GQGiI5E8FWasN0_A1w2OgOIpSb58GwrWbjh4jtEH1alaX57UFLUuu6sGPW1l1oZoyxeMwudhcaEB3A");
+        u.setSecret(null);
+        u.setRefreshToken(null);
+        u.setExpireTime(1423854298687l);
+        
+        Connection<Google> connection = new OAuth2Connection<Google>("google", "https://plus.google.com/111200739196604053879", "ya29.GQGiI5E8FWasN0_A1w2OgOIpSb58GwrWbjh4jtEH1alaX57UFLUuu6sGPW1l1oZoyxeMwudhcaEB3A", null, 1423854298687l, new GoogleServiceProvider("bal", "ble"), new GoogleAdapter());
+        
+        SecurityContextHolder.getContext().setAuthentication(new SocialAuthenticationToken(connection, u, Collections.EMPTY_MAP, u.getAuthorities()));
+        return "redirect:/";
     }
 
 }

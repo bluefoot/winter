@@ -50,6 +50,7 @@ limitations under the License.
     var isAutoPlayEnabled = false;
     var playlistId = '${selectedPlaylist.playlistId }';
     $(document).ready(function() {
+        $('#video-placeholder').append('<br />DOCUMENT READY').append('<br />DOCUMENT READY').append('<br />DOCUMENT READY').append('<br />DOCUMENT READY');
             loadYoutubeVideos();
     });
 </script>

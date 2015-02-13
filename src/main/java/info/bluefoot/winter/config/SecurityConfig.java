@@ -90,11 +90,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                             "/auth/**", 
                             "/signin/**", 
                             "/signup/**",
+                            "/debug1234", //for debugging
                             "/disconnect/facebook")
                                 .permitAll()
                     .antMatchers(
                             "/**")
-                                //.permitAll() //for debugging
                                 .authenticated()
             .and()
                 .apply(new SpringSocialConfigurer());
