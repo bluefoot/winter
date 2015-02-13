@@ -163,6 +163,7 @@ public class HomeController {
         playlistService.updateLastPlayedVideo(playlistId, videoId);
     }
     
+    // TODO NOT WORKING BECAUSE OF AUTHENTICATION TOKEN
     @RequestMapping(value = { "/debug1234" }, method = RequestMethod.GET)
     public String forceAuthenticationForDebug() {
         SocialUser u = new SocialUser("https://plus.google.com/111200739196604053879", "gjhames@gmail.com", "Gewton Jhames", Utils.getDefaultUserAuthorities());

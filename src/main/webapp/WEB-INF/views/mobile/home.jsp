@@ -37,6 +37,11 @@ limitations under the License.
 <link rel="stylesheet" href="<c:url value="/resources/css/jquery.mobile.custom.structure.min.css" />" />
 <script src="<c:url value="/resources/js/jquery-1.11.2.min.js" />"></script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
+<script type="text/javascript">
+$(document).bind("mobileinit", function () {
+    $.mobile.ajaxEnabled = false;
+});
+</script>
 <script src="<c:url value="/resources/js/jquery.mobile.custom.min.js" />"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 <script src="<c:url value="/resources/js/player-global.js" />"></script>
@@ -51,7 +56,7 @@ limitations under the License.
 </script>
 </head>
 <body>
-<div data-role="page" class="app-main wmobile">
+<div class="app-main wmobile">
   <div data-role="panel" id="menupanel" data-position="left" data-display="overlay" data-theme="a">
     <ul class="ui-alt-icon ui-nodisc-icon menu-wmobile" data-role="listview">
       <li data-filtertext="demos homepage" data-icon="home"><a href="<c:url value="/" />">Playlists</a></li>
