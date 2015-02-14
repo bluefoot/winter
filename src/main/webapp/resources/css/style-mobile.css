@@ -31,6 +31,10 @@ h1, h2, h3, h4, h5, #logo,
   border-left:none;
 }
 
+.playlists-wmobile-grid {
+  font-size:.7em;
+}
+
 .playlists-wmobile-grid .cell-wmobile {
   padding:.3em .3em;
   height:124px;
@@ -57,8 +61,6 @@ h1, h2, h3, h4, h5, #logo,
   border:none;
 }
 
-.playlists-wmobile-grid .cell-wmobile:hover,
-.playlists-wmobile-grid .cell-wmobile:active,
 .current-playing {
   background-color:#E6E6E6 !important;;
 }
@@ -85,6 +87,7 @@ h1, h2, h3, h4, h5, #logo,
   font-weight:normal;
   text-decoration:none;
   color: #32323e;
+  background-color:#fff;
 }
 
 .wmobile .header-wmobile .wmobile-menu-icon,

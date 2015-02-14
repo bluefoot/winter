@@ -48,6 +48,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /*
  * compress
  * implement save video priority
+ * Try smaller video
+Def smaller grid text
  *  send a "page loaded " date argument
  *  if old page sends a lesser page loaded, ignore it
  *  now, where to store it?
@@ -60,6 +62,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * MOVE STATIC JS TO EXTERNAL FILES, SUCH AS IN ADD-PLAYLIST.JSP
  * MAVEN COMPRESS JS AND CSS RELEASE
  * WHEN OPENING PLAYLIST, SCROLL TO IT. DANG THIS IS GONNA BE DIFFICULT
+ * http://stackoverflow.com/questions/25563084/how-exit-from-iphone-full-screen-of-html-5-video-player-when-video-is-done-playi
+
+Maybe end dull acreen
+Dint sesteoy player, just
+Change the cudeo url
+Maybe autoplay would work
+Fix hover active focus whatevet cralp
+
  * BUG: IS PLAYING VIDEO EVEN IF LESS THAN 5 SECONDS IF VIDEO FINISHED PLAYER WITHOUT RELOADING PAGE
  *  future:       //document.getElementById('plthumb-${selectedPlaylist.playlistId }').scrollIntoView(true);
  *  future: rename

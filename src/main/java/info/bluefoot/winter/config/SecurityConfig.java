@@ -17,6 +17,7 @@ package info.bluefoot.winter.config;
 
 import info.bluefoot.winter.dao.UserDao;
 import info.bluefoot.winter.service.sociallogin.WinterSocialUsersDetailService;
+import info.bluefoot.winter.service.sociallogin.WinterUserDetailsService;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -57,12 +58,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private DataSource dataSource;
 	
+//	@Inject
+//    public UserDetailsService userDetailsService;
+	
 	@Inject
-    public UserDetailsService userDetailsService;
+	private UserDao userDao;
 	
 	@Override
 	protected UserDetailsService userDetailsService() {
-	    return userDetailsService;
+	    return new WinterUserDetailsService(userDao);
+//	    return userDetailsService;
 	}
 	
 	@Bean

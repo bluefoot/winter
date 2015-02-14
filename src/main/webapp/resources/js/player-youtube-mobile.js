@@ -104,6 +104,8 @@ function onYoutubePlayerReady(event) {
  */
 function onYoutubePlayerStateChange(event) {
     if(event.data == YT.PlayerState.ENDED) {
+        $("#video-placeholder")[0].webkitExitFullscreen();
+        youtubePlayer.webkitExitFullscreen();
         playNextVideo();
      }
 }
