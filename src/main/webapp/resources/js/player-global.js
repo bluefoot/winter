@@ -41,8 +41,7 @@ function saveCurrentVideoTime() {
     $.post(contextRoot + 'video/savetime', {
         'videoId' : currentVideoId,
         'playlistId' : playlistId,
-        'currentTime' : currentTime,
-        '_csrf' : csrfToken
+        'currentTime' : currentTime
     });
     $('a[video-id=' + currentVideoId + ']').attr('last-played', currentTime);
 }

@@ -41,31 +41,29 @@ limitations under the License.
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
 <script src="<c:url value="/resources/js/modernizr.custom.js" />"></script>
 <script src="<c:url value="/resources/js/magnific-popup.min.js" />"></script>
-<script src="<c:url value="/resources/js/detectmobilebrowser.min.js" />"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 <script src="<c:url value="/resources/js/player-global.js" />"></script>
 <script src="<c:url value="/resources/js/player-youtube.js" />"></script>
 <script src="<c:url value="/resources/js/player-twitch.js" />"></script>
 
-<script type="text/javascript">
+<script>
     var playlistId = '${selectedPlaylist.playlistId }';
     var contextRoot = '<c:url value="/" />';
     var lastPlayedVideoId = '${selectedPlaylist.lastReproduced.videoId }';
+    /**
+     * If this var is set, means user wants to force playing this video. So 
+     * last position of playlist will be ignored and this video will be played.
+     */
     var videoToPlay = '${videoToPlay }';
-    var csrfToken = '${_csrf.token}';
     var isPlaylistOrVideoPage = (playlistId != '');
     var isAutoPlayEnabled = true;
     $(document).ready(function() {
-        if(jQuery.browser.mobile) {
-            isAutoPlayEnabled = false;
-            if(isPlaylistOrVideoPage) {
-                $('.app-main').addClass('playlist-or-video-page');
-            }
+        isAutoPlayEnabled = false;
+        if(isPlaylistOrVideoPage) {
+            $('.app-main').addClass('playlist-or-video-page');
         }
         // Scroll Emulator
-        if(!jQuery.browser.mobile) {
-            $('.wrapperscroll, .wrapperscrollmain').TrackpadScrollEmulator();
-        }
+        $('.wrapperscroll, .wrapperscrollmain').TrackpadScrollEmulator();
 
         // Load youtube and twitch videos
         loadTwitchVideos();
@@ -89,7 +87,7 @@ limitations under the License.
                         type: 'POST',
                         dataType: 'json',
                         url: '<c:url value="/playlist/delete" />',
-                        data: 'playlistId=' + playlistIdToBeDeleted + '&_csrf=' + csrfToken,
+                        data: 'playlistId=' + playlistIdToBeDeleted,
                         success: function(data) {
                             if(playlistIdToBeDeleted == playlistId) {
                                 window.location.href = contextRoot;
@@ -170,7 +168,7 @@ limitations under the License.
             </c:if>
             <c:if test="${playlists == null || empty playlists}">
             <div class="no-playlists">You have no playlists! <a href="<c:url value="/playlist/add" />" class="add-new-playlist-text">Click here to add!</a></div>
-            <script type="text/javascript">
+            <script>
               $(document).ready(function() {
                   $('.add-new-playlist').click();
               });

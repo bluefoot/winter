@@ -34,12 +34,31 @@ limitations under the License.
 </head>
 <body>
 <div class="static-main">
-  <header id="about-header"><h1>MOBILE YALL</h1></header>
-
+  <header id="about-header"><h1>F.A.Q.</h1></header>
+  <div id="about-text" class="tse-scrollable">
+    <div class="tse-content">
+      <p><a href="<c:url value="/" />">back</a>
+      <h2>Why "Winter"?</h2>
+      <p>I give pointless aliases to the stuff I build.</p>
+      <h2>What this thing does, really?</h2>
+      <p>You create playlists then you start watching videos. When you're done, you can just close the page and when you come back later you'll start from where you left off.</p>
+      <h2>Which video services does Winter supports?</h2>
+      <p>Youtube videos and Twitch VODS (past broadcasts or highlights). If you would like to see it support another video service, <a href="mailto:bluefoot.dev@gmail.com">contact me</a>.</p>
+      <h2>Why shouldn't I just use Youtube's playlist feature then?</h2>
+      <p>If you only watch Youtube videos, and not Twitch VODs, and you don't care to resume from where you stopped, then there's really no reason to use this app.</p>
+      <h2>Do you save any of my personal info such as email, password?</h2>
+      <p>Only your email and sometimes your name is read from your authentication provider. No additional info is asked.</p>
+      <h2>Will you share my name or email with any third party?</h2>
+      <p>No. Never.</p>
+      <h2>What is Winter's current version?</h2>
+      <p>pre alpha</p>
+      <p><a href="<c:url value="/" />">back</a>
+    </div>
+  </div>
   <footer id="footer-general">
     <div class="footer-line"><img src="<c:url value="/resources/images/wintersymbol.svg" />" height="24px" alt="Winter Symbol" /></div>
     <div class="footer-line">
-      <a href="<c:url value="/faq" />">FAQ YALL</a>
+      <a href="<c:url value="/faq" />">FAQ</a>
       <a href="http://bluefoot.info" target="_blank">Blog</a>
       <a href="http://careers.stackoverflow.com/bluefoot" target="_blank">Stack Careers</a>
       <a href="mailto:bluefoot.dev@gmail.com" target="_blank">Contact Me</a>

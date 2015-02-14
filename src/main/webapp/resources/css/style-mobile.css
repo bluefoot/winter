@@ -12,6 +12,7 @@ h1, h2, h3, h4, h5, #logo,
 .form input[type="submit"],
 .form input[type="button"] {
   font-family: "Raleway","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight:normal;
 }
 
 .wmobile .playlists-wmobile {
@@ -108,3 +109,93 @@ h1, h2, h3, h4, h5, #logo,
 .wmobile .menu-wmobile a:after {
   opacity: .4;
 }
+
+.video-disabled {
+  position: absolute;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+background-color: red;
+z-index: 10;
+opacity: .2;
+display:block;
+}
+
+.ui-listview,
+.ui-listview > .ui-li-divider {
+    font-family: "Raleway","Helvetica Neue",Helvetica,Arial,sans-serif !important;
+  font-weight:normal !important;
+}
+
+/**
+LOGIN
+**/
+
+#site-description {
+  margin: 15px;
+}
+#login-form-container, #site-description {
+  text-align:center;
+}
+
+
+#login-form-container .login-provider {
+  margin:0 auto;
+}
+
+
+.login-with-provider {
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  text-indent: -9999px;
+  cursor:pointer;
+  background-repeat:no-repeat;
+  background-color: #fff;
+  background-position:center;
+}
+
+.login-with-provider:hover
+  {
+  margin:3px;
+    box-shadow: 0 0 5px #07c;
+    
+    border: 1px solid #0495ff;
+}
+
+
+
+
+#login-form-container .login-provider {
+width: 320px;
+}
+
+.providers-login .provider-login {
+  float:left;
+  width:100%;
+}
+.login-with-provider {
+  width: 100%;
+  height: 60px;
+border: 2px solid #DDD;
+border-right: 2px solid #ccc;
+border-bottom: 2px solid #ccc;
+float: left;
+border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+margin:3px;
+background-repeat:no-repeat;
+}
+.login-with-google {
+  background-image:url(../images/google.png);
+}
+.login-with-twitter {
+  background-image:url(../images/twitter.png);
+}
+.login-with-facebook {
+  background-image:url(../images/facebook.png);
+}
+
+

@@ -37,24 +37,48 @@ limitations under the License.
 <link rel="stylesheet" href="<c:url value="/resources/css/jquery.mobile.custom.structure.min.css" />" />
 <script src="<c:url value="/resources/js/jquery-1.11.2.min.js" />"></script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
-<script type="text/javascript">
+<script>
 $(document).bind("mobileinit", function () {
     $.mobile.ajaxEnabled = false;
 });
 </script>
 <script src="<c:url value="/resources/js/jquery.mobile.custom.min.js" />"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
-<script src="<c:url value="/resources/js/player-global.js" />"></script>
-<script src="<c:url value="/resources/js/player-youtube.js" />"></script>
-<script src="<c:url value="/resources/js/player-twitch.js" />"></script>
-
-<script type="text/javascript">
-    var contextRoot = '<c:url value="/" />';
-    var csrfToken = '${_csrf.token}';
-    var isPlaylistOrVideoPage = false;
-    var isAutoPlayEnabled = false;
-</script>
 </head>
+<script>
+  $(document).ready(function() {
+    $('.open-playlist').bind( "taphold", function(event){
+        openPopup(this);
+    });
+  });
+  function openPopup(link) {
+      $('#popupplaylist a[rel=openplaylist]').attr('href', $(link).attr('href'));
+      playlistId = $(link).attr('data-playlist-id');
+      $('#popupplaylist a[rel=deleteplaylist]').unbind().bind('click', function(event){
+          removePlaylist(playlistId);
+          $('#popupplaylist').popup("close");
+          event.preventDefault();
+      });
+      $('#popupplaylist').popup("open");
+  }
+  function removePlaylist(playlistId) {
+      $('a[data-playlist-id=' + playlistId + ']').fadeOut('fast');
+      $.ajax({
+          type: 'POST',
+          dataType: 'json',
+          url: '<c:url value="/playlist/delete" />',
+          data: 'playlistId=' + playlistId,
+          success: function(data) {
+             siblings = $('a[data-playlist-id=' + playlistId + ']').parents('li').nextAll();
+             $('a[data-playlist-id=' + playlistId + ']').parents('li').remove();
+             siblings.toggleClass('ui-block-a').toggleClass('ui-block-b');
+          },
+          error: function(xhr, ajaxOptions, thrownError) {
+              $('a[data-playlist-id=' + playlistId + ']').fadeIn('fast');
+              alert(xhr.responseJSON.error);
+          }
+      });
+  }
+</script>
 <body>
 <div class="app-main wmobile">
   <div data-role="panel" id="menupanel" data-position="left" data-display="overlay" data-theme="a">
@@ -67,7 +91,6 @@ $(document).bind("mobileinit", function () {
   </div> <!--left panel-->
   <div data-role="header" class="header-wmobile">
     <h1><img src="<c:url value="/resources/images/winterlogomobile.svg" />" alt="Winter" height="40px" /></h1>
-    <!-- <a href="#menupanel" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a> -->
     <a href="#menupanel" class="ui-btn ui-btn-icon-notext ui-icon-bars ui-nodisc-icon wmobile-menu-icon">Menu</a>
   </div> <!--header-->
   <div role="main" class="ui-content playlists-wmobile">
@@ -75,13 +98,20 @@ $(document).bind("mobileinit", function () {
         <c:forEach items="${playlists }" var="pl" varStatus="loop" >
           <li class="ui-block-${loop.index % 2 == 0 ? 'a' : 'b'}">
             <div class="ui-bar ui-bar-a cell-wmobile">
-              <a data-role="none" href="<c:url value="/playlist/${pl.playlistId}" />">
+              <a class="open-playlist" data-playlist-id="${pl.playlistId}" data-role="none" href="<c:url value="/playlist/${pl.playlistId}" />">
                 <img src="${pl.image }" /><br />${pl.name }</a>
             </div>
           </li>
         </c:forEach>
       </ul><!-- /grid-c -->
   </div> <!-- main -->
+  <div id="popupplaylist" data-role="popup">
+    <ul data-role="listview" data-inset="true" style="min-width:210px;">
+      <li data-role="list-divider">Playlist Options</li>
+      <li><a rel="openplaylist" href="#">Open</a></li>
+      <li><a rel="deleteplaylist" href="#">Delete</a></li>
+    </ul>
+  </div>
 </div>
 </body>
 </html>

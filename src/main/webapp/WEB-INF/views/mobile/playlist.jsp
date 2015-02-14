@@ -36,26 +36,26 @@ limitations under the License.
 <link rel="stylesheet" href="<c:url value="/resources/css/jquery.mobile.icons.min.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/jquery.mobile.custom.structure.min.css" />" />
 <script src="<c:url value="/resources/js/jquery-1.11.2.min.js" />"></script>
-<script type="text/javascript">
+<script>
 $(document).bind("mobileinit", function () {
     $.mobile.ajaxEnabled = false;
 });
 </script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
 <script src="<c:url value="/resources/js/jquery.mobile.custom.min.js" />"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 <script src="<c:url value="/resources/js/player-global-mobile.js" />"></script>
 <script src="<c:url value="/resources/js/player-youtube-mobile.js" />"></script>
-<script src="<c:url value="/resources/js/player-twitch.js" />"></script>
+<script src="<c:url value="/resources/js/player-twitch-mobile.js" />"></script>
 
-<script type="text/javascript">
+<script>
     var contextRoot = '<c:url value="/" />';
-    var csrfToken = '${_csrf.token}';
     var isPlaylistOrVideoPage = false;
-    var isAutoPlayEnabled = false;
+    var isAutoPlayEnabled = true;
     var playlistId = '${selectedPlaylist.playlistId }';
+    var lastPlayedVideoId = '${selectedPlaylist.lastReproduced.videoId }';
     $(document).ready(function() {
         loadYoutubeVideos();
+        loadTwitchVideos();
     });
     
 /*    $(document).on('pagecontainerchange ', function() {
@@ -87,9 +87,9 @@ $(document).bind("mobileinit", function () {
     </div>
     <ul class="ui-grid-a playlists-wmobile-grid">
       <c:forEach items="${videos }" var="v" varStatus="loop" >
-        <li class="ui-block-${loop.index % 2 == 0 ? 'a' : 'b'}">
+        <li class="ui-block-${loop.index % 2 == 0 ? 'a' : 'b'}" style="position:relative">
           <div class="ui-bar ui-bar-a cell-wmobile">
-            <a data-role="none" href="<c:url value="/playlist/${selectedPlaylist.playlistId }/video/${v.videoId }" />">
+            <a data-role="none" href="<c:url value="#" />">
               <div class="img"></div>
               <span class="video-title" data-last-played="${v.currentPosition }" data-video-id="${v.videoId}" >${v.url }</span></a>
           </div>
@@ -97,7 +97,7 @@ $(document).bind("mobileinit", function () {
       </c:forEach>
     </ul><!-- /grid-c -->
   </div>
-
+  <div data-role="popup" id="popupmsg" data-arrow="t,r,b,l" class="ui-content"></div>
 </div>
 </body>
 </html>

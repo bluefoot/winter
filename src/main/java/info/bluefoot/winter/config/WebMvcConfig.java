@@ -46,7 +46,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         
         LiteDeviceDelegatingViewResolver mobileResolver = new LiteDeviceDelegatingViewResolver(viewResolver);
         mobileResolver.setMobilePrefix("mobile/");
-        mobileResolver.setEnableFallback(true);
+        mobileResolver.setEnableFallback(true);  // it's bugged, won't work. Need to extend and rewrite method
         return mobileResolver;
     }
     // ~ Spring mobile config ====================================

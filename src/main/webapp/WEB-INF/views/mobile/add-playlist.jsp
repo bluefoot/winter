@@ -18,10 +18,10 @@ limitations under the License.
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>   
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<script type="text/javascript">
+<script>
 
     var contextRoot = '<c:url value="/" />';
     var regExpIsMaybeAFullVideoURL = new RegExp("https?:\/\/(www\.)?(youtube|twitch)\..+?\/.+");
@@ -129,9 +129,7 @@ limitations under the License.
 <c:url value="/playlist/add" var="submitaction" />
 <h1>Add New Playlist or Video</h1>
 <div class="error-add-playlist"></div>
-  <!-- <form:input type="hidden" name="_csrf" value="${_csrf.token}" path="_csrf" /> -->
 <form:form action="${submitaction }" commandName="addplaylistform" >
-<input type="hidden" name="_csrf" value="${_csrf.token}" />
   <form:input class="namefield" type="text" name="name" placeholder="Name" autofocus="autofocus" required="required" path="playlist.name"/>
   <form:input class="imageurlfield" type="url" name="image" placeholder="Image" required="required" path="playlist.image" />
   <form:textarea name="videos" placeholder="Videos (one line per video)" required="required" rows="10" path="videos"></form:textarea>

@@ -97,7 +97,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                             "/**")
                                 .authenticated()
             .and()
-                .apply(new SpringSocialConfigurer());
+                .csrf().disable()
+            .apply(new SpringSocialConfigurer());
     }
     
     @Override

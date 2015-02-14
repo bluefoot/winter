@@ -30,48 +30,59 @@ limitations under the License.
 <title>Winter</title>
 <link rel="stylesheet" href="<c:url value="/resources/css/reset.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/text.css" />" />
-<link rel="stylesheet" href="<c:url value="/resources/css/style.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/style-mobile.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/jquery.mobile.winter.theme.min.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/jquery.mobile.icons.min.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/jquery.mobile.custom.structure.min.css" />" />
+<script src="<c:url value="/resources/js/jquery-1.11.2.min.js" />"></script>
+<script src="https://apis.google.com/js/client.js?onload=init"></script>
+<script>
+$(document).bind("mobileinit", function () {
+    $.mobile.ajaxEnabled = false;
+});
+</script>
+<script src="<c:url value="/resources/js/jquery.mobile.custom.min.js" />"></script>
 </head>
 <body>
-<div class="static-main">
-  <header id="big-logo"><h1>Winter</h1></header>
-  <div id="site-description"><h2>Winter lets you create and reproduce playlists and remembers where you left off!</h2></div>
-  <div id="login-form-container">
-    <p>Select your account provider to login into Winter using one of your existing accounts!</p>
-    
-    <div class="providers-login">
-      <form action="<c:url value="/auth/google" />" method="post" class="provider-login">
-        <input type="hidden" name="remember-me" value="true" />
-        <input type="hidden" name="_csrf" value="${_csrf.token}" />
-        <input type="hidden" name="scope" value="email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/latitude.all.best" />
-        <input type="hidden" name="request_visible_actions" value="http://schemas.google.com/AddActivity http://schemas.google.com/BuyActivity http://schemas.google.com/CheckInActivity http://schemas.google.com/CommentActivity http://schemas.google.com/CreateActivity http://schemas.google.com/DiscoverActivity http://schemas.google.com/ListenActivity http://schemas.google.com/ReserveActivity http://schemas.google.com/ReviewActivity http://schemas.google.com/WantActivity"/>
-        <input type="hidden" name="access_type" value="offline"/>
-        <input type="submit" value="Login with Google!" class="login-with-provider login-with-google" />
-      </form>
-      <form action="<c:url value="/auth/twitter" />" method="post" class="provider-login">
-        <input type="hidden" name="remember-me" value="true" />
-        <input type="hidden" name="_csrf" value="${_csrf.token}" />
-        <input type="submit" value="Login with Twitter!" class="login-with-provider login-with-twitter" />
-      </form>
-      <form action="<c:url value="/auth/facebook" />" method="post" class="provider-login">
-        <input type="hidden" name="remember-me" value="true" />
-        <input type="hidden" name="_csrf" value="${_csrf.token}" />
-        <input type="hidden" name="scope" value="email public_profile" />
-        <input type="submit" value="Login with Facebook!" class="login-with-provider login-with-facebook" />
-      </form>
-    </div>
-    <div class="clear"></div>
-  </div> <!--#login-form-container-->
-  <footer id="footer-general">
-    <div class="footer-line"><img src="<c:url value="/resources/images/wintersymbol.svg"/>" height="24px" alt="Winter Symbol" /></div>
-    <div class="footer-line">
-      <a href="<c:url value="/faq" />">FAQ</a>
-      <a href="http://bluefoot.info" target="_blank">Blog</a>
-      <a href="http://careers.stackoverflow.com/bluefoot" target="_blank">Stack Careers</a>
-      <a href="mailto:bluefoot.dev@gmail.com" target="_blank">Contact Me</a>
-    </div>
-  </footer>
-</div>
-
+<div class="static-main wmobile">
+  <div data-role="panel" id="menupanel" data-position="left" data-display="overlay" data-theme="a">
+    <ul class="ui-alt-icon ui-nodisc-icon menu-wmobile" data-role="listview">
+      <li data-filtertext="buttons button markup buttonmarkup method anchor link button element" data-icon="action"><a href="<c:url value="/faq" />">FAQ</a></li>
+      <li data-filtertext="buttons button markup buttonmarkup method anchor link button element" data-icon="bullets"><a href="http://bluefoot.info" target="_blank">Blog</a></li>
+      <li data-filtertext="buttons button markup buttonmarkup method anchor link button element" data-icon="user"><a href="http://careers.stackoverflow.com/bluefoot" target="_blank">Stack Careers</a></li>
+      <li data-filtertext="buttons button markup buttonmarkup method anchor link button element" data-icon="mail"><a href="mailto:bluefoot.dev@gmail.com" target="_blank">Contact Me</a></li>
+    </ul>
+  </div> <!--left panel-->
+  <div data-role="header" class="header-wmobile big-logo">
+    <h1><img src="<c:url value="/resources/images/winterlogo.svg" />" alt="Winter" height="80px" /></h1>
+    <a href="#menupanel" class="ui-btn ui-btn-icon-notext ui-icon-bars ui-nodisc-icon wmobile-menu-icon">Menu</a>
+  </div> <!--header-->
+  <div role="main" class="ui-content">
+    <div id="site-description"><h2>Winter lets you create and reproduce playlists and remembers where you left off!</h2></div>
+    <div id="login-form-container">
+      <p>Select your account provider to login into Winter using one of your existing accounts!</p>
+      
+      <div class="providers-login">
+        <form action="<c:url value="/auth/google" />" method="post" class="provider-login">
+          <input type="hidden" name="remember-me" value="true" />
+          <input type="hidden" name="scope" value="email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/latitude.all.best" />
+          <input type="hidden" name="request_visible_actions" value="http://schemas.google.com/AddActivity http://schemas.google.com/BuyActivity http://schemas.google.com/CheckInActivity http://schemas.google.com/CommentActivity http://schemas.google.com/CreateActivity http://schemas.google.com/DiscoverActivity http://schemas.google.com/ListenActivity http://schemas.google.com/ReserveActivity http://schemas.google.com/ReviewActivity http://schemas.google.com/WantActivity"/>
+          <input type="hidden" name="access_type" value="offline"/>
+          <input data-role="none" type="submit" value="Login with Google!" class="login-with-provider login-with-google" />
+        </form>
+        <form action="<c:url value="/auth/twitter" />" method="post" class="provider-login">
+          <input type="hidden" name="remember-me" value="true" />
+          <input data-role="none" type="submit" value="Login with Twitter!" class="login-with-provider login-with-twitter" />
+        </form>
+        <form action="<c:url value="/auth/facebook" />" method="post" class="provider-login">
+          <input type="hidden" name="remember-me" value="true" />
+          <input type="hidden" name="scope" value="email public_profile" />
+          <input data-role="none" type="submit" value="Login with Facebook!" class="login-with-provider login-with-facebook" />
+        </form>
+      </div>
+      <div class="clear"></div>
+    </div> <!--#login-form-container-->
+  </div> <!--role=main -->
+</div> <!-- static-main content-->
 </body>
 </html>

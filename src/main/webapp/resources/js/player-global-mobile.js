@@ -38,13 +38,14 @@ function saveCurrentVideoTime() {
     if(youtubePlayer) {
         currentTime = Math.round(youtubePlayer.getCurrentTime());
     }
-    $.post(contextRoot + 'video/savetime', {
-        'videoId' : currentVideoId,
-        'playlistId' : playlistId,
-        'currentTime' : currentTime,
-        '_csrf' : csrfToken
-    });
-    $('span[data-video-id=' + currentVideoId + ']').attr('data-last-played', currentTime);
+    if(currentTime != 0) {
+        $.post(contextRoot + 'video/savetime', {
+            'videoId' : currentVideoId,
+            'playlistId' : playlistId,
+            'currentTime' : currentTime
+        });
+        $('span[data-video-id=' + currentVideoId + ']').attr('data-last-played', currentTime);
+    }
 }
 
 /**
@@ -62,57 +63,4 @@ function playNextVideo() {
     if(nextVideo) {
         nextVideo.click();
     }
-}
-
-/**
- * The closePlayer() function is called by the popup plugin automatically. 
- * The function will also ask the plugin to close the popup, so there's a bit
- * of a loop there. So isClosingPlayer is used as a flag to prevent that.
- * Why the function also ask the plugin to close the popup? Because this function
- * is reused somewhere else (not only called by the popup plugin): when the user
- * hits the back button of the browse and the url goes back to list the playlists.
- */
-var isClosingPlayer = false;
-function closePlayer() {
-    if(isClosingPlayer) {
-        return;
-    }
-    isClosingPlayer = true;
-    saveCurrentVideoTime(); //forces one last save
-    stopSavingCurrentVideoTime();
-    twitchPlayer = null;
-    youtubePlayer = null;
-    $.magnificPopup.close();
-    history.pushState(null, null, contextRoot + 'playlist/' + playlistId);
-    isClosingPlayer = false;
-}
-
-/**
- * Registers HTML5's popstate functions to auto open or close video when browser
- * url is changed.
- * When a video is opened or closed , the browser URL will be changed by other
- * functions (see loadTwitchVideos() and loadYoutubeVideos())
- */
-function registerBrowseLocationChange() {
-    window.setTimeout(function() {
-        window.addEventListener("popstate", function(e) {
-            // This checks if new url is to open a video
-            var regExpPlayVideoUrl = new RegExp(contextRoot + "playlist/([0-9]+)/video/([0-9]+)");
-            var matchPlayVideoUrl = location.pathname.match(regExpPlayVideoUrl);
-            if (matchPlayVideoUrl){
-                closePlayer();
-                $('a[video-id=' + matchPlayVideoUrl[2] + ']').click();
-            }
-            // This checks if new url is to close a video (show playlist videos)
-            var regExpShowPlaylist = new RegExp(contextRoot + "playlist/([0-9]+)$");
-            var matchShowPlaylist = location.pathname.match(regExpShowPlaylist);
-            if (matchShowPlaylist){
-                // Note, when url is already winter/playlist/x, and user
-                // clicks back button and goes back to same winter/playlist/x,
-                // this method will get called anyway
-                closePlayer();
-            }
-            
-        }, false);
-      }, 1);
 }

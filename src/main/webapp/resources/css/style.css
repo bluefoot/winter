@@ -697,9 +697,6 @@ LOGIN
   overflow: hidden;
 }
 
-#login-form-container .login-provider {
-  margin:0 auto;
-}
 
 #footer-general {
   background-color: #19191f;
@@ -714,15 +711,20 @@ LOGIN
   height:96px;
 }
 
+#login-form-container .login-provider {
+  margin:0 auto;
+}
+
+
 .login-with-provider {
   box-shadow: none;
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   text-indent: -9999px;
   cursor:pointer;
-  background-image:url(../images/loginproviders.png);
   background-repeat:no-repeat;
   background-color: #fff;
+  background-position:center;
 }
 
 .login-with-provider:hover
@@ -760,13 +762,13 @@ border-radius: 5px;
 margin:3px;
 }
 .login-with-google {
-  background-position: 0px center;
+  background-image:url(../images/google.png);
 }
 .login-with-twitter {
-  background-position: -200px center;
+  background-image:url(../images/twitter.png);
 }
 .login-with-facebook {
-  background-position: -100px center;
+  background-image:url(../images/facebook.png);
 }
 
 /**
@@ -780,98 +782,5 @@ ABOUT
 
 #about-text, #login-form-container {
   padding-bottom:128px;
-}
-
-
-@media only screen and (max-device-width: 480px) {
-  /*
-  LOGIN
-  */
-  
-  #big-logo {
-    background-size:275px;
-    height:150px;
-  }
-  
-  /*
-  MAIN APP
-  */
-  
-  #large_nav .content .top #logo {
-padding: 4px 0 1px 0;
-}
-
-  #large_nav .content .top #logo img {
-  height: 70px;
-  }
-  .options-playlists {
-  text-align:center;
-  }
-  .options-playlists a.add-new-playlist {
-margin: 5px 9px -5px 0;
-}
-
-#left_col, #large_nav {
-  width:100%;
-}
-
-#large_nav .content,
-#large_nav .content .top,
-#large_nav .content .stretch
- {
-  width: auto !important;
-}
-
-ul.playlists-images a.link-playlist-thumb {
-  text-align:center;
-}
-#large_nav {
-  overflow: visible;
-}
-
-#large_nav .content {
-  height:auto;
-}
-
-.logged-user-name {
-  text-indent: -9999px;
-}
-
-.logged-user {
-  float:right;
-  margin-left:0;
-}
-
-.options-playlists {
-  float:left;
-}
-
-.icon-logout {
-  font-size:3em !important;
-  margin-top: 0;
-}
-ul.playlists-images {
-  clear:both;
-}
-
-.fa.fa-sign-out:before{content:"\f007" !important}
-
-.playlist-or-video-page #left_col {
-  left:-999px;
-}
-
-.playlist-or-video-page #main_col {
-  margin-left:0;
-}
-
-
-.playlist-or-video-page .content, 
-.playlist-or-video-page .stretch, 
-.playlist-or-video-page #main_col {
-  height:auto !important;
-}
-
-
-
 }
 

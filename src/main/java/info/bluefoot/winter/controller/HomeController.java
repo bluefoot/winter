@@ -46,12 +46,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /*
- * test utf8 chars like bruce playlist
+ * html5 doctype only set on home.jsp, FIX OTHERS
  * better break css
  * fix google scopr all you need is name and email and profile url
- * csrf token session expired if takes too long in a page. this is very annoying I think I'm gonna drop it OR redirect to / always
  * org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices
- * MOBILE
  * REMEMBER ME IGNORING "REMEMBER-ME" COOKIE WHEN COMING BACK FROM OPENID
  * better way of showing selected playlist - see inspiration on battle.net - actually the right-border is better 
  * TWITCH FULL SCREEN AND YOUTUBE - WELL YOUTUBE WONT WORK FUCK

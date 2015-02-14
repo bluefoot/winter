@@ -39,18 +39,18 @@ function onYouTubeIframeAPIReady() {
         var videoURL = $(this).text();
         var videoID = getYoutubeVideoID(videoURL);
         var internalVideoID = $(this).attr('data-video-id');
-        var linkobj = this;
+        var spanVideoDesc = this;
         // Calls youtube to get video info
         $.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + videoID + '&key=' + gkey + '&part=snippet,contentDetails&callback=?', function(data) {
             if (typeof (data.items[0]) != "undefined") {
                 // Modifies HTML to have image, title, etc
-                $(linkobj).text(data.items[0].snippet.title);
-                $('.img', $(linkobj).parent('a')).css('background-image', 'url(' + data.items[0].snippet.thumbnails.medium.url + ')');
+                $(spanVideoDesc).text(data.items[0].snippet.title);
+                $('.img', $(spanVideoDesc).parent('a')).css('background-image', 'url(' + data.items[0].snippet.thumbnails.medium.url + ')').css('background-size', 'cover');
                 // If last played size is almost finishing video, come back to start
-                if($(linkobj).attr('data-last-played') >= convertIso8601ToSeconds(data.items[0].contentDetails.duration) - 5) {
-                    $(linkobj).attr('data-last-played', '0');
+                if($(spanVideoDesc).attr('data-last-played') >= convertIso8601ToSeconds(data.items[0].contentDetails.duration) - 5) {
+                    $(spanVideoDesc).attr('data-last-played', '0');
                 }
-                $(linkobj).parent('a').bind('click', function(e){
+                $(spanVideoDesc).parent('a').bind('click', function(e){
                     if(youtubePlayer) {
                         youtubePlayer.destroy();
                     }
@@ -62,7 +62,7 @@ function onYouTubeIframeAPIReady() {
                         width: '100%',
                         videoId: videoID,
                         playerVars: {
-                            'start': $(linkobj).attr('data-last-played')
+                            'start': $(spanVideoDesc).attr('data-last-played')
                         },
                         events: {
                           'onReady': onYoutubePlayerReady,
@@ -71,14 +71,13 @@ function onYouTubeIframeAPIReady() {
                       });
                     e.preventDefault();
                 });
-/*                if(isAutoPlayEnabled &&
-                        ((videoToPlay == '' && $(linkobj).attr('video-id')==lastPlayedVideoId) || 
-                        $('.videos-list li').length==1 || 
-                        $(linkobj).attr('video-id')==videoToPlay)) {
-                    $(linkobj).click();
-                }*/
+                if(isAutoPlayEnabled &&
+                        (internalVideoID==lastPlayedVideoId || 
+                        $('.playlists-wmobile-grid li').length==1)) {
+                    $(spanVideoDesc).parent('a').click();
+                }
             } else {
-                $(linkobj).text('video not exist');
+                $(spanVideoDesc).text('video not exist');
             }
         });
     });
@@ -86,13 +85,15 @@ function onYouTubeIframeAPIReady() {
 
 
 /**
- * Called when youtube player is ready to be played. Starts playing and starts
+ * Called when youtube player is ready to be played. Starts
  * saving the current state to the server every 5 seconds.
+ * Could start playing as well, that'd be great but can't autoplay on mobile.
  * @param event
  */
 function onYoutubePlayerReady(event) {
     // Can't autoplay on mobile. https://developers.google.com/youtube/iframe_api_reference#Mobile_considerations
     //event.target.playVideo();
+    $.mobile.silentScroll(0);
     triggerSaveCurrentVideoTime();
 }
 

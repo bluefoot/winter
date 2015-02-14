@@ -50,6 +50,8 @@ limitations under the License.
       <p>Only your email and sometimes your name is read from your authentication provider. No additional info is asked.</p>
       <h2>Will you share my name or email with any third party?</h2>
       <p>No. Never.</p>
+      <h2>What is Winter's current version?</h2>
+      <p>pre alpha</p>
       <p><a href="<c:url value="/" />">back</a>
     </div>
   </div>
