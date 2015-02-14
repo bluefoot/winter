@@ -46,19 +46,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /*
- * html5 doctype only set on home.jsp, FIX OTHERS
+ * compress
+ * implement save video priority
+ *  send a "page loaded " date argument
+ *  if old page sends a lesser page loaded, ignore it
+ *  now, where to store it?
+ *  also, what if first page closes it? dunno, maybe still ignore it
  * better break css
  * fix google scopr all you need is name and email and profile url
- * org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices
- * REMEMBER ME IGNORING "REMEMBER-ME" COOKIE WHEN COMING BACK FROM OPENID
  * better way of showing selected playlist - see inspiration on battle.net - actually the right-border is better 
- * TWITCH FULL SCREEN AND YOUTUBE - WELL YOUTUBE WONT WORK FUCK
  * ERROR PAGES DEFAULT - GENERATE PROTOCOL
  * FAILURE MESSAGE LOGIN INCORRECT
  * MOVE STATIC JS TO EXTERNAL FILES, SUCH AS IN ADD-PLAYLIST.JSP
  * MAVEN COMPRESS JS AND CSS RELEASE
- * FAQ PAGE - NEED SCROLL OR NOT? CHECK HOW IT GOES ON WINDOWS
- * USER TRIES TO SEE A PLAYLIST THAT DOESN'T BELONG TO HIM
  * WHEN OPENING PLAYLIST, SCROLL TO IT. DANG THIS IS GONNA BE DIFFICULT
  * BUG: IS PLAYING VIDEO EVEN IF LESS THAN 5 SECONDS IF VIDEO FINISHED PLAYER WITHOUT RELOADING PAGE
  *  future:       //document.getElementById('plthumb-${selectedPlaylist.playlistId }').scrollIntoView(true);

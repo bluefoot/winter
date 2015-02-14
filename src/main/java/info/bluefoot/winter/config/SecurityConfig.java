@@ -37,6 +37,8 @@ import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.social.UserIdSource;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
@@ -63,6 +65,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	    return userDetailsService;
 	}
 	
+	@Bean
+	public RememberMeServices rememberMeServices() {
+	    TokenBasedRememberMeServices rememberMeServices = new TokenBasedRememberMeServices("winterapp23823829389", userDetailsService());
+	    rememberMeServices.setAlwaysRemember(true);
+	    rememberMeServices.setTokenValiditySeconds(15552000); // 6 months
+	    rememberMeServices.setCookieName("winter-rmm-key");
+	    return rememberMeServices;
+	}
+	
 	//FIXME url rewriting how to disable
     //FIXME remember me parameter: new org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices().setp
 	//isAuthenticated() and hasRole('ROLE_USER')
@@ -71,8 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http
             .userDetailsService(userDetailsService())
             .rememberMe()
-                .tokenValiditySeconds(7776000)
-                .key("winterapp23823829389")
+                .rememberMeServices(rememberMeServices())
             .and()
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))

@@ -41,18 +41,15 @@ limitations under the License.
     
     <div class="providers-login">
       <form action="<c:url value="/auth/google" />" method="post" class="provider-login">
-        <input type="hidden" name="remember-me" value="true" />
         <input type="hidden" name="scope" value="email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/latitude.all.best" />
         <input type="hidden" name="request_visible_actions" value="http://schemas.google.com/AddActivity http://schemas.google.com/BuyActivity http://schemas.google.com/CheckInActivity http://schemas.google.com/CommentActivity http://schemas.google.com/CreateActivity http://schemas.google.com/DiscoverActivity http://schemas.google.com/ListenActivity http://schemas.google.com/ReserveActivity http://schemas.google.com/ReviewActivity http://schemas.google.com/WantActivity"/>
         <input type="hidden" name="access_type" value="offline"/>
         <input type="submit" value="Login with Google!" class="login-with-provider login-with-google" />
       </form>
-      <form action="<c:url value="/auth/twitter" />" method="post" class="provider-login">
-        <input type="hidden" name="remember-me" value="true" />
+      <form action="<c:url value="/auth/twitter" />" method="get" class="provider-login">
         <input type="submit" value="Login with Twitter!" class="login-with-provider login-with-twitter" />
       </form>
       <form action="<c:url value="/auth/facebook" />" method="post" class="provider-login">
-        <input type="hidden" name="remember-me" value="true" />
         <input type="hidden" name="scope" value="email public_profile" />
         <input type="submit" value="Login with Facebook!" class="login-with-provider login-with-facebook" />
       </form>
