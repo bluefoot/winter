@@ -47,12 +47,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /*
  * compress
- * implement save video priority
- * BIGGER VIDEO HEIGHT
- FIXED ON TOP VIDEO MOBILE
- MAYBE ALSO SCROLL TO POSITION THUMB
-
- *  send a "page loaded " date argument
+ *  send a "page loaded " date argument implement save video priority to avoid race condition
  *  if old page sends a lesser page loaded, ignore it
  *  now, where to store it?
  *  also, what if first page closes it? dunno, maybe still ignore it

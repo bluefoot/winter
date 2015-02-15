@@ -67,7 +67,7 @@ $(document).bind("mobileinit", function () {
 </head>
 <body>
 <div class="app-main wmobile">
-  <div data-role="panel" id="menupanel" data-position="left" data-display="overlay" data-theme="a">
+  <div data-role="panel" id="menupanel" data-position="left" data-display="push" data-theme="a">
     <ul class="ui-alt-icon ui-nodisc-icon menu-wmobile" data-role="listview">
       <li data-filtertext="demos homepage" data-icon="home"><a href="<c:url value="/" />">Playlists</a></li>
       <li data-filtertext="buttons button markup buttonmarkup method anchor link button element" data-icon="plus"><a href=".././">Create New Playlist</a></li>
@@ -76,15 +76,15 @@ $(document).bind("mobileinit", function () {
     </ul>
   </div> <!--left panel-->
   
-  <div data-role="header" class="header-wmobile">
+  <div data-role="header" class="header-wmobile" data-position="fixed">
     <h1><img src="<c:url value="/resources/images/winterlogomobile.svg" />" alt="Winter" height="40px" /></h1>
     <!-- <a href="#menupanel" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a> -->
     <a href="#menupanel" class="ui-btn ui-btn-icon-notext ui-icon-bars ui-nodisc-icon wmobile-menu-icon">Menu</a>
-  </div>
-  <div role="main" class="ui-content playlists-wmobile">
-    <div id="video-placeholder">
+    <div id="video-placeholder" style="min-height:150px">
       
     </div>
+  </div>
+  <div role="main" class="ui-content playlists-wmobile">
     <ul class="ui-grid-a playlists-wmobile-grid">
       <c:forEach items="${videos }" var="v" varStatus="loop" >
         <li class="ui-block-${loop.index % 2 == 0 ? 'a' : 'b'}" style="position:relative">

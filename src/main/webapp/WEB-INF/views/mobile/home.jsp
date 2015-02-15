@@ -40,6 +40,7 @@ limitations under the License.
 <script>
 $(document).bind("mobileinit", function () {
     $.mobile.ajaxEnabled = false;
+    $.event.special.tap.tapholdThreshold=200
 });
 </script>
 <script src="<c:url value="/resources/js/jquery.mobile.custom.min.js" />"></script>
@@ -52,6 +53,7 @@ $(document).bind("mobileinit", function () {
   });
   function openPopup(link) {
       $('#popupplaylist a[rel=openplaylist]').attr('href', $(link).attr('href'));
+      $('#popupplaylist li[data-role=list-divider]').text($('span', link).text());
       playlistId = $(link).attr('data-playlist-id');
       $('#popupplaylist a[rel=deleteplaylist]').unbind().bind('click', function(event){
           removePlaylist(playlistId);
@@ -81,7 +83,7 @@ $(document).bind("mobileinit", function () {
 </script>
 <body>
 <div class="app-main wmobile">
-  <div data-role="panel" id="menupanel" data-position="left" data-display="overlay" data-theme="a">
+  <div data-role="panel" id="menupanel" data-position="left" data-display="push" data-theme="a">
     <ul class="ui-alt-icon ui-nodisc-icon menu-wmobile" data-role="listview">
       <li data-filtertext="demos homepage" data-icon="home"><a href="<c:url value="/" />">Playlists</a></li>
       <li data-filtertext="buttons button markup buttonmarkup method anchor link button element" data-icon="plus"><a href=".././">Create New Playlist</a></li>
@@ -99,7 +101,7 @@ $(document).bind("mobileinit", function () {
           <li class="ui-block-${loop.index % 2 == 0 ? 'a' : 'b'}">
             <div class="ui-bar ui-bar-a cell-wmobile">
               <a class="open-playlist" data-playlist-id="${pl.playlistId}" data-role="none" href="<c:url value="/playlist/${pl.playlistId}" />">
-                <img src="${pl.image }" /><br />${pl.name }</a>
+                <img src="${pl.image }" /><br /><span>${pl.name }</span></a>
             </div>
           </li>
         </c:forEach>

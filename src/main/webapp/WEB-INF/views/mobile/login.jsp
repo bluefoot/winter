@@ -45,7 +45,7 @@ $(document).bind("mobileinit", function () {
 </head>
 <body>
 <div class="static-main wmobile">
-  <div data-role="panel" id="menupanel" data-position="left" data-display="overlay" data-theme="a">
+  <div data-role="panel" id="menupanel" data-position="left" data-display="push" data-theme="a">
     <ul class="ui-alt-icon ui-nodisc-icon menu-wmobile" data-role="listview">
       <li data-filtertext="buttons button markup buttonmarkup method anchor link button element" data-icon="action"><a href="<c:url value="/faq" />">FAQ</a></li>
       <li data-filtertext="buttons button markup buttonmarkup method anchor link button element" data-icon="bullets"><a href="http://bluefoot.info" target="_blank">Blog</a></li>
