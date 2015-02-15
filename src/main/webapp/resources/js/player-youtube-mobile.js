@@ -75,6 +75,7 @@ function onYouTubeIframeAPIReady() {
                         (internalVideoID==lastPlayedVideoId || 
                         $('.playlists-wmobile-grid li').length==1)) {
                     $(spanVideoDesc).parent('a').click();
+                    $.mobile.silentScroll($('span[data-video-id=' + currentVideoId + ']').parents('li').position().top-$('.header-wmobile').height());
                 }
             } else {
                 $(spanVideoDesc).text('video not exist');
@@ -94,7 +95,6 @@ function onYoutubePlayerReady(event) {
     // Can't autoplay on mobile. https://developers.google.com/youtube/iframe_api_reference#Mobile_considerations
     //event.target.playVideo();
 //    $.mobile.silentScroll(0);
-    $.mobile.silentScroll($('span[data-video-id=' + currentVideoId + ']').parents('li').position().top-$('.header-wmobile').height());
     triggerSaveCurrentVideoTime();
 }
 
