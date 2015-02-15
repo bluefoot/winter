@@ -48,13 +48,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /*
  * compress
  * implement save video priority
- * Try smaller video
-Def smaller grid text
+ * BIGGER VIDEO HEIGHT
+ FIXED ON TOP VIDEO MOBILE
+ MAYBE ALSO SCROLL TO POSITION THUMB
+
  *  send a "page loaded " date argument
  *  if old page sends a lesser page loaded, ignore it
  *  now, where to store it?
  *  also, what if first page closes it? dunno, maybe still ignore it
  * better break css
+ * http://stackoverflow.com/questions/11494943/yuicompressor-maven-plugin-and-maven-war-plugin
  * fix google scopr all you need is name and email and profile url
  * better way of showing selected playlist - see inspiration on battle.net - actually the right-border is better 
  * ERROR PAGES DEFAULT - GENERATE PROTOCOL

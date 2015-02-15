@@ -87,7 +87,7 @@ h1, h2, h3, h4, h5, #logo,
   font-weight:normal;
   text-decoration:none;
   color: #32323e;
-  background-color:#fff;
+  background-color:transparent;
 }
 
 .wmobile .header-wmobile .wmobile-menu-icon,

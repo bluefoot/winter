@@ -88,6 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .userDetailsService(userDetailsService())
             .rememberMe()
                 .rememberMeServices(rememberMeServices())
+                .key("winterapp23823829389")
             .and()
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
