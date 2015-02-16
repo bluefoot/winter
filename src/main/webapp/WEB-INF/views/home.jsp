@@ -206,7 +206,7 @@ limitations under the License.
              <c:if test="${videos != null}">
              <ul class="videos-list" data-last-played-video="${selectedPlaylist.lastReproduced.videoId }">
               <c:forEach items="${videos }" var="v" >  
-                <li>
+                <li <c:if test="${v.videoId==selectedPlaylist.lastReproduced.videoId}">class="current-playing-video"</c:if>>
                   <a href="<c:url value="/playlist/${selectedPlaylist.playlistId }/video/${v.videoId }" />" data-video-id="${v.videoId }" class="button-play-video" data-last-played="${v.currentPosition }">${v.url }</a>
                 </li>
               </c:forEach>

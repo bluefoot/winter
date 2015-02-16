@@ -87,6 +87,9 @@ function loadTwitchVideos() {
                                         currentVideoId = internalVideoID;
                                         currentTwitchVideoLength = videoLength;
                                         history.pushState(null, null, $(linkobj).attr('href'));
+                                        $('li.current-playing-video').removeClass('current-playing-video');
+                                        $(linkobj).parents('li').addClass('current-playing-video');
+                                        $('.wrapperscrollmain .tse-scroll-content').scrollTop($('li.current-playing-video').offset().top);
                                         swfobject.embedSWF("http://www-cdn.jtvnw.net/swflibs/TwitchPlayer.swf",
                                                         "twitchpopup",
                                                         "100%",
