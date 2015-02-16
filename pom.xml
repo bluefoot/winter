@@ -29,34 +29,8 @@
   <build>
     <finalName>${project.artifactId}-${project.version}</finalName>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.1.1</version>
-        <configuration>
-          <excludes>**/.*.java</excludes>
-
-          <archive>
-            <manifest>
-              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-            </manifest>
-            <manifestEntries>
-              <Implementation-Build>${project.version}</Implementation-Build>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-
-      <plugin>
+    
+       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
         <version>2.4.3</version>
@@ -70,6 +44,18 @@
         <artifactId>maven-archetype-plugin</artifactId>
         <version>2.0</version>
       </plugin>
+      
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 
@@ -83,15 +69,6 @@
       </snapshots>
     </repository>
   </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <name>oss.sonatype.org</name>
-      <id>oss.sonatype.org</id>
-      <url>http://oss.sonatype.org/content/groups/public</url>
-    </pluginRepository>
-  </pluginRepositories>
-
 
   <dependencies>
 
@@ -333,11 +310,25 @@
         <finalName>winter</finalName>
         <plugins>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>2.4.3</version>
+            <configuration>
+              <encoding>${project.build.sourceEncoding}</encoding>
+            </configuration>
+          </plugin>
+          <plugin>
             <artifactId>maven-war-plugin</artifactId>
             <version>2.1.1</version>
             <configuration>
               <outputDirectory>webapps</outputDirectory>
               <warName>ROOT</warName>
+              <!-- Excluding all css and js that are directly within /css/ and /js/
+              dirs. Those files will be compressed and included by yuicompressor
+              plugin. 
+              This leaves only css and js files inside the /vendor/ subdirs. 
+              Those are already compressed and the war plugin can copy them np -->
+              <warSourceExcludes>**/css/*.css,**/js/*.js</warSourceExcludes>
             </configuration>
           </plugin>
 
@@ -354,13 +345,15 @@
             </executions>
             <configuration>
               <nosuffix>true</nosuffix>
+              <jswarn>false</jswarn>
               <excludes>
-                <exclude>**/*.min.*</exclude>
-                <exclude>**/*.custom.*</exclude>
+                <!-- Excluding every file inside /vendor/ dirs. Those css
+                and js should be already compressed. The war plugin will
+                take care of copying them inside the ear as they are. -->
+                <exclude>**/vendor/*</exclude>
               </excludes>
             </configuration>
           </plugin>
-
         </plugins>
       </build>
     </profile>

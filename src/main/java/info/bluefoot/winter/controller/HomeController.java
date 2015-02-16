@@ -41,6 +41,7 @@ import org.springframework.social.oauth2.OAuth2ServiceProvider;
 import org.springframework.social.security.SocialAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -129,7 +130,7 @@ public class HomeController {
 
     @Inject
     private VideoService videoService;
-    
+
     @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
     public String login(Device device) {
 //        Device device = DeviceUtils.getCurrentDevice(request);

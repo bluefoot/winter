@@ -31,17 +31,17 @@ limitations under the License.
 <link rel="stylesheet" href="<c:url value="/resources/css/reset.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/text.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/style-mobile.css" />" />
-<link rel="stylesheet" href="<c:url value="/resources/css/jquery.mobile.winter.theme.min.css" />" />
-<link rel="stylesheet" href="<c:url value="/resources/css/jquery.mobile.icons.min.css" />" />
-<link rel="stylesheet" href="<c:url value="/resources/css/jquery.mobile.custom.structure.min.css" />" />
-<script src="<c:url value="/resources/js/jquery-1.11.2.min.js" />"></script>
+<link rel="stylesheet" href="<c:url value="/resources/css/vendor/jquery.mobile.winter.theme.min.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/vendor/jquery.mobile.icons.min.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/vendor/jquery.mobile.custom.structure.min.css" />" />
+<script src="<c:url value="/resources/js/vendor/jquery-1.11.2.min.js" />"></script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
 <script>
 $(document).bind("mobileinit", function () {
     $.mobile.ajaxEnabled = false;
 });
 </script>
-<script src="<c:url value="/resources/js/jquery.mobile.custom.min.js" />"></script>
+<script src="<c:url value="/resources/js/vendor/jquery.mobile.custom.min.js" />"></script>
 </head>
 <body>
 <div class="static-main wmobile">

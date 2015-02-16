@@ -1,3 +1,7 @@
+/**
+adapted from: http://tympanus.net/Development/IconHoverEffects/
+http://tympanus.net/codrops/?p=15265
+*/
 .hi-icon {
   display: inline-block;
   font-size: 0px;

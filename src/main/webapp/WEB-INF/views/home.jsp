@@ -32,15 +32,15 @@ limitations under the License.
 <link rel="stylesheet" href="<c:url value="/resources/css/reset.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/text.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />" />
-<link rel="stylesheet" href="<c:url value="/resources/css/trackpad/trackpad-scroll-emulator.css" />" />
-<link rel="stylesheet" href="<c:url value="/resources/css/magnific-popup.css" />" />
-<link rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/vendor/trackpad/trackpad-scroll-emulator.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/vendor/magnific-popup.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/vendor/font-awesome.min.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/hiiconeffect.css" />" />
-<script src="<c:url value="/resources/js/jquery-1.11.2.min.js" />"></script>
-<script src="<c:url value="/resources/js/trackpad/jquery.trackpad-scroll-emulator.min.js" />"></script>
+<script src="<c:url value="/resources/js/vendor/jquery-1.11.2.min.js" />"></script>
+<script src="<c:url value="/resources/js/vendor/trackpad/jquery.trackpad-scroll-emulator.min.js" />"></script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
-<script src="<c:url value="/resources/js/modernizr.custom.js" />"></script>
-<script src="<c:url value="/resources/js/magnific-popup.min.js" />"></script>
+<script src="<c:url value="/resources/js/vendor/modernizr.custom.js" />"></script>
+<script src="<c:url value="/resources/js/vendor/magnific-popup.min.js" />"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 <script src="<c:url value="/resources/js/player-global.js" />"></script>
 <script src="<c:url value="/resources/js/player-youtube.js" />"></script>

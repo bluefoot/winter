@@ -32,17 +32,17 @@ limitations under the License.
 <link rel="stylesheet" href="<c:url value="/resources/css/reset.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/text.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/style-mobile.css" />" />
-<link rel="stylesheet" href="<c:url value="/resources/css/jquery.mobile.winter.theme.min.css" />" />
-<link rel="stylesheet" href="<c:url value="/resources/css/jquery.mobile.icons.min.css" />" />
-<link rel="stylesheet" href="<c:url value="/resources/css/jquery.mobile.custom.structure.min.css" />" />
-<script src="<c:url value="/resources/js/jquery-1.11.2.min.js" />"></script>
+<link rel="stylesheet" href="<c:url value="/resources/css/vendor/jquery.mobile.winter.theme.min.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/vendor/jquery.mobile.icons.min.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/vendor/jquery.mobile.custom.structure.min.css" />" />
+<script src="<c:url value="/resources/js/vendor/jquery-1.11.2.min.js" />"></script>
 <script>
 $(document).bind("mobileinit", function () {
     $.mobile.ajaxEnabled = false;
 });
 </script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
-<script src="<c:url value="/resources/js/jquery.mobile.custom.min.js" />"></script>
+<script src="<c:url value="/resources/js/vendor/jquery.mobile.custom.min.js" />"></script>
 <script src="<c:url value="/resources/js/player-global.js" />"></script>
 <script src="<c:url value="/resources/js/player-youtube.js" />"></script>
 <script src="<c:url value="/resources/js/player-twitch.js" />"></script>
@@ -62,7 +62,7 @@ $(document).bind("mobileinit", function () {
 </head>
 <body>
 <div class="app-main wmobile">
-  <div data-role="panel" id="menupanel" data-position="left" data-display="push" data-theme="a">
+  <div data-role="panel" id="menupanel" data-position="left" data-display="push" data-theme="a" style="z-index:999">
     <ul class="ui-alt-icon ui-nodisc-icon menu-wmobile" data-role="listview">
       <li data-filtertext="demos homepage" data-icon="home"><a href="<c:url value="/" />">Playlists</a></li>
       <li data-filtertext="buttons button markup buttonmarkup method anchor link button element" data-icon="plus"><a href=".././">Create New Playlist</a></li>
