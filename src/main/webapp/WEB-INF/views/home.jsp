@@ -37,7 +37,7 @@ limitations under the License.
 <link rel="stylesheet" href="<c:url value="/resources/css/vendor/font-awesome.min.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/hiiconeffect.css" />" />
 <script src="<c:url value="/resources/js/vendor/jquery-1.11.2.min.js" />"></script>
-<script src="<c:url value="/resources/js/vendor/trackpad/jquery.trackpad-scroll-emulator.min.js" />"></script>
+<script src="<c:url value="/resources/js/vendor/jquery.trackpad-scroll-emulator.min.js" />"></script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
 <script src="<c:url value="/resources/js/vendor/modernizr.custom.js" />"></script>
 <script src="<c:url value="/resources/js/vendor/magnific-popup.min.js" />"></script>
