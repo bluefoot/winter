@@ -32,7 +32,7 @@ limitations under the License.
 <link rel="stylesheet" href="<c:url value="/resources/css/reset.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/text.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />" />
-<link rel="stylesheet" href="<c:url value="/resources/css/vendor/trackpad/trackpad-scroll-emulator.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/vendor/trackpad-scroll-emulator.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/vendor/magnific-popup.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/vendor/font-awesome.min.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/hiiconeffect.css" />" />
