@@ -43,9 +43,9 @@ $(document).bind("mobileinit", function () {
 </script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
 <script src="<c:url value="/resources/js/jquery.mobile.custom.min.js" />"></script>
-<script src="<c:url value="/resources/js/player-global-mobile.js" />"></script>
-<script src="<c:url value="/resources/js/player-youtube-mobile.js" />"></script>
-<script src="<c:url value="/resources/js/player-twitch-mobile.js" />"></script>
+<script src="<c:url value="/resources/js/player-global.js" />"></script>
+<script src="<c:url value="/resources/js/player-youtube.js" />"></script>
+<script src="<c:url value="/resources/js/player-twitch.js" />"></script>
 
 <script>
     var contextRoot = '<c:url value="/" />';
@@ -53,16 +53,11 @@ $(document).bind("mobileinit", function () {
     var isAutoPlayEnabled = true;
     var playlistId = '${selectedPlaylist.playlistId }';
     var lastPlayedVideoId = '${selectedPlaylist.lastReproduced.videoId }';
+    isMobile = true; //player-global.js
     $(document).ready(function() {
         loadYoutubeVideos();
         loadTwitchVideos();
     });
-    
-/*    $(document).on('pagecontainerchange ', function() {
-        alert('pagechange');
-        loadYoutubeVideos();
-    });*/
-    
 </script>
 </head>
 <body>

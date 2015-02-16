@@ -14,6 +14,9 @@ var youtubePlayer;
 /**Holds the current video id that it's playing now. Used to save current time*/
 var currentVideoId;
 
+/**If app is running on mobile touch device*/
+var isMobile = false;;
+
 /**
  * Starts saving the current video time every 5 seconds until stopped.
  * To stop it, call stopSavingCurrentVideoTime()
@@ -38,12 +41,14 @@ function saveCurrentVideoTime() {
     if(youtubePlayer) {
         currentTime = Math.round(youtubePlayer.getCurrentTime());
     }
-    $.post(contextRoot + 'video/savetime', {
-        'videoId' : currentVideoId,
-        'playlistId' : playlistId,
-        'currentTime' : currentTime
-    });
-    $('a[video-id=' + currentVideoId + ']').attr('last-played', currentTime);
+    if(currentTime != 0) {
+        $.post(contextRoot + 'video/savetime', {
+            'videoId' : currentVideoId,
+            'playlistId' : playlistId,
+            'currentTime' : currentTime
+        });
+        $('[data-video-id=' + currentVideoId + ']').attr('data-last-played', currentTime);
+    }
 }
 
 /**
@@ -54,12 +59,15 @@ function stopSavingCurrentVideoTime() {
 }
 
 /**
- * Plays the next video, closing the popup for the current video and opening the next
+ * Plays the next video
+ * If on Desktop, will close the popup
  */
 function playNextVideo() {
-    var nextVideo = $('a', $('.videos-list li a[video-id=' + currentVideoId + ']').parent().next());
+    var nextVideo = $('a', $('[data-video-id=' + currentVideoId + ']').parents('li').next());
     if(nextVideo) {
-        $.magnificPopup.close()
+    	if($.magnificPopup) {
+	        $.magnificPopup.close()
+        }
         nextVideo.click();
     }
 }
@@ -101,7 +109,7 @@ function registerBrowseLocationChange() {
             var matchPlayVideoUrl = location.pathname.match(regExpPlayVideoUrl);
             if (matchPlayVideoUrl){
                 closePlayer();
-                $('a[video-id=' + matchPlayVideoUrl[2] + ']').click();
+                $('a[data-video-id=' + matchPlayVideoUrl[2] + ']').click();
             }
             // This checks if new url is to close a video (show playlist videos)
             var regExpShowPlaylist = new RegExp(contextRoot + "playlist/([0-9]+)$");

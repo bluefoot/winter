@@ -58,7 +58,6 @@ limitations under the License.
     var isPlaylistOrVideoPage = (playlistId != '');
     var isAutoPlayEnabled = true;
     $(document).ready(function() {
-        isAutoPlayEnabled = false;
         if(isPlaylistOrVideoPage) {
             $('.app-main').addClass('playlist-or-video-page');
         }
@@ -81,7 +80,7 @@ limitations under the License.
         $('.button-delete-playlist').each(function(){
             $(this).bind('click', function(e){
                 if(e.altKey) {
-                    var playlistIdToBeDeleted = $(this).attr('playlistid');
+                    var playlistIdToBeDeleted = $(this).attr('data-playlist-id');
                     $('#playlist' + playlistIdToBeDeleted).fadeOut('fast');
                     $.ajax({
                         type: 'POST',
@@ -161,7 +160,7 @@ limitations under the License.
                 <li id="playlist${pl.playlistId}" <c:if test="${selectedPlaylist.playlistId  == pl.playlistId}">class="selected-playlist"</c:if>>
                   <a class="link-playlist-thumb" href="<c:url value="/playlist/${pl.playlistId}" />">
                     <img src="${pl.image }" height="126px" width="224px" /><br />${pl.name }</a>
-                  <a href="javascript:;" class="button-delete-playlist fa fa-trash-o" playlistid="${pl.playlistId}" title="Delete this playlist (hold ALT key)"></a>
+                  <a href="javascript:;" class="button-delete-playlist fa fa-trash-o" data-playlist-id="${pl.playlistId}" title="Delete this playlist (hold ALT key)"></a>
                 </li>
               </c:forEach>
             </ul>
@@ -205,10 +204,10 @@ limitations under the License.
           <div id="someotherdiv">
             <h1>${selectedPlaylist eq null ? 'Winter' : selectedPlaylist.name }</h1>
              <c:if test="${videos != null}">
-             <ul class="videos-list" last-played-video="${selectedPlaylist.lastReproduced.videoId }">
+             <ul class="videos-list" data-last-played-video="${selectedPlaylist.lastReproduced.videoId }">
               <c:forEach items="${videos }" var="v" >  
                 <li>
-                  <a href="<c:url value="/playlist/${selectedPlaylist.playlistId }/video/${v.videoId }" />" video-id=${v.videoId } class="button-play-video" last-played="${v.currentPosition }">${v.url }</a>
+                  <a href="<c:url value="/playlist/${selectedPlaylist.playlistId }/video/${v.videoId }" />" data-video-id="${v.videoId }" class="button-play-video" data-last-played="${v.currentPosition }">${v.url }</a>
                 </li>
               </c:forEach>
               </ul>

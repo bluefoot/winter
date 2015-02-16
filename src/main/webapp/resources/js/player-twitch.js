@@ -60,7 +60,7 @@ function loadTwitchVideos() {
     $(".button-play-video:contains('twitch.tv')").each(function(index) {
         var videoURL = $(this).text();
         var videoID = getTwitchVideoID(videoURL);
-        var internalVideoID = $(this).attr('video-id');
+        var internalVideoID = $(this).attr('data-video-id');
         var linkobj = this;
         // Calls twitch to get video info
         $.getJSON('https://api.twitch.tv/kraken/videos/'+ videoID + '?callback=?', function(data) {
@@ -70,8 +70,8 @@ function loadTwitchVideos() {
             var img = '<img src="'+ data.preview + '" height="100px" width="188px" />';
             $(linkobj).prepend(img);
             // If last played size is almost finishing video, come back to start
-            if($(linkobj).attr('last-played') >= videoLength - 5) {
-                $(linkobj).attr('last-played', '0');
+            if($(linkobj).attr('data-last-played') >= videoLength - 5) {
+                $(linkobj).attr('data-last-played', '0');
             }
             // Binds a click event to the video link to open a popup and load TwitchPlayer
             $(linkobj).magnificPopup({
@@ -83,7 +83,7 @@ function loadTwitchVideos() {
                                 mainClass: 'popup-player-video',
                                 callbacks : {
                                     open : function() {
-                                        currentTwitchVideoStartPlayTime = $(linkobj).attr('last-played');
+                                        currentTwitchVideoStartPlayTime = $(linkobj).attr('data-last-played');
                                         currentVideoId = internalVideoID;
                                         currentTwitchVideoLength = videoLength;
                                         history.pushState(null, null, $(linkobj).attr('href'));
@@ -110,11 +110,35 @@ function loadTwitchVideos() {
                                 }
                             });
             if(isAutoPlayEnabled && 
-                    ((videoToPlay == '' && $(linkobj).attr('video-id')==lastPlayedVideoId) || 
+                    ((videoToPlay == '' && $(linkobj).attr('data-video-id')==lastPlayedVideoId) || 
                     $('.videos-list li').length==1 ||
-                    $(linkobj).attr('video-id')==videoToPlay)) {
+                    $(linkobj).attr('data-video-id')==videoToPlay)) {
                 $(linkobj).click();
             }
+        });
+    });
+    
+    // Mobile
+        $(".video-title:contains('twitch.tv')").each(function(index) {
+        var videoURL = $(this).text();
+        var videoID = getTwitchVideoID(videoURL);
+        var internalVideoID = $(this).attr('data-video-id');
+        var spanVideoDesc = this;
+        $(spanVideoDesc).parents('li').append('<a class="video-disabled"></a>');
+        // Calls twitch to get video info
+        $.getJSON('https://api.twitch.tv/kraken/videos/'+ videoID + '?callback=?', function(data) {
+            var videoLength = data.length;
+            // Modifies HTML to have image, title, etc
+            $(spanVideoDesc).text(data.title);
+            $('.img', $(spanVideoDesc).parent('a')).css('background-image', 'url(' + data.preview + ')').css('background-size', 'cover');
+            // If last played size is almost finishing video, come back to start
+            if($(spanVideoDesc).attr('data-last-played') >= videoLength - 5) {
+                $(spanVideoDesc).attr('data-last-played', '0');
+            }
+            // Binds a click event to the video link to open a popup and load TwitchPlayer
+            $('.video-disabled', $(spanVideoDesc).parents('li')).bind('click', function(e){
+                $('#popupmsg').text('Twitch VODs not supported on mobile. Hopefully Twitch will support HTML5 VODs soon™!');
+            }).attr('href', '#popupmsg').attr('data-rel', 'popup');
         });
     });
 }
@@ -122,11 +146,17 @@ function loadTwitchVideos() {
 /**
  * Returns a twitch video id from a URL
  * http://www.twitch.tv/dragon/v/3633912, returns v3633912
+ * http://www.twitch.tv/wcs/b/625294920, returns a625294920 (b for some reason 
+ * only works if replaced by a. go ask twitch about it, no documentation whatsoever)
  */
 function getTwitchVideoID(url){
     var regExp = /^.*twitch.tv\/.*?\/(.*)/;
     var match = url.match(regExp);
     if (match){
-        return match[1].replace("/", "");
+        var videoId = match[1].replace("/", "");
+        if(videoId.charAt(0)=='b') {
+            videoId = 'a' + videoId.substr(1);
+        }
+        return videoId;
     }
 }

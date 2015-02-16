@@ -38,7 +38,7 @@ function onYouTubeIframeAPIReady() {
     $(".button-play-video:contains('youtube.com')").each(function(index) {
         var videoURL = $(this).text();
         var videoID = getYoutubeVideoID(videoURL);
-        var internalVideoID = $(this).attr('video-id');
+        var internalVideoID = $(this).attr('data-video-id');
         var linkobj = this;
         // Calls youtube to get video info
         $.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + videoID + '&key=' + gkey + '&part=snippet,contentDetails&callback=?', function(data) {
@@ -48,8 +48,8 @@ function onYouTubeIframeAPIReady() {
                 var img = '<img src="' + data.items[0].snippet.thumbnails.medium.url + '" height="100px" width="188px" />';
                 $(linkobj).prepend(img);
                 // If last played size is almost finishing video, come back to start
-                if($(linkobj).attr('last-played') >= convertIso8601ToSeconds(data.items[0].contentDetails.duration) - 5) {
-                    $(linkobj).attr('last-played', '0');
+                if($(linkobj).attr('data-last-played') >= convertIso8601ToSeconds(data.items[0].contentDetails.duration) - 5) {
+                    $(linkobj).attr('data-last-played', '0');
                 }
                 $(linkobj).magnificPopup({
                     items : {
@@ -66,7 +66,7 @@ function onYouTubeIframeAPIReady() {
                                 width: '100%',
                                 videoId: videoID,
                                 playerVars: {
-                                    'start': $(linkobj).attr('last-played')
+                                    'start': $(linkobj).attr('data-last-played')
                                 },
                                 events: {
                                   'onReady': onYoutubePlayerReady,
@@ -81,9 +81,9 @@ function onYouTubeIframeAPIReady() {
                     }
                 });
                 if(isAutoPlayEnabled &&
-                        ((videoToPlay == '' && $(linkobj).attr('video-id')==lastPlayedVideoId) || 
+                        ((videoToPlay == '' && $(linkobj).attr('data-video-id')==lastPlayedVideoId) || 
                         $('.videos-list li').length==1 || 
-                        $(linkobj).attr('video-id')==videoToPlay)) {
+                        $(linkobj).attr('data-video-id')==videoToPlay)) {
                     $(linkobj).click();
                 }
             } else {
@@ -91,6 +91,58 @@ function onYouTubeIframeAPIReady() {
             }
         });
     });
+    
+    // Mobile
+    
+    $(".video-title:contains('youtube.com')").each(function(index) {
+    var videoURL = $(this).text();
+    var videoID = getYoutubeVideoID(videoURL);
+    var internalVideoID = $(this).attr('data-video-id');
+    var spanVideoDesc = this;
+    // Calls youtube to get video info
+    $.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + videoID + '&key=' + gkey + '&part=snippet,contentDetails&callback=?', function(data) {
+        if (typeof (data.items[0]) != "undefined") {
+            // Modifies HTML to have image, title, etc
+            $(spanVideoDesc).text(data.items[0].snippet.title);
+            $('.img', $(spanVideoDesc).parent('a')).css('background-image', 'url(' + data.items[0].snippet.thumbnails.medium.url + ')').css('background-size', 'cover');
+            // If last played size is almost finishing video, come back to start
+            if($(spanVideoDesc).attr('data-last-played') >= convertIso8601ToSeconds(data.items[0].contentDetails.duration) - 5) {
+                $(spanVideoDesc).attr('data-last-played', '0');
+            }
+            $(spanVideoDesc).parent('a').bind('click', function(e){
+                if(youtubePlayer) {
+                    youtubePlayer.destroy();
+                }
+                currentVideoId = $('span.video-title', this).attr('data-video-id');
+                $('.current-playing').removeClass('current-playing');
+                $(this).parent('div.cell-wmobile').addClass('current-playing');
+                youtubePlayer = new YT.Player('video-placeholder', {
+                    height: '150px',
+                    width: '100%',
+                    videoId: videoID,
+                    playerVars: {
+                        'start': $(spanVideoDesc).attr('data-last-played')
+                    },
+                    events: {
+                      'onReady': onYoutubePlayerReady,
+                      'onStateChange': onYoutubePlayerStateChange
+                    }
+                  });
+                e.preventDefault();
+            });
+            if(isAutoPlayEnabled && (
+                    internalVideoID==lastPlayedVideoId || // if this is the last played video from before, play it 
+                    $('.playlists-wmobile-grid li').length==1 || // or if this is the only single video in the playlist
+                    (lastPlayedVideoId=='' && $('div.cell-wmobile.current-playing').length==0) // or if there's no last played video, and nothing else is playing. in mobile, there should be always a video loaded
+                  )
+                ){
+                $(spanVideoDesc).parent('a').click();
+            }
+        } else {
+            $(spanVideoDesc).text('video not exist');
+        }
+    });
+  });
 }
 
 
@@ -100,7 +152,12 @@ function onYouTubeIframeAPIReady() {
  * @param event
  */
 function onYoutubePlayerReady(event) {
-    event.target.playVideo();
+	if(!isMobile) {
+		// Can't autoplay on mobile. https://developers.google.com/youtube/iframe_api_reference#Mobile_considerations
+	    event.target.playVideo();
+    } else {
+        $.mobile.silentScroll($('span[data-video-id=' + currentVideoId + ']').parents('li').position().top-$('.header-wmobile').height());
+    }
     triggerSaveCurrentVideoTime();
 }
 
@@ -111,6 +168,12 @@ function onYoutubePlayerReady(event) {
  */
 function onYoutubePlayerStateChange(event) {
     if(event.data == YT.PlayerState.ENDED) {
+        if(document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
+        if(document.mozCancelFullscreen) {
+            document.mozCancelFullscreen();
+        }
         playNextVideo();
      }
 }

@@ -46,6 +46,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /*
+ * consistency between html selectors in mobile and desktop versions
+ *  unify javascripts
  * compress
  *  send a "page loaded " date argument implement save video priority to avoid race condition
  *  if old page sends a lesser page loaded, ignore it
