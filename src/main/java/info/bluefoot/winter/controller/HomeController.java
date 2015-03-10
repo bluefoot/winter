@@ -47,6 +47,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /*
+ * remember last used QUALITY (this is urgent)
+ * add "watched" overlays to videos and playlists please lol
+ * edit playlist, just open add window with videos in it. ez.
  * only save video position if it's playing AND changed since last post
  * consistency between html selectors in mobile and desktop versions
  * compress

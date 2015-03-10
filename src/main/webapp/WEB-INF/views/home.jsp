@@ -77,6 +77,13 @@ limitations under the License.
             showCloseBtn: true
         });
         
+        $('#add-videos-playlist').magnificPopup({
+            type: 'ajax',
+            closeOnContentClick: false,
+            closeOnBgClick: false,
+            showCloseBtn: true
+        });
+        
         $('.button-delete-playlist').each(function(){
             $(this).bind('click', function(e){
                 if(e.altKey) {
@@ -105,6 +112,7 @@ limitations under the License.
                 e.preventDefault();
             });
         });
+
     });
     
     function warningMessage(text, bounce) {
@@ -204,6 +212,13 @@ limitations under the License.
           <div id="someotherdiv">
             <h1>${selectedPlaylist eq null ? 'Winter' : selectedPlaylist.name }</h1>
              <c:if test="${videos != null}">
+             <nav>
+                <c:url value="/playlist/addvideos" var="addVideosUrl">
+                  <c:param name="playlistId" value="${selectedPlaylist.playlistId}"></c:param>
+                </c:url>
+                <a id="add-videos-playlist" href="${addVideosUrl }"><span data-hover="Add Videos">Add Videos</span></a>
+                <a href="#"><span data-hover="Edit Playlist">Edit Playlist</span></a>
+             </nav>
              <ul class="videos-list" data-last-played-video="${selectedPlaylist.lastReproduced.videoId }">
               <c:forEach items="${videos }" var="v" >  
                 <li <c:if test="${v.videoId==selectedPlaylist.lastReproduced.videoId}">class="current-playing-video"</c:if>>

@@ -24,6 +24,7 @@ import info.bluefoot.winter.service.PlaylistService;
 import info.bluefoot.winter.service.VideoService;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -95,6 +96,17 @@ public class PlaylistServiceImpl implements PlaylistService {
     @Override
     public Playlist getPlaylistById(Integer playlistId) {
         return playlistDao.getPlaylistsById(playlistId);
+    }
+
+    @Override
+    public void addVideosToPlaylist(Playlist playlist, Set<Video> videos) {
+        List<Video> currentPlaylistVideos = videoService.getVideosFromPlaylistSortedByPosition(playlist);
+        int position = currentPlaylistVideos.get(currentPlaylistVideos.size()-1).getSortPosition();
+        for (Video video : videos) {
+            video.setSortPosition(++position);
+            video.setPlaylist(playlist);
+            videoService.addVideo(video);
+        }
     }
 
 }

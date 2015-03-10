@@ -25,7 +25,7 @@ public interface VideoService {
 
     public void addVideo(Video video);
 
-    public List<Video> getVideosFromPlaylist(Playlist playlist);
+    public List<Video> getVideosFromPlaylistSortedByPosition(Playlist playlist);
 
     public void removeVideosFromPlaylist(Integer playlistId);
 

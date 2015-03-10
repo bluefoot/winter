@@ -25,8 +25,9 @@ public class AddPlaylistForm {
         return playlist;
     }
 
-    public void setPlaylist(Playlist playlist) {
+    public AddPlaylistForm setPlaylist(Playlist playlist) {
         this.playlist = playlist;
+        return this;
     }
 
     public String getVideos() {

@@ -44,12 +44,16 @@ public class Video {
     }
 
     public Video(String url, Integer sortPosition) {
-        this.url = url;
+        this(url);
         this.sortPosition=sortPosition;
     }
 
     public Video() {
         super();
+    }
+
+    public Video(String url) {
+        this.url = url;
     }
 
     public Integer getCurrentPosition() {

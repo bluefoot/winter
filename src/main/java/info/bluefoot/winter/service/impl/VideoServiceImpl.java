@@ -57,7 +57,7 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public List<Video> getVideosFromPlaylist(Playlist playlist) {
+    public List<Video> getVideosFromPlaylistSortedByPosition(Playlist playlist) {
         return videoDao.getVideosFromPlaylist(playlist);
     }
 

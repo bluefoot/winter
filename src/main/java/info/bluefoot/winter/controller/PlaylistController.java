@@ -45,6 +45,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 //http://docs.spring.io/spring-security/site/docs/3.2.5.RELEASE/reference/htmlsingle/
@@ -80,7 +81,7 @@ public class PlaylistController {
                     id, 
                     Utils.getCurrentLoggedUser());
 //            Playlist selectedPlaylist = playlistService.getPlaylistById(id);
-            List<Video> videos = videoService.getVideosFromPlaylist(selectedPlaylist);
+            List<Video> videos = videoService.getVideosFromPlaylistSortedByPosition(selectedPlaylist);
             model.addAttribute("selectedPlaylist", selectedPlaylist);
             model.addAttribute("videos", videos);
             if (device.isMobile()) {
@@ -105,7 +106,7 @@ public class PlaylistController {
                     id, 
                     Utils.getCurrentLoggedUser());
             List<Playlist> playlists = playlistService.getPlaylistsFromUser(Utils.getCurrentLoggedUser());
-            List<Video> videos = videoService.getVideosFromPlaylist(selectedPlaylist);
+            List<Video> videos = videoService.getVideosFromPlaylistSortedByPosition(selectedPlaylist);
             model.addAttribute("playlists", playlists);
             model.addAttribute("selectedPlaylist", selectedPlaylist);
             model.addAttribute("videos", videos);
@@ -135,6 +136,44 @@ public class PlaylistController {
         return new ResponseEntity<Map<String, String>>(
                 Collections.singletonMap("sucess", "true"),
                 HttpStatus.OK);    }
+   
+    @RequestMapping(value = { "/playlist/addvideos" }, method = RequestMethod.GET)
+    public String addVideosToPlaylistDisplayForm(@RequestParam Integer playlistId, Model model) {
+        model.addAttribute("playlistform", new AddPlaylistForm().setPlaylist(new Playlist().setPlaylistId(playlistId)));
+        return "add-videos-to-playlist";
+    }
+    
+    @RequestMapping(value = { "/playlist/addvideos" }, method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody ResponseEntity<Map<String, String>> addVideosToPlaylist(
+            @ModelAttribute("addplaylistform") AddPlaylistForm addPlaylistForm,
+            HttpServletResponse response) {
+        Set<Video> videos = new HashSet<Video>();
+        for (String url : addPlaylistForm.getVideos().split("\n")) {
+            if (!url.trim().isEmpty()) {
+                videos.add(new Video(url.trim()));
+            }
+        }
+        try {
+            // checking if user is the owner of the playlist
+            Playlist selectedPlaylist = playlistService.getPlaylistByIdAndUser(
+                    addPlaylistForm.getPlaylist().getPlaylistId(), 
+                    Utils.getCurrentLoggedUser());
+            playlistService.addVideosToPlaylist(selectedPlaylist, videos);
+        } catch (PlaylistNotFoundException e) {
+            return new ResponseEntity<Map<String, String>>(
+                    Collections.singletonMap("error", "Invalid playlist"), 
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            String errorId = RandomStringUtils.randomAlphanumeric(6).toUpperCase();
+            logger.error("[" + errorId + "] Can't add videos to playlist", e);
+            return new ResponseEntity<Map<String, String>>(
+                    Collections.singletonMap("error", "Can't add videos to playlist. Try again later. Error id: " + errorId + "."), 
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<Map<String, String>>(
+                Collections.singletonMap("playlist_id", String.valueOf(addPlaylistForm.getPlaylist().getPlaylistId())),
+                HttpStatus.OK);
+    }
     
     @RequestMapping(value = { "/playlist/add" }, method = RequestMethod.GET)
     public String addPlaylistDisplayForm(Model model) {

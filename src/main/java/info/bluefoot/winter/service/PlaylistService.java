@@ -17,8 +17,10 @@ package info.bluefoot.winter.service;
 
 import info.bluefoot.winter.model.Playlist;
 import info.bluefoot.winter.model.User;
+import info.bluefoot.winter.model.Video;
 
 import java.util.List;
+import java.util.Set;
 
 public interface PlaylistService {
     public List<Playlist> getPlaylistsFromUser(User user);
@@ -33,4 +35,6 @@ public interface PlaylistService {
             User principal);
 
     public Playlist getPlaylistById(Integer id);
+
+    public void addVideosToPlaylist(Playlist playlist, Set<Video> videos);
 }
