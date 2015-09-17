@@ -214,10 +214,14 @@ limitations under the License.
              <c:if test="${videos != null}">
              <nav>
                 <c:url value="/playlist/addvideos" var="addVideosUrl">
-                  <c:param name="playlistId" value="${selectedPlaylist.playlistId}"></c:param>
+                  <c:param name="playlistId" value="${selectedPlaylist.playlistId}" />
+                </c:url>
+                <c:url value="/playlist/removeduplicates" var="removeDuplicatesUrl">
+                  <c:param name="playlistId" value="${selectedPlaylist.playlistId}" />
                 </c:url>
                 <a id="add-videos-playlist" href="${addVideosUrl }"><span data-hover="Add Videos">Add Videos</span></a>
                 <a href="#"><span data-hover="Edit Playlist">Edit Playlist</span></a>
+                <a id="remove-duplicates" href="${removeDuplicatesUrl }"><span data-hover="Remove Duplicates">Remove Duplicates</span></a>
              </nav>
              <ul class="videos-list" data-last-played-video="${selectedPlaylist.lastReproduced.videoId }">
               <c:forEach items="${videos }" var="v" >  
