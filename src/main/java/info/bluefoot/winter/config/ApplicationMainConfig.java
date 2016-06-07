@@ -46,15 +46,13 @@ public class ApplicationMainConfig {
     
     @Bean(destroyMethod="close", autowire=Autowire.BY_TYPE)
     public DataSource dataSource() throws Throwable {
-        String envVar = System.getenv("WINTER_DB_USER");
-
         if(StringUtils.isBlank(databaseHost)) databaseHost = "127.0.0.1";
         if(StringUtils.isBlank(databaseUser) || StringUtils.isBlank(databasePassword)) {
             throw new IllegalStateException("Can't find out database user and pwd based on environment variables");
         }
         com.mchange.v2.c3p0.ComboPooledDataSource ds = new com.mchange.v2.c3p0.ComboPooledDataSource();
         ds.setDriverClass("org.postgresql.Driver");
-        ds.setJdbcUrl("jdbc:postgresql://" + databaseHost + ":5432/winter?user=" + databaseUser + "&password=" + databasePassword); //prod: 127.8.229.130 // dev: 127.0.0.1
+        ds.setJdbcUrl("jdbc:postgresql://" + databaseHost + ":5432/winter?user=" + databaseUser + "&password=" + databasePassword);
         ds.setMaxPoolSize(40);
         ds.setMinPoolSize(1);
         ds.setMaxIdleTime(200);

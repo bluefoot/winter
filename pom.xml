@@ -13,10 +13,20 @@
   <artifactId>winter</artifactId>
   <packaging>war</packaging>
   <version>0.1.1</version>
-  <name>Watch Later</name>
+  <name>Winter</name>
 
-  <description>Reproduces your playlist, resumes where you left off, lets you queue playlist to watch later</description>
+  <description>Reproduces your playlists, resumes where you left off, lets you queue playlists to watch later</description>
   <url>http://bluefoot.info</url>
+  
+  <inceptionYear>2015</inceptionYear>
+
+  <developers>
+    <developer>
+      <id>bluefoot</id>
+      <name>Gewton Teixeira</name>
+      <email>bluefoot.dev@gmail.com</email>
+    </developer>
+  </developers>
 
   <properties>
     <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
