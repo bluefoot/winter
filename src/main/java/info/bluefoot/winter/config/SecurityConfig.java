@@ -58,16 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private DataSource dataSource;
 	
-//	@Inject
-//    public UserDetailsService userDetailsService;
-	
 	@Inject
 	private UserDao userDao;
 	
 	@Override
 	protected UserDetailsService userDetailsService() {
 	    return new WinterUserDetailsService(userDao);
-//	    return userDetailsService;
 	}
 	
 	@Bean
@@ -106,7 +102,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                             "/auth/**", 
                             "/signin/**", 
                             "/signup/**",
-                            "/debug1234", //for debugging
                             "/disconnect/facebook")
                                 .permitAll()
                     .antMatchers(

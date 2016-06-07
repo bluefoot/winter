@@ -15,11 +15,11 @@
  */
 package info.bluefoot.winter.controller;
 
+import info.bluefoot.winter.model.User;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-
-import info.bluefoot.winter.model.User;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

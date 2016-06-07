@@ -18,8 +18,8 @@ package info.bluefoot.winter.service.impl;
 import info.bluefoot.winter.controller.Utils;
 import info.bluefoot.winter.dao.PlaylistDao;
 import info.bluefoot.winter.model.Playlist;
-import info.bluefoot.winter.model.Video;
 import info.bluefoot.winter.model.User;
+import info.bluefoot.winter.model.Video;
 import info.bluefoot.winter.service.PlaylistService;
 import info.bluefoot.winter.service.VideoService;
 

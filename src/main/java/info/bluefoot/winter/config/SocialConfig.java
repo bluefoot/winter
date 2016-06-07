@@ -21,6 +21,7 @@ import info.bluefoot.winter.service.sociallogin.SocialConnectionSignUp;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -50,6 +51,24 @@ import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 @EnableSocial
 public class SocialConfig extends SocialConfigurerAdapter {
 
+    @Value("#{systemEnvironment['WINTER_TWITTER_KEY']}")
+    private String twitterKey;
+
+    @Value("#{systemEnvironment['WINTER_TWITTER_SECRET']}")
+    private String twitterSecret;
+    
+    @Value("#{systemEnvironment['WINTER_FACEBOOK_KEY']}")
+    private String facebookKey;
+    
+    @Value("#{systemEnvironment['WINTER_FACEBOOK_SECRET']}")
+    private String facebookSecret;
+    
+    @Value("#{systemEnvironment['WINTER_GOOGLE_KEY']}")
+    private String googleKey;
+    
+    @Value("#{systemEnvironment['WINTER_GOOGLE_SECRET']}")
+    private String googleSecret;
+    
 	@Inject
 	private DataSource dataSource;
 	
@@ -58,9 +77,9 @@ public class SocialConfig extends SocialConfigurerAdapter {
 	
 	@Override
 	public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment env) {
-	    cfConfig.addConnectionFactory(new TwitterConnectionFactory("RCtIDv8oe5W5hqAda3Py5Zr4e", "C42BnY6mLNElOAEHFhueD2Vy1ppA18Z36a4YGMziYA9sDYFJWO"));
-	    cfConfig.addConnectionFactory(new FacebookConnectionFactory("446027038882898", "7419ee53166f54c5c8c83ccca6c63546"));
-	    cfConfig.addConnectionFactory(new GoogleConnectionFactory("421555105306-1ef8cfjroj9gggm5tgiaim0smv5mv6rc.apps.googleusercontent.com", "WJ_MDFaKthzj91ZSl8cAQsys"));
+	    cfConfig.addConnectionFactory(new TwitterConnectionFactory(twitterKey, twitterSecret));
+	    cfConfig.addConnectionFactory(new FacebookConnectionFactory(facebookKey, facebookSecret));
+	    cfConfig.addConnectionFactory(new GoogleConnectionFactory(googleKey, googleSecret));
 	}
 
 	@Override
@@ -106,7 +125,6 @@ public class SocialConfig extends SocialConfigurerAdapter {
     @Bean
     @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
     public Google google(ConnectionRepository repository) {
-        System.out.println("called google? " + repository);
         Connection<Google> connection = repository.findPrimaryConnection(Google.class);
         return connection != null ? connection.getApi() : null;
     }

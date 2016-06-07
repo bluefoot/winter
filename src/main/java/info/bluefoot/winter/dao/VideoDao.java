@@ -15,10 +15,10 @@
  */
 package info.bluefoot.winter.dao;
 
-import java.util.List;
-
 import info.bluefoot.winter.model.Playlist;
 import info.bluefoot.winter.model.Video;
+
+import java.util.List;
 
 public interface VideoDao {
     public void updateNotNullValues(Video video);

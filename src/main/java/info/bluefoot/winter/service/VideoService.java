@@ -15,10 +15,10 @@
  */
 package info.bluefoot.winter.service;
 
-import java.util.List;
-
 import info.bluefoot.winter.model.Playlist;
 import info.bluefoot.winter.model.Video;
+
+import java.util.List;
 
 public interface VideoService {
     public void updateLastPlayedTime(int videoId, Integer lastPlayedTime);

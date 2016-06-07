@@ -16,8 +16,8 @@
 package info.bluefoot.winter.controller;
 
 import info.bluefoot.winter.model.Playlist;
-import info.bluefoot.winter.model.Video;
 import info.bluefoot.winter.model.User;
+import info.bluefoot.winter.model.Video;
 import info.bluefoot.winter.service.PlaylistService;
 import info.bluefoot.winter.service.VideoService;
 import info.bluefoot.winter.service.impl.PlaylistNotFoundException;
@@ -48,20 +48,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-//http://docs.spring.io/spring-security/site/docs/3.2.5.RELEASE/reference/htmlsingle/
-//https://github.com/spring-projects/spring-mvc-showcase/blob/master/src/main/webapp/WEB-INF/spring/root-context.xml
-//http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#mvc-servlet
-//http://discuss.dev.twitch.tv/t/scrub-to-time-on-embedded-player/120
-//https://github.com/justintv/Twitch-API
-//http://tympanus.net/Development/CreativeLinkEffects/
-//https://github.com/justintv/Twitch-API/blob/master/player.md
-//http://discuss.dev.twitch.tv/t/embedding-player-with-javascript-api-callback/1198/5
-//http://discuss.dev.twitch.tv/t/embedding-player-with-javascript-api-callback/1198/4
-//https://developers.google.com/youtube/v3/docs/videos#fileDetails
-//https://developers.google.com/youtube/player_parameters?playerVersion=HTML5#start
-//http://diveintohtml5.info/history.html
-//http://dimsemenov.com/plugins/magnific-popup/documentation.html
-//http://astronautweb.co/snippet/font-awesome/
 @Controller
 public class PlaylistController {
 
@@ -80,7 +66,6 @@ public class PlaylistController {
             Playlist selectedPlaylist = playlistService.getPlaylistByIdAndUser(
                     id, 
                     Utils.getCurrentLoggedUser());
-//            Playlist selectedPlaylist = playlistService.getPlaylistById(id);
             List<Video> videos = videoService.getVideosFromPlaylistSortedByPosition(selectedPlaylist);
             model.addAttribute("selectedPlaylist", selectedPlaylist);
             model.addAttribute("videos", videos);
@@ -123,7 +108,6 @@ public class PlaylistController {
     @RequestMapping(value = { "/playlist/delete" }, method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody ResponseEntity<Map<String, String>> removePlaylist(
             Integer playlistId, HttpServletResponse response) {
-        System.out.println("removing " + playlistId);
         try {
             playlistService.removePlaylistAndVideos(playlistId);
         } catch (Exception e) {

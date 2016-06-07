@@ -17,8 +17,8 @@ package info.bluefoot.winter.dao.jdbc;
 
 import info.bluefoot.winter.dao.PlaylistDao;
 import info.bluefoot.winter.model.Playlist;
-import info.bluefoot.winter.model.Video;
 import info.bluefoot.winter.model.User;
+import info.bluefoot.winter.model.Video;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

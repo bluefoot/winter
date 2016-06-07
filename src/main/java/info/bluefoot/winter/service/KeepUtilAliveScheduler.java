@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class KeepUtilAliveScheduler {
+    
     private static final String UTIL_URL = "http://util-gewton.rhcloud.com";
 
     private static Logger logger = LoggerFactory.getLogger(KeepUtilAliveScheduler.class);

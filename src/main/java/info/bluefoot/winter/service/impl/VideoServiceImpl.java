@@ -15,12 +15,12 @@
  */
 package info.bluefoot.winter.service.impl;
 
-import java.util.List;
-
 import info.bluefoot.winter.dao.VideoDao;
 import info.bluefoot.winter.model.Playlist;
 import info.bluefoot.winter.model.Video;
 import info.bluefoot.winter.service.VideoService;
+
+import java.util.List;
 
 import javax.inject.Inject;
 

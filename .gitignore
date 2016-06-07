@@ -8,3 +8,5 @@
 maven-eclipse.xml
 /.externalToolBuilders
 .DS_Store
+*KeepUtilAliveScheduler*
+KeepUtilAliveScheduler.java
