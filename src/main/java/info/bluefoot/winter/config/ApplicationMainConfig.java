@@ -46,8 +46,7 @@ public class ApplicationMainConfig {
     
     @Bean(destroyMethod="close", autowire=Autowire.BY_TYPE)
     public DataSource dataSource() throws Throwable {
-        if(StringUtils.isBlank(databaseHost)) databaseHost = "127.0.0.1";
-        if(StringUtils.isBlank(databaseUser) || StringUtils.isBlank(databasePassword)) {
+        if(StringUtils.isBlank(databaseUser) || StringUtils.isBlank(databasePassword) || StringUtils.isBlank(databaseHost)) {
             throw new IllegalStateException("Can't find out database user and pwd based on environment variables");
         }
         com.mchange.v2.c3p0.ComboPooledDataSource ds = new com.mchange.v2.c3p0.ComboPooledDataSource();

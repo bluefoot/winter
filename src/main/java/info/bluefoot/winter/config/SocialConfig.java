@@ -21,6 +21,7 @@ import info.bluefoot.winter.service.sociallogin.SocialConnectionSignUp;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -77,6 +78,9 @@ public class SocialConfig extends SocialConfigurerAdapter {
 	
 	@Override
 	public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment env) {
+        if(StringUtils.isBlank(twitterKey) || StringUtils.isBlank(facebookKey) || StringUtils.isBlank(googleKey)) {
+            throw new IllegalStateException("Can't find out social login provider keys based on environment variables");
+        }
 	    cfConfig.addConnectionFactory(new TwitterConnectionFactory(twitterKey, twitterSecret));
 	    cfConfig.addConnectionFactory(new FacebookConnectionFactory(facebookKey, facebookSecret));
 	    cfConfig.addConnectionFactory(new GoogleConnectionFactory(googleKey, googleSecret));

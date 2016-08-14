@@ -1,6 +1,16 @@
 /**Google api v3 key*/
 var gkey = 'AIzaSyDB0_Z2fziu128Qci8coL6XfeAaSARM-YM';
+/**
+ * https://developers.google.com/api-client-library/javascript/
+ */
+function onLoadFn() {
+    gapi.client.setApiKey(gkey);
+}
+gapi.load("client", onLoadFn);
 
+function exportToYoutube() {
+	alert("to be implemented");
+}
 /**
  * Converts ISO 8601 date returned by youtube to seconds.
  * http://stackoverflow.com/a/22762313

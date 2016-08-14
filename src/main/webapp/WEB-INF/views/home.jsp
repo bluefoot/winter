@@ -38,7 +38,7 @@ limitations under the License.
 <link rel="stylesheet" href="<c:url value="/resources/css/hiiconeffect.css" />" />
 <script src="<c:url value="/resources/js/vendor/jquery-1.11.2.min.js" />"></script>
 <script src="<c:url value="/resources/js/vendor/jquery.trackpad-scroll-emulator.min.js" />"></script>
-<script src="https://apis.google.com/js/client.js?onload=init"></script>
+<script src="https://apis.google.com/js/api.js"></script>
 <script src="<c:url value="/resources/js/vendor/modernizr.custom.js" />"></script>
 <script src="<c:url value="/resources/js/vendor/magnific-popup.min.js" />"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
@@ -112,7 +112,12 @@ limitations under the License.
                 e.preventDefault();
             });
         });
-
+        
+        $('#export-youtube').click(function(){
+            gapi.client.load('youtube', 'v1').then(function() {
+                exportToYoutube();
+             });
+        });
     });
     
     function warningMessage(text, bounce) {
@@ -219,9 +224,13 @@ limitations under the License.
                 <c:url value="/playlist/removeduplicates" var="removeDuplicatesUrl">
                   <c:param name="playlistId" value="${selectedPlaylist.playlistId}" />
                 </c:url>
+                <c:url value="/playlist/export" var="exportPlaylistUrl">
+                  <c:param name="playlistId" value="${selectedPlaylist.playlistId}" />
+                </c:url>
                 <a id="add-videos-playlist" href="${addVideosUrl }"><span data-hover="Add Videos">Add Videos</span></a>
                 <a href="#"><span data-hover="Edit Playlist">Edit Playlist</span></a>
                 <a id="remove-duplicates" href="${removeDuplicatesUrl }"><span data-hover="Remove Duplicates">Remove Duplicates</span></a>
+                <a id="export-youtube" href="${exportPlaylistUrl }"><span data-hover="Export to Youtube">Export to Youtube</span></a>
              </nav>
              <ul class="videos-list" data-last-played-video="${selectedPlaylist.lastReproduced.videoId }">
               <c:forEach items="${videos }" var="v" >  
