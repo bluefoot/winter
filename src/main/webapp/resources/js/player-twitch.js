@@ -19,7 +19,9 @@ function triggerVerifyIfTwitchVideoEnded() {
         if(!twitchPlayer) {
             window.clearInterval(intervalVerifyIfTwitchVideoEndedId);
         }
-        if(twitchPlayer && currentTwitchVideoLength <= twitchPlayer.getVideoTime()) {
+        console.log("CurrentTWiVideoLen: " + currentTwitchVideoLength +  " currenttime: " + twitchPlayer.getCurrentTime());
+        if(twitchPlayer && currentTwitchVideoLength <= twitchPlayer.getCurrentTime()) {
+            console.log("will play next video");
             playNextVideo();
             if(!isMobile) {
                 $('.wrapperscrollmain .tse-scroll-content').scrollTop($('li.current-playing-video').offset().top);
@@ -30,25 +32,105 @@ function triggerVerifyIfTwitchVideoEnded() {
 }
 
 /**
- * Callback function for the twitch player. When video starts, jumps to the last
- * position, also calls triggerSaveCurrentVideoTime()
+ * Loads metadata for twitch videos and binds functions on twitch videos to
+ * be played on click.
+ * For each video, calls via JSONP twitch api to get video metadata such as 
+ * thumbnail and title. Then binds for each video link to open a magnificPopup 
+ * with a swf object binding it to a javascript object to be used to read 
+ * statistics. The callback when twitch player is loaded is onTwitchPlayerOpenedEvent();
+ * Finally, if finds the last played video of the playlist, starts it.
+ * 
+ * https://github.com/justintv/Twitch-API/blob/master/embed-video.md
  */
-window.onTwitchPlayerOpenedEvent = function(data) {
-    data.forEach(function(event) {
-//        console.log("EVENT: %s", event.event);
-//        console.log("DATA:", event.data);
-        if (event.event == "playerInit") {
-            twitchPlayer = $("#twitchpopup")[0];
-        }
-        if (event.event == "videoPlaying") {
-            //twitchPlayer.playVideo();
-            //twitchPlayer.mute();
-            twitchPlayer.videoSeek(currentTwitchVideoStartPlayTime);
-            triggerSaveCurrentVideoTime();
-            triggerVerifyIfTwitchVideoEnded();
-        }
+
+function loadTwitchVideos() {
+    $(".button-play-video:contains('twitch.tv')").each(function(index) {
+        var videoURL = $(this).text();
+        var videoID = getTwitchVideoID(videoURL);
+        var internalVideoID = $(this).attr('data-video-id');
+        var linkobj = this;
+        // Calls twitch to get video info
+        $.getJSON('https://api.twitch.tv/kraken/videos/'+ videoID + '?callback=?', function(data) {
+            var videoLength = data.length;
+            // Modifies HTML to have image, title, etc
+            $(linkobj).text(data.title);
+            var img = '<img src="'+ data.preview + '" height="100px" width="188px" />';
+            $(linkobj).prepend(img);
+            // If last played size is almost finishing video, come back to start
+            if($(linkobj).attr('data-last-played') >= videoLength - 5) {
+                $(linkobj).attr('data-last-played', '0');
+            }
+            $(linkobj).click(function(event){
+                closePlayer();
+                event.stopPropagation();
+                var width = $("#video-player-container").width();
+                var height = width / 1.77777;
+                // Height is calculated to force 16:9 aspect ratio, but won't go over 80% of the screen
+                if(height > $(window).height() * .8) {
+                    height = $(window).height() * .8;
+                    width = height * 1.77777;
+                }
+                var options = {
+                        width: "100%", // or width
+                        height: height + "px",
+                        video: videoID
+                    };
+                var player = new Twitch.Player("video-player-container", options);
+                player.addEventListener(Twitch.Player.READY, function(){
+                    currentTwitchVideoStartPlayTime = $(linkobj).attr('data-last-played');
+                    currentVideoId = internalVideoID;
+                    currentTwitchVideoLength = videoLength;
+                    history.pushState(null, null, $(linkobj).attr('href'));
+                    $('li.current-playing-video').removeClass('current-playing-video');
+                    $(linkobj).parents('li').addClass('current-playing-video');
+                    player.seek(currentTwitchVideoStartPlayTime);
+                    player.play();
+                    twitchPlayer = player;
+                    triggerSaveCurrentVideoTime();
+                    triggerVerifyIfTwitchVideoEnded();
+                });
+                player.addEventListener(Twitch.Player.ENDED, function(){
+                    console.log("Twitch.Player.ENDED, will play nextvideo");
+                    closePlayer();
+                    playNextVideo();
+                });
+                return false;
+            });
+            if(isAutoPlayEnabled && 
+                    ((videoToPlay == '' && $(linkobj).attr('data-video-id')==lastPlayedVideoId) || 
+                    $('.videos-list li').length==1 ||
+                    $(linkobj).attr('data-video-id')==videoToPlay)) {
+                $(linkobj).click();
+                $('.wrapperscrollmain .tse-scroll-content').scrollTop($('li.current-playing-video').offset().top);
+            }
+        });
+    });
+    
+    // Mobile
+        $(".video-title:contains('twitch.tv')").each(function(index) {
+        var videoURL = $(this).text();
+        var videoID = getTwitchVideoID(videoURL);
+        var internalVideoID = $(this).attr('data-video-id');
+        var spanVideoDesc = this;
+        $(spanVideoDesc).parents('li').append('<a class="video-disabled"></a>');
+        // Calls twitch to get video info
+        $.getJSON('https://api.twitch.tv/kraken/videos/'+ videoID + '?callback=?', function(data) {
+            var videoLength = data.length;
+            // Modifies HTML to have image, title, etc
+            $(spanVideoDesc).text(data.title);
+            $('.img', $(spanVideoDesc).parent('a')).css('background-image', 'url(' + data.preview + ')').css('background-size', 'cover');
+            // If last played size is almost finishing video, come back to start
+            if($(spanVideoDesc).attr('data-last-played') >= videoLength - 5) {
+                $(spanVideoDesc).attr('data-last-played', '0');
+            }
+            // Binds a click event to the video link to open a popup and load TwitchPlayer
+            $('.video-disabled', $(spanVideoDesc).parents('li')).bind('click', function(e){
+                $('#popupmsg').text('Twitch VODs not supported on mobile. Hopefully Twitch will support HTML5 VODs soon™!');
+            }).attr('href', '#popupmsg').attr('data-rel', 'popup');
+        });
     });
 }
+
 
 /**
  * Loads metadata for twitch videos and binds functions on twitch videos to
@@ -58,8 +140,9 @@ window.onTwitchPlayerOpenedEvent = function(data) {
  * with a swf object binding it to a javascript object to be used to read 
  * statistics. The callback when twitch player is loaded is onTwitchPlayerOpenedEvent();
  * Finally, if finds the last played video of the playlist, starts it.
+ * @deprecated Now twitch supports HTML5 player for past broadcasts, this is no longer used
  */
-function loadTwitchVideos() {
+function loadTwitchVideosFlash() {
     $(".button-play-video:contains('twitch.tv')").each(function(index) {
         var videoURL = $(this).text();
         var videoID = getTwitchVideoID(videoURL);

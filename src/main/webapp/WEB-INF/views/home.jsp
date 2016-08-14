@@ -41,7 +41,10 @@ limitations under the License.
 <script src="https://apis.google.com/js/api.js"></script>
 <script src="<c:url value="/resources/js/vendor/modernizr.custom.js" />"></script>
 <script src="<c:url value="/resources/js/vendor/magnific-popup.min.js" />"></script>
+<script src= "http://player.twitch.tv/js/embed/v1.js"></script>
+<!-- Used by old swf twitch player
 <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+-->
 <script src="<c:url value="/resources/js/player-global.js" />"></script>
 <script src="<c:url value="/resources/js/player-youtube.js" />"></script>
 <script src="<c:url value="/resources/js/player-twitch.js" />"></script>
@@ -151,21 +154,23 @@ limitations under the License.
         </div>
         <div class="playlists tse-scrollable wrapperscroll stretch">
           <div class="tse-content">
-            <div class="logged-user">
-              <span class="logged-user-name" title="<sec:authentication property="principal.displayName"/>"><sec:authentication property="principal.displayName"/></span>
-              <a href="<c:url value="/logout" />" title="Logout" class="fa fa-sign-out icon-logout"></a>
-             <div class="clear" ></div>
-            </div>
-            <div class="options-playlists">
-              <div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
-                <a href="<c:url value="/playlist/add" />" class="hi-icon fa fa-file-o add-new-playlist">Add New Playlist or Video</a>
+            <div class="top-container-playlists">
+              <div class="logged-user">
+                <span class="logged-user-name" title="<sec:authentication property="principal.displayName"/>"><sec:authentication property="principal.displayName"/></span>
+                <a href="<c:url value="/logout" />" title="Logout" class="fa fa-sign-out icon-logout"></a>
+               <div class="clear" ></div>
               </div>
-              <%--
-              <div class="float-right hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
-                <a href="<c:url value="/editplaylists" />" class="hi-icon fa fa-pencil edit-playlist">Edit</a>
+              <div class="options-playlists">
+                <div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+                  <a href="<c:url value="/playlist/add" />" class="hi-icon fa fa-file-o add-new-playlist">Add New Playlist or Video</a>
+                </div>
+                <%--
+                <div class="float-right hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+                  <a href="<c:url value="/editplaylists" />" class="hi-icon fa fa-pencil edit-playlist">Edit</a>
+                </div>
+                <div class="clear" ></div>
+                 --%>
               </div>
-              <div class="clear" ></div>
-               --%>
             </div>
             <c:if test="${playlists != null && not empty playlists}">
             <ul class="playlists-images">
@@ -208,8 +213,20 @@ limitations under the License.
       <div class="point"></div>
       <div class="content"></div>
     </div>
+  </div> <!--left_col-->
+  <div class="column tse-scrollable wrapperscroll stretch" id="secondary_col">
+    <div class="tse-content">
+      <c:if test="${videos != null}">
+        <ul class="videos-list" data-last-played-video="${selectedPlaylist.lastReproduced.videoId }">
+          <c:forEach items="${videos }" var="v" >  
+            <li <c:if test="${v.videoId==selectedPlaylist.lastReproduced.videoId}">class="current-playing-video"</c:if>>
+              <a href="<c:url value="/playlist/${selectedPlaylist.playlistId }/video/${v.videoId }" />" data-video-id="${v.videoId }" class="button-play-video" data-last-played="${v.currentPosition }">${v.url }</a>
+            </li>
+          </c:forEach>
+        </ul>
+      </c:if>
+    </div>
   </div>
-  
   <div class="column tse-scrollable wrapperscrollmain stretch" id="main_col">
     <div class="tse-content">
       <div class="content">
@@ -232,14 +249,10 @@ limitations under the License.
                 <a id="remove-duplicates" href="${removeDuplicatesUrl }"><span data-hover="Remove Duplicates">Remove Duplicates</span></a>
                 <a id="export-youtube" href="${exportPlaylistUrl }"><span data-hover="Export to Youtube">Export to Youtube</span></a>
              </nav>
-             <ul class="videos-list" data-last-played-video="${selectedPlaylist.lastReproduced.videoId }">
-              <c:forEach items="${videos }" var="v" >  
-                <li <c:if test="${v.videoId==selectedPlaylist.lastReproduced.videoId}">class="current-playing-video"</c:if>>
-                  <a href="<c:url value="/playlist/${selectedPlaylist.playlistId }/video/${v.videoId }" />" data-video-id="${v.videoId }" class="button-play-video" data-last-played="${v.currentPosition }">${v.url }</a>
-                </li>
-              </c:forEach>
-              </ul>
-              </c:if>
+             <div id="video-player-container">
+             </div>
+
+             </c:if>
           </div>
         </div>
       </div>

@@ -36,7 +36,7 @@ function saveCurrentVideoTime() {
     }
     var currentTime;
     if(twitchPlayer) {
-        currentTime = twitchPlayer.getVideoTime();
+        currentTime = twitchPlayer.getCurrentTime();
     }
     if(youtubePlayer) {
         currentTime = Math.round(youtubePlayer.getCurrentTime());
@@ -45,7 +45,7 @@ function saveCurrentVideoTime() {
         $.post(contextRoot + 'video/savetime', {
             'videoId' : currentVideoId,
             'playlistId' : playlistId,
-            'currentTime' : currentTime
+            'currentTime' : parseInt(currentTime)
         });
         $('[data-video-id=' + currentVideoId + ']').attr('data-last-played', currentTime);
     }
@@ -65,9 +65,6 @@ function stopSavingCurrentVideoTime() {
 function playNextVideo() {
     var nextVideo = $('a', $('[data-video-id=' + currentVideoId + ']').parents('li').next());
     if(nextVideo) {
-    	if($.magnificPopup) {
-	        $.magnificPopup.close()
-        }
         nextVideo.click();
     }
 }
@@ -90,9 +87,9 @@ function closePlayer() {
     stopSavingCurrentVideoTime();
     twitchPlayer = null;
     youtubePlayer = null;
-    $.magnificPopup.close();
     history.pushState(null, null, contextRoot + 'playlist/' + playlistId);
     isClosingPlayer = false;
+    $("#video-player-container").empty();
 }
 
 /**
