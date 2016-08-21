@@ -89,7 +89,8 @@ function closePlayer() {
     youtubePlayer = null;
     history.pushState(null, null, contextRoot + 'playlist/' + playlistId);
     isClosingPlayer = false;
-    $("#video-player-container").empty();
+    $("#video-player-container").remove();
+    $("#pre-video-player-container").after('<div id="video-player-container"></div>');
 }
 
 /**

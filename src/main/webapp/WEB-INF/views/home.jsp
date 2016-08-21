@@ -144,7 +144,7 @@ limitations under the License.
 </head>
 <body>
 <div class="app-main">
-  <div class="column fixed open" id="left_col">
+  <div class="column fixed open <c:if test="${selectedPlaylist eq null}">no-playlist-selected</c:if>" id="left_col">
     <div class="column" id="large_nav">
       <div class="content">
         <div class="top">
@@ -227,12 +227,15 @@ limitations under the License.
       </c:if>
     </div>
   </div>
-  <div class="column tse-scrollable wrapperscrollmain stretch" id="main_col">
+  <div class="column tse-scrollable wrapperscrollmain stretch <c:if test="${selectedPlaylist eq null}">no-playlist-selected</c:if>" id="main_col">
     <div class="tse-content">
       <div class="content">
         <div id="channel">
           <div id="someotherdiv">
             <h1>${selectedPlaylist eq null ? 'Winter' : selectedPlaylist.name }</h1>
+            <c:if test="${selectedPlaylist eq null}">
+            Please select a playlist on the right to continue, or <a href="<c:url value="/playlist/add" />" class="add-new-playlist-text">create a new one</a>.
+            </c:if>
              <c:if test="${videos != null}">
              <nav>
                 <c:url value="/playlist/addvideos" var="addVideosUrl">
@@ -249,6 +252,7 @@ limitations under the License.
                 <a id="remove-duplicates" href="${removeDuplicatesUrl }"><span data-hover="Remove Duplicates">Remove Duplicates</span></a>
                 <a id="export-youtube" href="${exportPlaylistUrl }"><span data-hover="Export to Youtube">Export to Youtube</span></a>
              </nav>
+             <div id="pre-video-player-container"></div>
              <div id="video-player-container">
              </div>
 

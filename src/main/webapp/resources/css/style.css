@@ -64,6 +64,10 @@ width: 10px;
 z-index: 4;
 }
 
+#left_col.no-playlist-selected:before {
+  width:0;
+}
+
 #left_col.open #large_nav {
 display: block;
 }
@@ -81,7 +85,7 @@ width: 240px;
 height: 100%;
 }
 
-#large_nav .content, .playlists {
+#large_nav .content, .playlists, #secondary_col {
   background: #19191f;
 }
 
@@ -351,6 +355,9 @@ MAIN COL
 
 */
 
+#main_col.no-playlist-selected {
+  margin-left: 250px;
+}
 
 #main_col {
 background: #fff;

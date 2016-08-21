@@ -19,9 +19,7 @@ function triggerVerifyIfTwitchVideoEnded() {
         if(!twitchPlayer) {
             window.clearInterval(intervalVerifyIfTwitchVideoEndedId);
         }
-        console.log("CurrentTWiVideoLen: " + currentTwitchVideoLength +  " currenttime: " + twitchPlayer.getCurrentTime());
         if(twitchPlayer && currentTwitchVideoLength <= twitchPlayer.getCurrentTime()) {
-            console.log("will play next video");
             playNextVideo();
             if(!isMobile) {
                 $('.wrapperscrollmain .tse-scroll-content').scrollTop($('li.current-playing-video').offset().top);
@@ -90,7 +88,6 @@ function loadTwitchVideos() {
                     triggerVerifyIfTwitchVideoEnded();
                 });
                 player.addEventListener(Twitch.Player.ENDED, function(){
-                    console.log("Twitch.Player.ENDED, will play nextvideo");
                     closePlayer();
                     playNextVideo();
                 });
