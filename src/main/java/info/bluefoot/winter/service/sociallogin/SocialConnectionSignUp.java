@@ -1,14 +1,13 @@
 package info.bluefoot.winter.service.sociallogin;
 
-import info.bluefoot.winter.controller.Utils;
-import info.bluefoot.winter.dao.UserDao;
-import info.bluefoot.winter.model.SocialUser;
-
 import org.apache.commons.lang.StringUtils;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UserProfile;
+
+import info.bluefoot.winter.controller.Utils;
+import info.bluefoot.winter.dao.UserDao;
+import info.bluefoot.winter.model.SocialUser;
 
 public class SocialConnectionSignUp implements ConnectionSignUp {
 
@@ -38,17 +37,17 @@ public class SocialConnectionSignUp implements ConnectionSignUp {
             }
             name = profile.getName();
         }
-        // ========================================
-        SocialUser user = new SocialUser(connection.getProfileUrl(),
-                email, name, Utils.getDefaultUserAuthorities());
-        try {
-        userDao.insertUser(user);
-        } catch (DuplicateKeyException e) {
-            if(e.getCause() != null && e.getCause().getMessage() != null && e.getCause().getMessage().contains("email")) {
-                throw new EmailAlreadyRegisteredException("Email already registered: " + email, e);
-            }
-            throw e;
+        if(StringUtils.isEmpty(name)) {
+            name = email;
         }
+        String profileUrl = connection.getProfileUrl();
+        if(StringUtils.isEmpty(profileUrl)) {
+            throw new RuntimeException("Error creating your user: no profile URL provided");
+        }
+        // ========================================
+        SocialUser user = new SocialUser(profileUrl,
+                email, name, Utils.getDefaultUserAuthorities());
+        userDao.insertUser(user);
         userDao.insertAuthorities(user);
         return connection.getProfileUrl();
     }
