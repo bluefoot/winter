@@ -1,6 +1,7 @@
 <%--
 Copyright 2015 Gewton Jhames <bluefoot.dev@gmail.com>
 
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -197,7 +198,7 @@ limitations under the License.
               <div class="footer-line">thanks for using Winter!</div>
               <div class="footer-line">
                 <a href="<c:url value="/faq" />">FAQ</a>
-                <a href="http://bluefoot.info" target="_blank">Blog</a>
+                <a href="http://journal-gewton.rhcloud.com" target="_blank">Blog</a>
                 <a href="http://careers.stackoverflow.com/bluefoot" target="_blank">Stack Careers</a>
                 <a href="mailto:bluefoot.dev@gmail.com" target="_blank">Contact Me</a>
               </div>

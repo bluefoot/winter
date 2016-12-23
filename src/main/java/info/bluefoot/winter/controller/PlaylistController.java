@@ -56,6 +56,7 @@ public class PlaylistController {
 
     @Inject
     private VideoService videoService;
+
     
     private static Logger logger = LoggerFactory.getLogger(PlaylistController.class);
 
@@ -178,7 +179,7 @@ public class PlaylistController {
         }
 
         addPlaylistForm.getPlaylist().setVideos(new ArrayList<Video>(videos));
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = Utils.getCurrentLoggedUser();
         addPlaylistForm.getPlaylist().setUser(user);
         try {
             playlistService.addPlaylistAndVideos(addPlaylistForm.getPlaylist());

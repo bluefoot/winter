@@ -70,62 +70,68 @@ public class SocialConfig extends SocialConfigurerAdapter {
     @Value("#{systemEnvironment['WINTER_GOOGLE_SECRET']}")
     private String googleSecret;
     
-	@Inject
-	private DataSource dataSource;
-	
-	@Inject
-	private UserDao userDao;
-	
-	@Override
-	public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment env) {
+    @Value("#{systemEnvironment['WINTER_ENABLE_IMPLICIT_SIGNUP']?:true}")
+    private boolean enableImplicitSignup;
+    
+    @Inject
+    private DataSource dataSource;
+    
+    @Inject
+    private UserDao userDao;
+    
+    @Override
+    public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment env) {
         if(StringUtils.isBlank(twitterKey) || StringUtils.isBlank(facebookKey) || StringUtils.isBlank(googleKey)) {
             throw new IllegalStateException("Can't find out social login provider keys based on environment variables");
         }
-	    cfConfig.addConnectionFactory(new TwitterConnectionFactory(twitterKey, twitterSecret));
-	    cfConfig.addConnectionFactory(new FacebookConnectionFactory(facebookKey, facebookSecret));
-	    cfConfig.addConnectionFactory(new GoogleConnectionFactory(googleKey, googleSecret));
-	}
+        cfConfig.addConnectionFactory(new TwitterConnectionFactory(twitterKey, twitterSecret));
+        cfConfig.addConnectionFactory(new FacebookConnectionFactory(facebookKey, facebookSecret));
+        cfConfig.addConnectionFactory(new GoogleConnectionFactory(googleKey, googleSecret));
+    }
 
-	@Override
-	public UserIdSource getUserIdSource() {
-		return new UserIdSource() {			
-			@Override
-			public String getUserId() {
-				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-				if (authentication == null) {
-					throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in");
-				}
-				return authentication.getName();
-			}
-		};
-	}
-	
-	@Override
-	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
-		JdbcUsersConnectionRepository rep = new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
-		rep.setConnectionSignUp(new SocialConnectionSignUp(userDao));
+    @Override
+    public UserIdSource getUserIdSource() {
+        return new UserIdSource() {            
+            @Override
+            public String getUserId() {
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                if (authentication == null) {
+                    throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in");
+                }
+                return authentication.getName();
+            }
+        };
+    }
+    
+    @Override
+    public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
+        JdbcUsersConnectionRepository rep = new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
+        if(enableImplicitSignup) {
+            // Enabling implicit signup http://docs.spring.io/spring-social/docs/1.1.4.RELEASE/reference/htmlsingle/#implicit-sign-up
+            rep.setConnectionSignUp(new SocialConnectionSignUp(userDao));
+        }
         return rep;
-	}
+    }
 
-	@Bean
-	public ReconnectFilter apiExceptionHandler(UsersConnectionRepository usersConnectionRepository, UserIdSource userIdSource) {
-		return new ReconnectFilter(usersConnectionRepository, userIdSource);
-	}
+    @Bean
+    public ReconnectFilter apiExceptionHandler(UsersConnectionRepository usersConnectionRepository, UserIdSource userIdSource) {
+        return new ReconnectFilter(usersConnectionRepository, userIdSource);
+    }
 
-	@Bean
-	@Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)
-	public Facebook facebook(ConnectionRepository repository) {
-		Connection<Facebook> connection = repository.findPrimaryConnection(Facebook.class);
-		return connection != null ? connection.getApi() : null;
-	}
-	
-	@Bean
-	@Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)
-	public Twitter twitter(ConnectionRepository repository) {
-		Connection<Twitter> connection = repository.findPrimaryConnection(Twitter.class);
-		return connection != null ? connection.getApi() : null;
-	}
-	
+    @Bean
+    @Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)
+    public Facebook facebook(ConnectionRepository repository) {
+        Connection<Facebook> connection = repository.findPrimaryConnection(Facebook.class);
+        return connection != null ? connection.getApi() : null;
+    }
+    
+    @Bean
+    @Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)
+    public Twitter twitter(ConnectionRepository repository) {
+        Connection<Twitter> connection = repository.findPrimaryConnection(Twitter.class);
+        return connection != null ? connection.getApi() : null;
+    }
+    
     @Bean
     @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
     public Google google(ConnectionRepository repository) {

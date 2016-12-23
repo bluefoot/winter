@@ -14,6 +14,7 @@
   <packaging>war</packaging>
   <version>0.1.1</version>
   <name>Winter</name>
+  
 
   <description>Reproduces your playlists, resumes where you left off, lets you queue playlists to watch later</description>
   <url>http://bluefoot.info</url>
@@ -168,8 +169,6 @@
       <artifactId>commons-lang</artifactId>
       <version>2.6</version>
     </dependency>
-    <!-- <dependency> <groupId>info.bluefoot.scripts</groupId> <artifactId>utils</artifactId> 
-      <version>0.4</version> </dependency> -->
       
     <!-- Json =============================================================== -->
 
@@ -250,19 +249,21 @@
     <dependency>
       <groupId>org.springframework.social</groupId>
       <artifactId>spring-social-core</artifactId>
-      <version>1.1.0.RELEASE</version>
+      <version>1.1.4.RELEASE</version>
     </dependency>
+    
     <dependency>
       <groupId>org.springframework.social</groupId>
       <artifactId>spring-social-security</artifactId>
-      <version>1.1.0.RELEASE</version>
+      <version>1.1.4.RELEASE</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.social</groupId>
       <artifactId>spring-social-web</artifactId>
-      <version>1.1.0.RELEASE</version>
+      <version>1.1.4.RELEASE</version>
     </dependency>
+    
     <dependency>
       <groupId>org.springframework.social</groupId>
       <artifactId>spring-social-google</artifactId>
@@ -278,13 +279,13 @@
     <dependency>
       <groupId>org.springframework.social</groupId>
       <artifactId>spring-social-facebook</artifactId>
-      <version>2.0.0.M1</version> <!-- 1.1.1.RELEASE -->
+      <version>2.0.3.RELEASE</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-      <version>4.3.1</version>
+      <version>4.3.6</version>
     </dependency>
 
     <!-- Spring mobile ================================================================== -->
@@ -303,7 +304,7 @@
     <dependency>
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
-      <version>0.9.5</version>
+      <version>0.9.5.2</version>
     </dependency>
     
     <dependency>
